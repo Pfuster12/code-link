@@ -1,0 +1,9 @@
+{
+    "plugins": [
+        {
+            "id": "javascript",
+            "extensions": [".js"],
+            "path": "./language-plugins/javascript-plugin.json"
+        }
+    ] 
+}
