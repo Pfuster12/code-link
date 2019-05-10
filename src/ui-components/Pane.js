@@ -15,14 +15,9 @@ export default function Pane(props) {
      */
     const id = props.id
 
-    /**
-     * The style of this Pane component.
-     */
-    const width = props.width
-
     return (
-        <div id={id} className="pane" style={{width: width}}>
+        <section id={id} className="pane">
             { children }
-        </div>
+        </section>
     )
 }

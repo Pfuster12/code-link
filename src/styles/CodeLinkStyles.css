@@ -1,4 +1,11 @@
 html, body {
+    overflow: hidden;
+}
+
+main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
 }
 
 h1 {
@@ -9,18 +16,31 @@ h1 {
 .pane {
     display: flex;
     flex-direction: column;
-    flex-basis: 50%
+    min-width: 100px;
+    width: calc(50%)
+}
+
+#first-pane {
+    width: calc(20%)
+}
+
+#second-pane {
+    width: calc(80%)
 }
 
 .gutter {
     display: flex;
+    flex: 0 0 auto;
     width: 60px;
-    flex-direction: column
+    flex-direction: column;
+    -webkit-user-select: none;
 }
 
 .row-split-pane {
     display: flex;
     flex: 1;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .resizer {

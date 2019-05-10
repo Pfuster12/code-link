@@ -34,7 +34,9 @@ export default function App() {
         <>
             {/* The context is passed to a Theme Context Provider app-wide. */}
             <ThemeContext.Provider value={[theme, setTheme]}>
-                <SplitPane/>
+                <main>
+                    <SplitPane/>
+                </main>
             </ThemeContext.Provider>
         </>
     )

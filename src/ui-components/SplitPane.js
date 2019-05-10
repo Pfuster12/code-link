@@ -15,8 +15,8 @@ export default function SplitPane(props) {
      * such as its width, change in width and dragging state.
      */
     const [splitPaneState, setSplitPaneState] = useState({
+        isDragging: false,
         dragX: 0,
-        deltaX: 0
     })
 
     /**
@@ -26,8 +26,8 @@ export default function SplitPane(props) {
     function onMouseDown(event) {
         // set dragging to true and the startX,
         setSplitPaneState({
+            isDragging: true,
             dragX: event.clientX,
-            deltaX: splitPaneState.deltaX
         })
     }
 
@@ -36,12 +36,43 @@ export default function SplitPane(props) {
      * @param {React.SyntheticEvent} event Contains event data.
      */
     function onMouseMove(event) {
-        const currentX = event.clientX
+        // if in dragging state,
+        if (splitPaneState.isDragging) {
+            // get the split pane element,
+            const splitPane = document.getElementsByClassName("row-split-pane")[0];
+            // set the cursor to a resize,
+            splitPane.style.cursor = 'col-resize'
+            // set user select to none,
+            splitPane.style.userSelect = 'none'
+            // get the current x pos,
+            const currentX = event.clientX
+            // find the delta,
+            var deltaX = currentX - splitPaneState.dragX
+    
+            // grab the pane elements,
+            const first = document.getElementById("first-pane");
+            const second = document.getElementById("second-pane");
+    
+            // get their original widths,
+            var firstWidth = first.offsetWidth
+            var secondWidth = second.offsetWidth
+    
+            // add to width the delta change,
+            firstWidth += deltaX
+            secondWidth -= deltaX
 
-        setSplitPaneState({
-            dragX: splitPaneState.dragX
-            deltaX: currentX - splitPaneState.dragX
-        })
+            // grab the window width,
+            const windowWidth = document.documentElement.clientWidth
+
+            // resize according to percentage of the window,
+            first.style.width = ((firstWidth / windowWidth) * 100) + '%';
+            second.style.width = ((secondWidth / windowWidth) * 100) + '%';
+        
+            setSplitPaneState({
+                isDragging: true,
+                dragX: currentX,
+            })
+        }
     }
     
     /**
@@ -49,30 +80,32 @@ export default function SplitPane(props) {
      * @param {React.SyntheticEvent} event Contains event data.
      */
     function onMouseUp(event) {
-        // set dragging to false,
+        // grab the splitpane,
+        const splitPane = document.getElementsByClassName("row-split-pane");
+        splitPane[0].style.cursor = 'default'
+        // set user select to none,
+        splitPane.style.userSelect = 'default'
+        
+        // set dragging to true and the startX,
         setSplitPaneState({
             isDragging: false,
-            width: splitPaneState.deltaX,
-            deltaX: splitPaneState.deltaX,
-            startX: splitPaneState.startX
+            dragX: event.clientX,
         })
     }
-
-    // set the deltaX in px for the style prop,
-    const resize = `${splitPaneState.deltaX}px`
 
     return (
         <div className="row-split-pane" 
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}>
             {/* The first Pane */}
-            <Pane id={'first-pane'} children={<h1>code-link</h1>}
-                width={resize}/>
+            <Pane id={'first-pane'} 
+                children={<h1>c</h1>}/>
             {/* The resizer inbetween */}
             <Resizer onMouseDownCallback={onMouseDown}
                 onMouseUpCallback={onMouseUp}/>
             {/* The second Pane */}
-            <Pane id={'second-pane'} children={<EditorPane/>}/>
+            <Pane id={'second-pane'} 
+                children={<EditorPane/>}/>
         </div>
     )
 }
