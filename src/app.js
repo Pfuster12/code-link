@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import SplitPane from './ui-components/SplitPane';
-import R from 'res/R';
 import { themes, ThemeContext } from './theme/theme-context'
 import Chopstring from './lexer/chopstring';
 import PluginReader from './lexer/PluginReader';
+import './styles/CodeLinkStyles.css'
 
 /**
  * This is the entry point of this React Electron Editor Program.
@@ -31,12 +31,12 @@ export default function App() {
         })
 
     return (
-        <React.Fragment>
+        <>
             {/* The context is passed to a Theme Context Provider app-wide. */}
             <ThemeContext.Provider value={[theme, setTheme]}>
                 <SplitPane/>
             </ThemeContext.Provider>
-        </React.Fragment>
+        </>
     )
 }
 

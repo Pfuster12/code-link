@@ -28,14 +28,11 @@ export default function Gutter(props) {
      * This component's style.
      */
     const gutterStyle = {
-        display: 'flex',
-        width: '60px',
-        flexDirection: 'column',
         backgroundColor: theme.gutterBackgroundColor
     }
 
     return (
-        <div style={gutterStyle}>
+        <div className="gutter" style={gutterStyle}>
             {/* Map the lines to LineNumber components. */}
             {lines.map((line, index) => <LineNumber key={index + 1} lineNumber={index + 1}/>)}
         </div>

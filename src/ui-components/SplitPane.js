@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Pane from './Pane'
 import Resizer from './Resizer'
-import R from 'res/R';
 import EditorPane from './editor/EditorPane';
 
 /** 
@@ -16,14 +15,8 @@ export default function SplitPane(props) {
      * such as its width, change in width and dragging state.
      */
     const [splitPaneState, setSplitPaneState] = useState({
-        // remembers if user is currently dragging the resizer,
-        isDragging: false,
-        // initialise a width for the left pane,
-        width: 160,
-        // stores the current change in X direction of a resizer drag,
-        deltaX: 160,
-        // stores the startX position of the event,
-        startX: 0
+        dragX: 0,
+        deltaX: 0
     })
 
     /**
@@ -33,10 +26,8 @@ export default function SplitPane(props) {
     function onMouseDown(event) {
         // set dragging to true and the startX,
         setSplitPaneState({
-            isDragging: true,
-            width: splitPaneState.width,
-            deltaX: splitPaneState.deltaX,
-            startX: event.clientX
+            dragX: event.clientX,
+            deltaX: splitPaneState.deltaX
         })
     }
 
@@ -45,18 +36,12 @@ export default function SplitPane(props) {
      * @param {React.SyntheticEvent} event Contains event data.
      */
     function onMouseMove(event) {
-        // grab the X position of the mouse click and set the state to be dragging,
-        if (splitPaneState.isDragging) {
-            // calculate the delta of the drag,
-            var dX = splitPaneState.width + event.clientX - splitPaneState.startX
-            // set the state with the moving deltaX,
-            setSplitPaneState({
-                isDragging: splitPaneState.isDragging,
-                width: splitPaneState.width,
-                deltaX: dX,
-                startX: splitPaneState.startX
-            })
-        }
+        const currentX = event.clientX
+
+        setSplitPaneState({
+            dragX: splitPaneState.dragX
+            deltaX: currentX - splitPaneState.dragX
+        })
     }
     
     /**
@@ -75,28 +60,19 @@ export default function SplitPane(props) {
 
     // set the deltaX in px for the style prop,
     const resize = `${splitPaneState.deltaX}px`
-    
-    // CSS style for the container of the SplitPane,
-    const resizeStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        // the width is assigned dynamically with dragging,
-        width: resize
-    }
 
     return (
-        <div style={R.styles.rowWrapper}
+        <div className="row-split-pane" 
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}>
             {/* The first Pane */}
-            <Pane children={<div><h1>code-link</h1></div>}
-                style={resizeStyle}/>
+            <Pane id={'first-pane'} children={<h1>code-link</h1>}
+                width={resize}/>
             {/* The resizer inbetween */}
-            <Resizer
-                onMouseDownCallback={onMouseDown}/>
+            <Resizer onMouseDownCallback={onMouseDown}
+                onMouseUpCallback={onMouseUp}/>
             {/* The second Pane */}
-            <Pane children={<EditorPane/>}
-                style={R.styles.rowWrapper}/>
+            <Pane id={'second-pane'} children={<EditorPane/>}/>
         </div>
     )
 }

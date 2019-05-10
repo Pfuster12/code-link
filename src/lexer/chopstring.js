@@ -29,7 +29,18 @@ type Token = {
 const Chopstring = (text: string, language: LanguagePlugin) => {
 
     function applyPatterns(): Token[] {
-        
+        const features = Object.values(language.lang_features)
+        console.log(features)
+       features.forEach(feature => {
+            const pattern = feature.match
+            const regex = new RegExp(pattern, 'gm')
+            const match = regex.exec(text)
+            console.log({
+                token: match[0], 
+                id: feature.id, 
+                index: match.index
+            })
+        })
     }
 
     /**

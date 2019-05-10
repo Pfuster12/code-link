@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import R from 'res/R';
 import Gutter from './Gutter';
 import { ThemeContext } from '../../theme/theme-context'
 import TextEditor from './TextEditor';
@@ -41,7 +40,7 @@ export default function EditorPane() {
     }
 
     return (
-        <div style={R.styles.rowWrapper}>
+        <div className="editor">
             {/* Pass the text value to the gutter. */}
             <Gutter text={editText.value}/>
             <TextEditor editText={editText}

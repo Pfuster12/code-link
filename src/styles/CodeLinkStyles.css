@@ -1,0 +1,43 @@
+html, body {
+}
+
+h1 {
+    display: flex;
+    margin: 0px;
+}
+
+.pane {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%
+}
+
+.gutter {
+    display: flex;
+    width: 60px;
+    flex-direction: column
+}
+
+.row-split-pane {
+    display: flex;
+    flex: 1;
+}
+
+.resizer {
+    width: 2px;
+    background-color: black;
+    cursor: e-resize
+}
+
+.editor {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    min-width: 100px;
+}
+
+.line-generator {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}

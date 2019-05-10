@@ -10,13 +10,18 @@ export default function Pane(props) {
      */
     const children = props.children
 
+     /**
+     * The id of this pane.
+     */
+    const id = props.id
+
     /**
      * The style of this Pane component.
      */
-    const style = props.style
+    const width = props.width
 
     return (
-        <div style={style}>
+        <div id={id} className="pane" style={{width: width}}>
             { children }
         </div>
     )

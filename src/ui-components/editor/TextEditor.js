@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import R from 'res/R';
 import Gutter from './Gutter';
 import { ThemeContext } from '../../theme/theme-context'
 import LineGenerator from './LineGenerator';

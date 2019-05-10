@@ -1,5 +1,4 @@
 import React from 'react';
-import R from 'res/R';
 
 /**
  * A view in-between two {@link Panes} to resize them horizontally.
@@ -15,8 +14,8 @@ export default function Resizer(props) {
     const onMouseDownCallback = props.onMouseDownCallback
 
     return (
-        <div style={R.styles.resizerStyle}
-            onMouseDown={onMouseDownCallback}>
+        <div className="resizer"
+             onMouseDown={onMouseDownCallback}>
         </div>
     )
 }
