@@ -19,6 +19,8 @@ export default function LineGenerator(props) {
      */
     const lineRegex = /(?<=\r?\n)/gm
 
+    var text = textEditor.value
+    
     /**
      * The App-wide context reference.
      * @see React
@@ -38,7 +40,7 @@ export default function LineGenerator(props) {
 
     return (
         <div className="line-generator">
-            <span style={tokenParentStyle}>{textEditor.value}</span>
+            <span style={tokenParentStyle}>{text}</span>
         </div>
     )
 }

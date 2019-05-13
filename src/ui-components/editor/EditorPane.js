@@ -21,18 +21,13 @@ export default function EditorPane() {
     const [theme, setTheme] = useContext(ThemeContext)
 
     /**
-     * State for the token list of the current text parsed by a language plugin.
-     */
-    const [tokens, setTokens] = useState([])
-
-    /**
      * Text area editText state object stores the current value and the
      * selection range of the text.
      * @see useState
      */
     const [textEditor, setTextEditor] = useState({
         value: "function triple(param1: String) {\n    const x = 101 + param1\n}",
-        tokens: tokens,
+        tokens: [],
         selectionStart: 0,
         selectionEnd: 0
     })
@@ -48,10 +43,10 @@ export default function EditorPane() {
         pluginReader.readPlugin('./src/lexer/language-plugins/javascript-plugin.json')
             .then(result => {
                 console.log(result)
-                const tokensArray = Chopstring('function triple(param1: String) {\nconst x = 101 + param1\n}', result).applyPatterns()
+                const tokens = Chopstring('function triple(param1: String) {\nconst x = 101 + param1\n}', result).applyPatterns()
                 setTextEditor({
                     value: textEditor.value,
-                    tokens: tokensArray,
+                    tokens: tokens,
                     selectionStart: textEditor.selectionStart,
                     selectionEnd: textEditor.selectionEnd
                 })
@@ -69,7 +64,7 @@ export default function EditorPane() {
     function onChange(event) {
         setTextEditor({
             value: event.currentTarget.value,
-            tokens: tokens,
+            tokens: textEditor.tokens,
             selectionStart: textEditor.selectionStart,
             selectionEnd: textEditor.selectionEnd
         })
