@@ -8,6 +8,18 @@ main {
     flex-direction: column;
 }
 
+textarea {
+    position: absolute;
+    resize: none;
+    border-style: none;
+    border-color: transparent;
+    outline: none;
+    border: none;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+}
+
 h1 {
     display: flex;
     margin: 0px;
@@ -49,15 +61,43 @@ h1 {
     cursor: e-resize
 }
 
-.editor {
+.editor-pane {
     display: flex;
     flex-direction: row;
     flex: 1;
     min-width: 100px;
 }
 
+.text-editor {
+    display: flex;
+    flex: 1;
+    cursor: text;
+    overflow: auto
+}
+
 .line-generator {
     display: flex;
     flex: 1;
-    flex-direction: column;
+    flex-direction: row;
+    white-space: pre;
+}
+
+.token-generator {
+
+}
+
+.line-number-parent {
+    width: 100%;
+}
+
+.line-number {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.line-number:hover {
+    opacity: 1;
 }

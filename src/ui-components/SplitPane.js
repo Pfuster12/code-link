@@ -11,6 +11,11 @@ import EditorPane from './editor/EditorPane';
 export default function SplitPane(props) {
 
     /**
+     * This SplitPane children.
+     */
+    const children = props.children
+
+    /**
      * A variable for the split pane state holding information
      * such as its width, change in width and dragging state.
      */
@@ -81,8 +86,8 @@ export default function SplitPane(props) {
      */
     function onMouseUp(event) {
         // grab the splitpane,
-        const splitPane = document.getElementsByClassName("row-split-pane");
-        splitPane[0].style.cursor = 'default'
+        const splitPane = document.getElementsByClassName("row-split-pane")[0];
+        splitPane.style.cursor = 'default'
         // set user select to none,
         splitPane.style.userSelect = 'default'
         
@@ -99,13 +104,20 @@ export default function SplitPane(props) {
             onMouseUp={onMouseUp}>
             {/* The first Pane */}
             <Pane id={'first-pane'} 
-                children={<h1>c</h1>}/>
+                children={children[0]}/>
             {/* The resizer inbetween */}
             <Resizer onMouseDownCallback={onMouseDown}
                 onMouseUpCallback={onMouseUp}/>
             {/* The second Pane */}
             <Pane id={'second-pane'} 
-                children={<EditorPane/>}/>
+                children={children[1]}/>
         </div>
     )
+}
+
+/**
+ * Define the default props to be empty divs.
+ */
+SplitPane.defaultProps = {
+    children: [<div/>, <div/>]
 }

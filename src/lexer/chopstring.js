@@ -10,8 +10,9 @@ type LanguagePlugin = {
 }
 
 type Token = {
-    scope: string[],
-    token: string
+    token: string,
+    id: String,
+    index: Number
 }
 
 /**
@@ -28,19 +29,32 @@ type Token = {
  */
 const Chopstring = (text: string, language: LanguagePlugin) => {
 
+    /**
+     * Apply the language plugin patterns to the input text.
+     */
     function applyPatterns(): Token[] {
         const features = Object.values(language.lang_features)
-        console.log(features)
+
+        const tokens = []
+
        features.forEach(feature => {
             const pattern = feature.match
-            const regex = new RegExp(pattern, 'gm')
-            const match = regex.exec(text)
-            console.log({
-                token: match[0], 
-                id: feature.id, 
-                index: match.index
-            })
+            const regex = new RegExp(pattern, 'gms')
+            var array1
+
+            while ((array1 = regex.exec(text)) !== null) {
+                tokens.push({
+                    token: array1[0],
+                    id: feature.id,
+                    index: regex.lastIndex
+                })
+            }
         })
+
+        tokens.sort((a, b) => a.index - b.index)
+        console.log(tokens)
+
+        return tokens
     }
 
     /**

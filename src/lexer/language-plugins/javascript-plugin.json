@@ -2,9 +2,9 @@
     "id": "javascript",
     "patterns": ["function_expression"],
     "lang_features": {
-        "function_keyword": {
-            "match": "function",
-            "id": "keyword.function"
+        "whitespace": {
+            "match": "\\s",
+            "id": "whitespace"
         },
         "paren_begin": {
             "match": "\\(",
@@ -12,7 +12,11 @@
         },
         "paren_end": {
             "match": "\\)",
-            "id": "punctuation.paren.open"
+            "id": "punctuation.paren.close"
+        },
+        "bracket_expression": {
+            "match": "(?<={).*(?=})",
+            "id": "expression.bracket"
         },
         "bracket_begin": {
             "match": "\\{",
@@ -23,12 +27,16 @@
             "id": "punctuation.bracket.close"
         },
         "keyword": {
-            "match": "abstract|break|char|debugger|double|export|finally|goto|in|let|null|public|super|throw|try|volatile|arguments|byte|class|default|else|extends|float|if|instanceof|long|package|return|switch|throws|typeof|while|await|case|const|delete|enum|false|for|implements|int|native|private|short|synchronized|transient|var|with|boolean|catch|continue|do|eval|final|function|import|interface|new|protected|static|this|true|void|yield|from",
+            "match": "\\b(abstract|break|char|debugger|double|export|finally|goto|in|let|null|public|super|throw|try|volatile|arguments|byte|class|default|else|extends|float|if|instanceof|long|package|return|switch|throws|typeof|while|await|case|const|delete|enum|false|for|implements|int|native|private|short|synchronized|transient|var|with|boolean|catch|continue|do|eval|final|function|import|interface|new|protected|static|this|true|void|yield|from)\\b",
             "id": "keyword"
         },
         "variable": {
             "match": "\\b[a-z]([\\w\\d]+)?",
             "id": "variable"
+        },
+        "operator": {
+            "match": "\\=|\\+|\\-|\\*|\\/|\\%|\\+\\+|\\-\\\\\\\\-|\\+\\=|\\-\\=|\\*\\=|\\/\\=|\\%\\=|\\=\\=|\\=\\=\\=|\\!\\=|\\!\\=\\=|\\>|\\<|\\>\\=|\\<\\=|\\?|\\:|\\&\\&|\\|\\||\\!|\\&|\\||\\~|\\^|\\<\\<|\\>\\>",
+            "id": "operator"
         }
     },
     "keywords": [

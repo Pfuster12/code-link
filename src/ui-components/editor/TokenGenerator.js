@@ -5,19 +5,12 @@ import { ThemeContext } from '../../theme/theme-context'
  * Generates a highlighted syntax line from a given string in the props.
  * @see TextEditor
  */
-export default function LineGenerator(props) {
+export default function TokenGenerator(props) {
 
     /**
      * The string to generate highlighted tokens.
      */
-    const textEditor = props.textEditor
-
-    /**
-     * A new-line separator RegEx for any platform (respecting an optional Windows and
-     * Mac CRLF) with positive lookbehind to split a line by newline while keeping
-     * the delimiters.
-     */
-    const lineRegex = /(?<=\r?\n)/gm
+    const token = props.token
 
     /**
      * The App-wide context reference.
@@ -37,8 +30,6 @@ export default function LineGenerator(props) {
     }
 
     return (
-        <div className="line-generator">
-            <span style={tokenParentStyle}>{textEditor.value}</span>
-        </div>
+        <span className={token.id}>{token}</span>
     )
 }

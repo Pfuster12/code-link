@@ -25,7 +25,7 @@ export default function TextEditor(props) {
      * Text area Editor state object passed by parent {@link EditorPane} stores
      * the current value and the selection range of the text.
      */
-    const editText = props.editText
+    const textEditor = props.textEditor
 
     /**
      * Text area onChange callback from the parent {@link EditorPane} component
@@ -37,10 +37,7 @@ export default function TextEditor(props) {
     /**
      * Parent container style holding the text area and the generated lines.
      */
-    const containerStyle = {
-        display: 'flex',
-        flex: 1,
-        cursor: 'text',
+    const textEditorStyle = {
         backgroundColor: theme.backgroundColorEditor
     }
 
@@ -48,31 +45,27 @@ export default function TextEditor(props) {
      * TextArea editor style
      */
     const textAreaStyle = {
-        position: 'absolute',
-        resize: 'none',
-        borderStyle: 'none',
-        borderColor: 'transparent',
-        outline: 'none',
-        border: 'none',
-        width: '1px',
-        height: '1px',
-        padding: 0,
         lineHeight: theme.editorTextStyle.lineHeight,
         fontSize: theme.editorTextStyle.fontSize
     }
 
+    /**
+     * onClick text editor to focus on the text area always.
+     * @param {React.SyntheticEvent} event 
+     */
     function onClick(event) {
         textArea.focus()
     }
 
     return (
-        <div style={containerStyle}
+        <div className="text-editor" 
+            style={textEditorStyle}
             onClick={onClick}>
-            <LineGenerator text={editText.value}/>
+            <LineGenerator textEditor={textEditor}/>
             <textarea style={textAreaStyle}
                 ref={ ref => textArea = ref}
                 onChange={onChange}
-                value={editText.value}
+                value={textEditor.value}
                 wrap="off"/>
         </div>
     )

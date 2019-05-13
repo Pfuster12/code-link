@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import SplitPane from './ui-components/SplitPane';
 import { themes, ThemeContext } from './theme/theme-context'
-import Chopstring from './lexer/chopstring';
-import PluginReader from './lexer/PluginReader';
+import EditorPane from './ui-components/editor/EditorPane';
 import './styles/CodeLinkStyles.css'
+import './styles/BasicThemeStyle.css'
 
 /**
  * This is the entry point of this React Electron Editor Program.
@@ -17,25 +17,15 @@ export default function App() {
      */
     const [theme, setTheme] = useState(themes.light)
 
-    // create a new plugin reader,
-    const pluginReader = PluginReader()
-
-    // read the js plugin,
-    pluginReader.readPlugin('./src/lexer/language-plugins/javascript-plugin.json')
-        .then(result => {
-            console.log(result)
-            Chopstring('function triple() {\n}', result).applyPatterns()
-        })
-        .catch(error => {
-            console.log(error)
-        })
-
     return (
         <>
             {/* The context is passed to a Theme Context Provider app-wide. */}
             <ThemeContext.Provider value={[theme, setTheme]}>
                 <main>
-                    <SplitPane/>
+                    <SplitPane>
+                        <h1>CL</h1>
+                        <EditorPane/>
+                    </SplitPane>
                 </main>
             </ThemeContext.Provider>
         </>
