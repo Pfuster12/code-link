@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import Gutter from './Gutter';
 import { ThemeContext } from '../../theme/theme-context'
-import LineGenerator from './LineGenerator';
+import TokenGenerator from './TokenGenerator';
 
 /**
  * Editor handling text input and displaying code text. Displays a code editor
@@ -61,7 +61,7 @@ export default function TextEditor(props) {
         <div className="text-editor" 
             style={textEditorStyle}
             onClick={onClick}>
-            <LineGenerator textEditor={textEditor}/>
+            <TokenGenerator textEditor={textEditor}/>
             <textarea style={textAreaStyle}
                 ref={ ref => textArea = ref}
                 onChange={onChange}

@@ -26,14 +26,22 @@ export default function EditorPane() {
      * @see useState
      */
     const [textEditor, setTextEditor] = useState({
+        plugin: {},
         value: "function triple(param1: String) {\n    const x = 101 + param1\n}",
         tokens: [],
         selectionStart: 0,
         selectionEnd: 0
     })
 
-    // create a new plugin reader,
+    /**
+     * Plugin reader to parse the language plugin.
+     */
     const pluginReader = PluginReader()
+
+    /**
+     * Tokeniser library chopstring.js
+     */
+    const chopstring = Chopstring()
 
     /**
      * Read the current selected language plugin to parse the text.
@@ -43,8 +51,9 @@ export default function EditorPane() {
         pluginReader.readPlugin('./src/lexer/language-plugins/javascript-plugin.json')
             .then(result => {
                 console.log(result)
-                const tokens = Chopstring('function triple(param1: String) {\nconst x = 101 + param1\n}', result).applyPatterns()
+                const tokens = chopstring.applyPatterns(textEditor.value, result)
                 setTextEditor({
+                    plugin: result,
                     value: textEditor.value,
                     tokens: tokens,
                     selectionStart: textEditor.selectionStart,
@@ -62,9 +71,11 @@ export default function EditorPane() {
      * @param {React.SyntheticEvent} event JSX event.
      */
     function onChange(event) {
+        const tokens = chopstring.applyPatterns(event.currentTarget.value, textEditor.plugin)
         setTextEditor({
+            plugin: textEditor.plugin,
             value: event.currentTarget.value,
-            tokens: textEditor.tokens,
+            tokens: tokens,
             selectionStart: textEditor.selectionStart,
             selectionEnd: textEditor.selectionEnd
         })

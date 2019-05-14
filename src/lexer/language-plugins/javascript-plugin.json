@@ -18,6 +18,10 @@
             "match": "(?<={).*(?=})",
             "id": "expression.bracket"
         },
+        "paren_expression": {
+            "match": "(?<=\\().*(?=\\))",
+            "id": "expression.paren"
+        },
         "bracket_begin": {
             "match": "\\{",
             "id": "punctuation.bracket.open"
@@ -30,9 +34,17 @@
             "match": "\\b(abstract|break|char|debugger|double|export|finally|goto|in|let|null|public|super|throw|try|volatile|arguments|byte|class|default|else|extends|float|if|instanceof|long|package|return|switch|throws|typeof|while|await|case|const|delete|enum|false|for|implements|int|native|private|short|synchronized|transient|var|with|boolean|catch|continue|do|eval|final|function|import|interface|new|protected|static|this|true|void|yield|from)\\b",
             "id": "keyword"
         },
+        "number": {
+            "match": "\\b\\d+\\b",
+            "id": "number"
+        },
         "variable": {
             "match": "\\b[a-z]([\\w\\d]+)?",
             "id": "variable"
+        },
+        "object": {
+            "match": "\\b[A-Z]([\\w\\d]+)?",
+            "id": "object"
         },
         "operator": {
             "match": "\\=|\\+|\\-|\\*|\\/|\\%|\\+\\+|\\-\\\\\\\\-|\\+\\=|\\-\\=|\\*\\=|\\/\\=|\\%\\=|\\=\\=|\\=\\=\\=|\\!\\=|\\!\\=\\=|\\>|\\<|\\>\\=|\\<\\=|\\?|\\:|\\&\\&|\\|\\||\\!|\\&|\\||\\~|\\^|\\<\\<|\\>\\>",
