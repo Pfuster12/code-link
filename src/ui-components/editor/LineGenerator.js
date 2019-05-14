@@ -1,11 +1,26 @@
+// @flow
+
 import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../../theme/theme-context'
 
+type LineGeneratorProps = {
+    textEditor: {
+        tokens: Array<{
+            token: Map,
+            index: Number,
+            id: string
+        }>,
+        value: String,
+        selectionStart: Number,
+        selectionEnd: Number
+    }
+}
+
 /**
- * Generates a highlighted syntax line from a given string in the props.
+ * Generates a highlighted syntax line from the given text value in the props.
  * @see TextEditor
  */
-export default function LineGenerator(props) {
+export default function LineGenerator(props: LineGeneratorProps) {
 
     /**
      * The string to generate highlighted tokens.
@@ -19,7 +34,6 @@ export default function LineGenerator(props) {
      */
     const lineRegex = /(?<=\r?\n)/gm
 
-    var text = textEditor.value
     
     /**
      * The App-wide context reference.
@@ -40,7 +54,7 @@ export default function LineGenerator(props) {
 
     return (
         <div className="line-generator">
-            <span style={tokenParentStyle}>{text}</span>
+            <span style={tokenParentStyle}>{Array.from(textEditor.tokens, ([key, token]) => !token.id.match('expression') && token.value)}</span>
         </div>
     )
 }

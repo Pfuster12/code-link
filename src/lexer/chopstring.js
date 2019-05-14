@@ -35,7 +35,7 @@ const Chopstring = (text: string, language: LanguagePlugin) => {
     function applyPatterns(): Token[] {
         const features = Object.values(language.lang_features)
 
-        const tokens = []
+        const tokens = new Map()
 
        features.forEach(feature => {
             const pattern = feature.match
@@ -43,18 +43,26 @@ const Chopstring = (text: string, language: LanguagePlugin) => {
             var array1
 
             while ((array1 = regex.exec(text)) !== null) {
-                tokens.push({
-                    token: array1[0],
-                    id: feature.id,
-                    index: regex.lastIndex
-                })
+                if (!tokens.has(regex.lastIndex)) {
+                    tokens.set(regex.lastIndex, {
+                        value: array1[0],
+                        id: feature.id
+                    })
+                }
+                else {
+                    const previousId = tokens.get(regex.lastIndex).id
+                    tokens.set(regex.lastIndex, {
+                        value: array1[0],
+                        id: previousId + " " + feature.id
+                    })
+                }
             }
         })
 
-        tokens.sort((a, b) => a.index - b.index)
-        console.log(tokens)
+        var tokensSorted = new Map([...tokens.entries()].sort((a,b) => a[0] - b[0]));
+        console.log(tokensSorted)
 
-        return tokens
+        return tokensSorted
     }
 
     /**
