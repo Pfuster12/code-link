@@ -42,6 +42,10 @@ Syntax tokens theme.
     color: darkcyan
 }
 
+.function {
+    color: palevioletred;
+}
+
 .operator {
     color: coral;
     font-weight: bold

@@ -15,9 +15,12 @@ textarea {
     border-color: transparent;
     outline: none;
     border: none;
-    width: 1px;
-    height: 1px;
+    width: 100%;
+    height: 100%;
     padding: 0;
+    color: transparent;
+    background-color: transparent;
+    caret-color: black;
 }
 
 h1 {
@@ -97,6 +100,7 @@ h1 {
     justify-content: center;
     cursor: pointer;
     opacity: 0.6;
+    -webkit-user-select: none;
 }
 
 .line-number:hover {

@@ -39,7 +39,7 @@ export default function TextEditor(props) {
      * @param {React.SyntheticEvent} event 
      */
     function onClick(event) {
-        textArea.focus()
+        //textArea.focus()
     }
 
     return (
