@@ -7,20 +7,14 @@ more custom themes can be saved for use.
 ------------------------------------------
 */
 
-.keyword {
-    color: royalblue;
-    font-weight: bold;
-}
+/*
 
-.object {
-    color: darkcyan
-}
+Editor Theme
 
-.operator {
-    color: coral;
-    font-weight: bold
-}
+*/
 
-.number {
-    color: rebeccapurple;
-}
+/*
+
+Syntax tokens theme.
+
+*/

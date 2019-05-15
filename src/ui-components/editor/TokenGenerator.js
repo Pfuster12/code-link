@@ -5,9 +5,8 @@ import { ThemeContext } from '../../theme/theme-context'
 
 type LineGeneratorProps = {
     textEditor: {
-        tokens: Array<{
-            token: Map,
-            index: Number,
+        tokens: Map<Number, {
+            token: string,
             id: string
         }>,
         value: String,
@@ -40,24 +39,13 @@ export default function TokenGenerator(props: LineGeneratorProps) {
      */
     const [theme, setTheme] = useContext(ThemeContext)
 
-    /**
-     * Parent style to inherit for all tokens from the theme.
-     */
-    const tokenParentStyle = {
-        display: 'block',
-        whiteSpace: 'pre',
-        lineHeight: theme.editorTextStyle.lineHeight,
-        fontSize: theme.editorTextStyle.fontSize,
-        fontFamily: theme.editorTextStyle.fontFamily,
-    }
-
     return (
-        <div className="line-generator">
-            <span style={tokenParentStyle}>
+        <div className="token-generator">
+            <span className="token-parent default-text">
             {
                 // iterate through the map of tokens,
                 Array.from(textEditor.tokens, ([key, token]) =>
-                    !token.id.match('expression') && <span className={token.id}>{token.value}</span>
+                    !token.id.match('expression') && <span key={key} className={token.id}>{token.value}</span>
                 )
             }
             </span>

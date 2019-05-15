@@ -35,21 +35,6 @@ export default function TextEditor(props) {
     const onChange = props.onChange
 
     /**
-     * Parent container style holding the text area and the generated lines.
-     */
-    const textEditorStyle = {
-        backgroundColor: theme.backgroundColorEditor
-    }
-
-    /**
-     * TextArea editor style
-     */
-    const textAreaStyle = {
-        lineHeight: theme.editorTextStyle.lineHeight,
-        fontSize: theme.editorTextStyle.fontSize
-    }
-
-    /**
      * onClick text editor to focus on the text area always.
      * @param {React.SyntheticEvent} event 
      */
@@ -58,11 +43,10 @@ export default function TextEditor(props) {
     }
 
     return (
-        <div className="text-editor" 
-            style={textEditorStyle}
+        <div className="text-editor text-editor-theme" 
             onClick={onClick}>
             <TokenGenerator textEditor={textEditor}/>
-            <textarea style={textAreaStyle}
+            <textarea className="default-text"
                 ref={ ref => textArea = ref}
                 onChange={onChange}
                 value={textEditor.value}

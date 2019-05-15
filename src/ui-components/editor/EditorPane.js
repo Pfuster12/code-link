@@ -29,8 +29,8 @@ export default function EditorPane() {
         plugin: {},
         value: "function triple(param1: String) {\n    const x = 101 + param1\n}",
         tokens: [],
-        selectionStart: 0,
-        selectionEnd: 0
+        selStart: 0,
+        selEnd: 0
     })
 
     /**
@@ -56,8 +56,8 @@ export default function EditorPane() {
                     plugin: result,
                     value: textEditor.value,
                     tokens: tokens,
-                    selectionStart: textEditor.selectionStart,
-                    selectionEnd: textEditor.selectionEnd
+                    selStart: textEditor.selStart,
+                    selEnd: textEditor.selEnd
                 })
             })
             .catch(error => {
@@ -71,13 +71,15 @@ export default function EditorPane() {
      * @param {React.SyntheticEvent} event JSX event.
      */
     function onChange(event) {
+        // get the new tokens,
         const tokens = chopstring.applyPatterns(event.currentTarget.value, textEditor.plugin)
+        // set the text editor state,
         setTextEditor({
             plugin: textEditor.plugin,
             value: event.currentTarget.value,
             tokens: tokens,
-            selectionStart: textEditor.selectionStart,
-            selectionEnd: textEditor.selectionEnd
+            selStart: textEditor.selStart,
+            selEnd: textEditor.selEnd
         })
     }
 

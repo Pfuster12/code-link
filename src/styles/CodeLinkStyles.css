@@ -75,15 +75,16 @@ h1 {
     overflow: auto
 }
 
-.line-generator {
+.token-generator {
     display: flex;
     flex: 1;
     flex-direction: row;
     white-space: pre;
 }
 
-.token-generator {
-
+.token-parent {
+    display: block;
+    white-space: pre;
 }
 
 .line-number-parent {

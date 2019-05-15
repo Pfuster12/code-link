@@ -17,18 +17,9 @@ export default function LineNumber(props) {
      */
     const lineNumber = props.lineNumber
 
-    /**
-     * Style of the line number.
-     */
-    const lineNumberStyle = {
-        lineHeight: theme.editorTextStyle.lineHeight,
-        fontSize: theme.editorTextStyle.fontSize,
-    }
-
     return (
         <div className="line-number-parent">
-            <span className="line-number" 
-                style={lineNumberStyle}>{lineNumber}</span>
+            <span className="line-number default-text">{lineNumber}</span>
         </div>
     )
 }

@@ -15,7 +15,7 @@ module.exports = {
         }),
         new CopyPlugin([
             // copy the themes to a build themes folder,
-            { from: './src/themes/default-theme.css', to: './themes/' },
+            { from: './src/themes/default-light-theme.css', to: './themes/' },
         ]),
     ],
     output: {

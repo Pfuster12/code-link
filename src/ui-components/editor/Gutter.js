@@ -24,15 +24,8 @@ export default function Gutter(props) {
     // split the lines from the text with the regex,
     const lines = props.text.split(lineRegex)
 
-    /**
-     * This component's style.
-     */
-    const gutterStyle = {
-        backgroundColor: theme.gutterBackgroundColor
-    }
-
     return (
-        <div className="gutter" style={gutterStyle}>
+        <div className="gutter gutter-theme">
             {/* Map the lines to LineNumber components. */}
             {lines.map((line, index) => <LineNumber key={index + 1} lineNumber={index + 1}/>)}
         </div>
