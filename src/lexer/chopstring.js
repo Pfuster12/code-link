@@ -54,13 +54,19 @@ const Chopstring = () => {
             }
         })
 
-        tokens.reduce((previousValue, currentValue) => {
-            
-        })
+        // make the object values into an array,
+        const result = Object.values(tokens.reduce((accumulator, {id, startIndex}) => {
+            // assign the index to an existing value if it exists, or if the accumulator is undefined
+            // create a new object with the id empty.
+            accumulator[startIndex] = accumulator[startIndex] || { startIndex, id: "" }
+            // assign the accumulator id the previous id if it exists and the current id,
+            accumulator[startIndex].id = id + (accumulator[startIndex].id ? ("." + accumulator[startIndex].id) : "")
+            return accumulator
+        }, {}))
 
-        console.log(tokens)
+        console.log(result)
 
-        return tokens
+        return result
     }
 
     /**

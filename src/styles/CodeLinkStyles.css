@@ -71,14 +71,22 @@ h1 {
 .text-editor {
     display: flex;
     flex: 1;
+    flex-direction: column;
     overflow: auto;
     cursor: text
 }
 
 .line-generator {
     display: flex;
-    flex: 1;
+    flex: 0 0 auto;
     flex-direction: column;
+    white-space: pre;
+}
+
+.token-generator {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
     white-space: pre;
 }
 

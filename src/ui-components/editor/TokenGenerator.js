@@ -16,13 +16,25 @@ export default function TokenGenerator(props) {
     const line = props.line
 
     /**
-     * Tee language plugin to tokenise by.
+     * The language plugin to tokenise by.
      */
     const plugin = props.plugin
 
     // get the language plugin tokens from the line,
     const tokens = plugin.lang_features !== undefined ? Chopstring().applyPatterns(line, plugin) : []
 
+    // add an end of line token,
+    tokens.push({startIndex: line.length, id: 'end'})
+
+    // split the line by spans according to the language plugin tokens,
+    var previousIndex = 0
+    const spans = tokens.map(token => {
+        const span = line.substring(previousIndex, token.startIndex)
+        previousIndex = token.startIndex
+        return span
+    })
+
+    console.log('Spans are', spans)
 
     /**
      * The App-wide context reference.
@@ -31,8 +43,10 @@ export default function TokenGenerator(props) {
     const [theme, setTheme] = useContext(ThemeContext)
 
     return (
-        <div className="line-generator">
-            {tokens.map(token => <span className={'token'}>{token.id}</span>)}
+        <div className="token-generator">
+            {
+                spans.map((span, index) => <span className={'token ' + (tokens[index - 1] ? tokens[index - 1].id.replace(".", " ") : "")}>{span}</span>)
+            }
         </div>
     )
 }

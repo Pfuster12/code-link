@@ -28,11 +28,7 @@ export default function LineGenerator(props) {
 
     return (
         <div className="line-generator">
-            {lines.map(line => <span className={'token'}>
-                    <TokenGenerator line={line}
-                        plugin={plugin}/>
-                </span>)
-            }
+            { lines.map(line => <TokenGenerator line={line} plugin={plugin}/>) }
         </div>
     )
 }

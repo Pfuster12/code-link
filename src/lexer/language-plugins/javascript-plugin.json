@@ -16,19 +16,19 @@
         },
         "paren_begin": {
             "match": "\\(",
-            "id": "punctuation.paren.open"
+            "id": "paren.open"
         },
         "paren_end": {
             "match": "\\)",
-            "id": "punctuation.paren.close"
+            "id": "paren.close"
         },
         "bracket_begin": {
             "match": "\\{",
-            "id": "punctuation.bracket.open"
+            "id": "bracket.open"
         },
         "bracket_end": {
             "match": "\\}",
-            "id": "punctuation.bracket.close"
+            "id": "bracket.close"
         },
         "keyword": {
             "match": "\\b(abstract|break|char|debugger|double|export|finally|goto|in|let|null|public|super|throw|try|volatile|arguments|byte|class|default|else|extends|float|if|instanceof|long|package|return|switch|throws|typeof|while|await|case|const|delete|enum|false|for|implements|int|native|private|short|synchronized|transient|var|with|boolean|catch|continue|do|eval|final|function|import|interface|new|protected|static|this|true|void|yield|from)\\b",
