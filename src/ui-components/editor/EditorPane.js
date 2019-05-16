@@ -47,15 +47,18 @@ export default function EditorPane() {
      * Read the current selected language plugin to parse the text.
      */
     useEffect(() => {
+        console.log('Startup Editor Pane. Reading plugin...')
         // read the js plugin,
         pluginReader.readPlugin('./src/lexer/language-plugins/javascript-plugin.json')
             .then(result => {
                 console.log(result)
-                const tokens = chopstring.applyPatterns(textEditor.value, result)
+                const lines = chopstring.splitLines(textEditor.value)
+                const tokens = chopstring.applyPatterns(lines[0], result)
+                // set the text editor state,
                 setTextEditor({
                     plugin: result,
                     value: textEditor.value,
-                    tokens: tokens,
+                    tokens:  textEditor.tokens,
                     selStart: textEditor.selStart,
                     selEnd: textEditor.selEnd
                 })
@@ -77,7 +80,7 @@ export default function EditorPane() {
         setTextEditor({
             plugin: textEditor.plugin,
             value: event.currentTarget.value,
-            tokens: tokens,
+            tokens:  textEditor.tokens,
             selStart: textEditor.selStart,
             selEnd: textEditor.selEnd
         })

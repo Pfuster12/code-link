@@ -36,7 +36,7 @@ const Chopstring = () => {
         const features = Object.values(plugin.lang_features)
 
         // create a new map to store the parsed tokens,
-        const tokens = new Map()
+        const tokens = new Array()
 
         // for each feature
        features.forEach(feature => {
@@ -47,33 +47,45 @@ const Chopstring = () => {
 
             // loop the match expression to get every match result,
             while ((array1 = regex.exec(text)) !== null) {
-                if (!feature.id.match('expression')) {
-                    if (!tokens.has(regex.lastIndex)) {
-                        tokens.set(regex.lastIndex, {
-                            value: array1[0],
-                            id: feature.id
-                        })
-                    }
-                    else {
-                        const previousId = tokens.get(regex.lastIndex).id
-                        tokens.set(regex.lastIndex, {
-                            value: array1[0],
-                            id: previousId + " " + feature.id
-                        })
-                    }
-                }
+                tokens.push({
+                    id: feature.id,
+                    startIndex: regex.lastIndex - array1[0].length
+                })
             }
         })
 
-        // sort index by natural order,
-        var tokensSorted = new Map([...tokens.entries()].sort((a,b) => a[0] - b[0]));
-        console.log(tokensSorted)
+        tokens.reduce((previousValue, currentValue) => {
+            
+        })
 
-        return tokensSorted
+        console.log(tokens)
+
+        return tokens
+    }
+
+    /**
+     * Helper function to split a given text by new line.
+     * @param {string} text 
+     */
+    function splitLines(text: string): Array<string> {
+        /*
+          A new-line separator RegEx for any platform (respecting an optional Windows and
+          Mac CRLF) with positive lookbehind to split a line by newline while keeping
+          the delimiters.
+         */
+        const lineRegex = /(?<=\r?\n)/gm
+
+        // split the text,
+        const lines = text.split(lineRegex)
+
+        console.log(lines)
+        // return the line array
+        return lines
     }
 
     return Object.freeze({
-        applyPatterns
+        applyPatterns,
+        splitLines
     })
 }
 

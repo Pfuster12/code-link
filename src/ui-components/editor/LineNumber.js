@@ -19,7 +19,7 @@ export default function LineNumber(props) {
 
     return (
         <div className="line-number-parent">
-            <span className="line-number default-text">{lineNumber}</span>
+            <span className="line-number token">{lineNumber}</span>
         </div>
     )
 }

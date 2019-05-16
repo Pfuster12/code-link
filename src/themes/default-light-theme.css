@@ -27,7 +27,7 @@ Syntax tokens theme.
 
 */
 
-.default-text {
+.token {
     line-height: 1.4;
     font-size: 14px;
     font-family: 'consolas';

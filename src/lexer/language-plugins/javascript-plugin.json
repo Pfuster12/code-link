@@ -2,9 +2,17 @@
     "id": "javascript",
     "patterns": ["function_expression"],
     "lang_features": {
+        "punctuation": {
+            "match": "\\W",
+            "id": "punctuation" 
+        },
         "whitespace": {
             "match": "\\s",
-            "id": "whitespace"
+            "id": ""
+        },
+        "function": {
+            "match": "\\b[a-z][\\w]+?(?=\\()\\b",
+            "id": "function"
         },
         "paren_begin": {
             "match": "\\(",
@@ -13,14 +21,6 @@
         "paren_end": {
             "match": "\\)",
             "id": "punctuation.paren.close"
-        },
-        "bracket_expression": {
-            "match": "(?<={).*(?=})",
-            "id": "expression.bracket"
-        },
-        "paren_expression": {
-            "match": "(?<=\\().*(?=\\))",
-            "id": "expression.paren"
         },
         "bracket_begin": {
             "match": "\\{",
@@ -35,7 +35,7 @@
             "id": "keyword"
         },
         "number": {
-            "match": "\\b\\d+\\b",
+            "match": "\\b\\d+?\\b",
             "id": "number"
         },
         "variable": {
@@ -45,10 +45,6 @@
         "object": {
             "match": "\\b[A-Z]([\\w]+)?",
             "id": "object"
-        },
-        "function": {
-            "match": "\\b[a-z][\\w]+(?=\\()\\b",
-            "id": "function"
         },
         "operator": {
             "match": "\\=|\\+|\\-|\\*|\\/|\\%|\\+\\+|\\-\\\\\\\\-|\\+\\=|\\-\\=|\\*\\=|\\/\\=|\\%\\=|\\=\\=|\\=\\=\\=|\\!\\=|\\!\\=\\=|\\>|\\<|\\>\\=|\\<\\=|\\?|\\:|\\&\\&|\\|\\||\\!|\\&|\\||\\~|\\^|\\<\\<|\\>\\>",
