@@ -54,3 +54,15 @@ Syntax tokens theme.
 .number {
     color: rebeccapurple;
 }
+
+.line-comment {
+    color: grey
+}
+
+.string {
+    color: greenyellow
+}
+
+.template {
+    color: green
+}
