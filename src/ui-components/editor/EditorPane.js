@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
-import Gutter from './Gutter';
+import Gutter from './gutter/Gutter';
 import { ThemeContext } from '../../theme/theme-context'
 import TextEditor from './TextEditor';
 import PluginReader from '../../lexer/PluginReader';
 import Chopstring from '../../lexer/chopstring';
+import Line from './Line';
 
 /**
  * Editor window handling text input and displaying code text. Displays a code editor
@@ -27,40 +28,34 @@ export default function EditorPane() {
      */
     const [textEditor, setTextEditor] = useState({
         plugin: {},
-        value: "function triple(param1: String) {\n    const x = 101 + param1\n}",
-        tokens: [],
-        selStart: 0,
-        selEnd: 0
+        lines: []
     })
-
-    /**
-     * Plugin reader to parse the language plugin.
-     */
-    const pluginReader = PluginReader()
-
-    /**
-     * Tokeniser library chopstring.js
-     */
-    const chopstring = Chopstring()
 
     /**
      * Read the current selected language plugin to parse the text.
      */
     useEffect(() => {
         console.log('Startup Editor Pane. Reading plugin...')
+
+        /**
+         * Tokeniser library chopstring.js
+         */
+        const chopstring = Chopstring()
+        
+        /**
+         * Plugin reader to parse the language plugin.
+         */
+        const pluginReader = PluginReader()
+
         // read the js plugin,
         pluginReader.readPlugin('./src/lexer/language-plugins/javascript-plugin.json')
             .then(result => {
                 console.log(result)
-                const lines = chopstring.splitLines(textEditor.value)
-                const tokens = chopstring.applyPatterns(lines[0], result)
+                const lines = chopstring.splitLines('// A comment "has been" made\nfunction triple(param1: String) {\n    const x = 101 + param1 + "Hey now " + 42;\n}')
                 // set the text editor state,
                 setTextEditor({
                     plugin: result,
-                    value: textEditor.value,
-                    tokens:  textEditor.tokens,
-                    selStart: textEditor.selStart,
-                    selEnd: textEditor.selEnd
+                    lines: lines
                 })
             })
             .catch(error => {
@@ -70,28 +65,26 @@ export default function EditorPane() {
     [])
 
     /**
-     * Handles the text area change event setting it to state.
-     * @param {React.SyntheticEvent} event JSX event.
+     * Generate an array of {@link Line} components with end of line state for
+     * multi-line features.
+     * @param {Array<String>} lines 
      */
-    function onChange(event) {
-        // get the new tokens,
-        const tokens = chopstring.applyPatterns(event.currentTarget.value, textEditor.plugin)
-        // set the text editor state,
-        setTextEditor({
-            plugin: textEditor.plugin,
-            value: event.currentTarget.value,
-            tokens:  textEditor.tokens,
-            selStart: textEditor.selStart,
-            selEnd: textEditor.selEnd
+    function generateLines(lines: Array<String>): Array<Line> {
+        var endOfLineState = ""
+        const lineList = lines.map((line, index, stringList) => {
+            return <Line key={line + index}
+                        line={line} 
+                        plugin={textEditor.plugin}/>
         })
+
+        return lineList
     }
 
     return (
         <div className="editor-pane">
             {/* Pass the text value to the gutter. */}
-            <Gutter text={textEditor.value}/>
-            <TextEditor textEditor={textEditor}
-                onChange={onChange}/>
+            <Gutter lines={textEditor.lines}/>
+            <TextEditor lines={generateLines(textEditor.lines)}/>
         </div>
     )
 }

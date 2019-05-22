@@ -1,8 +1,10 @@
+// @flow
+
 import React, { useState, useContext } from 'react';
-import Gutter from './Gutter';
+import Gutter from './gutter/Gutter';
 import { ThemeContext } from '../../theme/theme-context'
-import LineGenerator from './LineGenerator';
 import Chopstring from '../../lexer/chopstring';
+import Line from './Line';
 
 /**
  * Editor handling text input and displaying code text. Displays a code editor
@@ -23,35 +25,26 @@ export default function TextEditor(props) {
      var textArea = React.createRef()
 
     /**
-     * Text area Editor state object passed by parent {@link EditorPane} stores
-     * the current value and the selection range of the text.
+     * The {@link Line} array to display.
      */
-    const textEditor = props.textEditor
-
-    /**
-     * Text area onChange callback from the parent {@link EditorPane} component
-     * to change the state object.
-     * Passed to this TextEditor's <textarea/> onChange callback.
-     */
-    const onChange = props.onChange
+    const lines = props.lines
 
     /**
      * onClick text editor to focus on the text area always.
      * @param {React.SyntheticEvent} event 
      */
     function onClick(event) {
-        //textArea.focus()
+        textArea.focus()
     }
 
     return (
         <div className="text-editor text-editor-theme" 
             onClick={onClick}>
-            <LineGenerator lines={Chopstring().splitLines(textEditor.value)}
-                plugin={textEditor.plugin}/>
-            <textarea className="token"
+            <div className="line-generator">
+                { lines }
+            </div>
+            <textarea className="text-input token"
                 ref={ ref => textArea = ref}
-                onChange={onChange}
-                value={textEditor.value}
                 wrap="off"/>
         </div>
     )

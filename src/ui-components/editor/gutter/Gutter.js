@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import LineNumber from './LineNumber';
-import { ThemeContext } from '../../theme/theme-context'
+import { ThemeContext } from '../../../theme/theme-context'
 
 /**
  * Handles the Gutter for the code {@link Editor}, displaying the line 
@@ -15,14 +15,8 @@ export default function Gutter(props) {
      */
     const [theme, setTheme] = useContext(ThemeContext)
 
-    /**
-     * A new-line separator RegEx for any platform.
-     * @see RegExp
-     */
-    const lineRegex = new RegExp('\r|\r\n|\n')
-
     // split the lines from the text with the regex,
-    const lines = props.text.split(lineRegex)
+    const lines = props.lines
 
     return (
         <div className="gutter gutter-theme">

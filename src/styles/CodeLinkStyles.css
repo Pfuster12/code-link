@@ -9,15 +9,11 @@ main {
 }
 
 textarea {
-    position: absolute;
     resize: none;
     border-style: none;
     border-color: transparent;
     outline: none;
     border: none;
-    width: 1px;
-    height: 1px;
-    padding: 0;
 }
 
 h1 {
@@ -38,6 +34,13 @@ h1 {
 
 #second-pane {
     width: calc(80%)
+}
+
+.text-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
 }
 
 .gutter {
@@ -72,7 +75,8 @@ h1 {
     display: flex;
     flex: 1;
     flex-direction: column;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     cursor: text
 }
 

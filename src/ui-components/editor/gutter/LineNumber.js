@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { ThemeContext } from '../../theme/theme-context'
+import { ThemeContext } from '../../../theme/theme-context'
 
 /**
  * Component representing the line number in the gutter.

@@ -1,7 +1,7 @@
 {
     "id": "javascript",
     "patterns": ["function_expression"],
-    "lang_features": {
+    "features": {
         "punctuation": {
             "match": "\\W",
             "id": "punctuation" 
@@ -11,7 +11,7 @@
             "id": ""
         },
         "function": {
-            "match": "\\b[a-z][\\w]+?(?=\\()\\b",
+            "match": "\\b[a-z][\\w]*?(?=\\()\\b",
             "id": "function"
         },
         "paren_begin": {
@@ -49,6 +49,22 @@
         "operator": {
             "match": "\\=|\\+|\\-|\\*|\\/|\\%|\\+\\+|\\-\\\\\\\\-|\\+\\=|\\-\\=|\\*\\=|\\/\\=|\\%\\=|\\=\\=|\\=\\=\\=|\\!\\=|\\!\\=\\=|\\>|\\<|\\>\\=|\\<\\=|\\?|\\:|\\&\\&|\\|\\||\\!|\\&|\\||\\~|\\^|\\<\\<|\\>\\>",
             "id": "operator"
+        }
+    },
+    "features_multi": {
+        "string_template": {
+            "match": {
+                "start": "\"",
+                "end": "\""
+            },
+            "id": "string.template"
+        },
+        "line_comment": {
+            "match": {
+                "start": "\/\/",
+                "end": "\\n"
+            },
+            "id": "linecomment"
         }
     },
     "keywords": [
