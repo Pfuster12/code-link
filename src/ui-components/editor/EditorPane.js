@@ -51,7 +51,7 @@ export default function EditorPane() {
         pluginReader.readPlugin('./src/lexer/language-plugins/javascript-plugin.json')
             .then(result => {
                 console.log(result)
-                const lines = chopstring.splitLines('// A comment "has been" made\nfunction triple(param1: String) {\n    const x = 101 + param1 + "Hey now " + 42;\n}')
+                const lines = chopstring.splitLines('// A comment "has been" made\nfunction triple(param1: String) { // and why not?\n    const x = 101 +param1 + \'Hey now \'+  `Dont do it` // A comment + 42;\n    "Why tho?"\n}')
                 // set the text editor state,
                 setTextEditor({
                     plugin: result,

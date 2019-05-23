@@ -59,10 +59,18 @@ Syntax tokens theme.
     color: grey
 }
 
-.string {
-    color: greenyellow
+.string-template {
+    color: green
 }
 
-.template {
+.string-literal {
+    color: yellowgreen
+}
+
+.template-literal {
+    color: seagreen
+}
+
+.incomplete-string-template {
     color: green
 }

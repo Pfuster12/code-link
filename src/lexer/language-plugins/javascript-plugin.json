@@ -49,21 +49,25 @@
         "operator": {
             "match": "\\=|\\+|\\-|\\*|\\/|\\%|\\+\\+|\\-\\\\\\\\-|\\+\\=|\\-\\=|\\*\\=|\\/\\=|\\%\\=|\\=\\=|\\=\\=\\=|\\!\\=|\\!\\=\\=|\\>|\\<|\\>\\=|\\<\\=|\\?|\\:|\\&\\&|\\|\\||\\!|\\&|\\||\\~|\\^|\\<\\<|\\>\\>",
             "id": "operator"
-        }
-    },
-    "features_multi": {
+        },
+        "newline": {
+            "match": "\\n",
+            "id": "newline"
+        },
         "string_template": {
-            "match": {
-                "start": "\"",
-                "end": "\""
-            },
-            "id": "string.template"
+            "match": "\".+?\"",
+            "id": "string-template"
+        },
+        "string_literal": {
+            "match": "\\'.+?\\'",
+            "id": "string-literal"
+        },
+        "template_literal": {
+            "match": "\\`.+?\\`",
+            "id": "template-literal"
         },
         "line_comment": {
-            "match": {
-                "start": "\/\/",
-                "end": "\\n"
-            },
+            "match": "\/\/.+?\\n",
             "id": "line-comment"
         }
     },
