@@ -8,69 +8,123 @@ more custom themes can be saved for use.
 */
 
 /*
-
+------------------------------------------
 Editor Theme
-
+------------------------------------------
 */
 
+/*
+    Theme for the text editor pane.
+*/
 .text-editor-theme {
     background-color: #F8F8F8;
 }
 
+/*
+    Theme for the gutter.
+*/
 .gutter-theme {
     background-color: #F8F8F8;
 }
 
 /*
+    Line height theme.
+*/
+.lineheight-theme {
+    height: 19px;
+}
 
-Syntax tokens theme.
+/*
+    Theme for the text editor caret.
+*/
+.caret-theme {
+    background-color: red
+}
 
+/*
+------------------------------------------
+ Syntax tokens theme.
+------------------------------------------
 */
 
+/*
+    General token theme.
+*/
 .token {
-    line-height: 1.4;
+    color: black;
+    height: 19px;
     font-size: 14px;
     font-family: 'consolas';
 }
 
+/*
+    Keyword token theme.
+*/
 .keyword {
     color: royalblue;
     font-weight: bold;
 }
 
+/*
+    Object token theme.
+*/
 .object {
     color: darkcyan
 }
 
+/*
+    Function identifier token theme.
+*/
 .function {
     color: palevioletred;
 }
 
+/*
+    An operator (e.g. +, - , /) token theme.
+*/
 .operator {
     color: coral;
     font-weight: bold
 }
 
+/*
+    Numeric token theme.
+*/
 .number {
     color: rebeccapurple;
 }
 
+/*
+    Line comment token theme.
+*/
 .line-comment {
     color: grey
 }
 
+/*
+    String double quotes token theme.
+*/
 .string-template {
     color: green
 }
 
+/*
+    String single quotes token theme.
+*/
 .string-literal {
     color: yellowgreen
 }
 
+/*
+    String back tick token theme.
+*/
 .template-literal {
     color: seagreen
 }
 
+/*
+    Incomplete string double quotes token theme.
+*/
 .incomplete-string-template {
     color: green
 }

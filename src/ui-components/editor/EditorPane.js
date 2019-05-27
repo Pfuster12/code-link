@@ -51,7 +51,7 @@ export default function EditorPane() {
         pluginReader.readPlugin('./src/lexer/language-plugins/javascript-plugin.json')
             .then(result => {
                 console.log(result)
-                const lines = chopstring.splitLines('// A comment "has been" made\nfunction triple(param1: String) { // and why not?\n    const x = 101 +param1 + \'Hey now \'+  `Dont do it` // A comment + 42;\n    "Why tho?"\n}')
+                const lines = chopstring.splitLines('// A comment "has been" made\nfunction \'But lwhayyy\' triple(param1: String) { // and why not?\n    const x = 101 +param1 + \'Hey \\\' now \'+  `Dont do it` // A comment + 42;\n    "Why tho?"\n}')
                 // set the text editor state,
                 setTextEditor({
                     plugin: result,
@@ -64,27 +64,11 @@ export default function EditorPane() {
     },
     [])
 
-    /**
-     * Generate an array of {@link Line} components with end of line state for
-     * multi-line features.
-     * @param {Array<String>} lines 
-     */
-    function generateLines(lines: Array<String>): Array<Line> {
-        var endOfLineState = ""
-        const lineList = lines.map((line, index, stringList) => {
-            return <Line key={line + index}
-                        line={line} 
-                        plugin={textEditor.plugin}/>
-        })
-
-        return lineList
-    }
-
     return (
         <div className="editor-pane">
             {/* Pass the text value to the gutter. */}
             <Gutter lines={textEditor.lines}/>
-            <TextEditor lines={generateLines(textEditor.lines)}/>
+            <TextEditor textEditor={textEditor}/>
         </div>
     )
 }

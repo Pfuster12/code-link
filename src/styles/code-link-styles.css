@@ -110,3 +110,8 @@ h1 {
 .line-number:hover {
     opacity: 1;
 }
+
+.caret {
+    position: absolute;
+    width: 2px;
+}

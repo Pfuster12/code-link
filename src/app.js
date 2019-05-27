@@ -8,7 +8,7 @@ import EditorPane from './ui-components/editor/EditorPane';
  * Load the Code Link private styles file. These are not user-facing customisable styles,
  * but essential, under-the-hood styles for the app to work properly.
  */
-import './styles/CodeLinkStyles.css'
+import './styles/code-link-styles.css'
 
 /**
  * This is the entry point of this React Electron Editor Program.

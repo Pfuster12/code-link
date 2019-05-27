@@ -5,6 +5,7 @@ import Gutter from './gutter/Gutter';
 import { ThemeContext } from '../../theme/theme-context'
 import Chopstring from '../../lexer/chopstring';
 import Line from './Line';
+import Caret from './Caret';
 
 /**
  * Editor handling text input and displaying code text. Displays a code editor
@@ -20,6 +21,17 @@ export default function TextEditor(props) {
     const [theme, setTheme] = useContext(ThemeContext)
 
      /**
+     * The caret position state.
+     * @see React
+     */
+    const [caret, setCaret] = useState({
+        pos: {
+            x: 0,
+            y: 0
+        }
+    })
+
+     /**
       * A Reference to the text area html element.
       */
      var textArea = React.createRef()
@@ -27,7 +39,33 @@ export default function TextEditor(props) {
     /**
      * The {@link Line} array to display.
      */
-    const lines = props.lines
+    const textEditor = props.textEditor
+
+    /**
+     * Handles a line selection change.
+     */
+    function onLineSelection(position) {
+        setCaret({
+            pos: position
+        })
+    }
+
+    /**
+     * Generate an array of {@link Line} components with end of line state for
+     * multi-line features.
+     * @param {Array<String>} lines 
+     */
+    function generateLines(lines: Array<String>): Array<Line> {
+        var endOfLineState = ""
+        const lineList = lines.map((line, index, stringList) => {
+            return <Line key={line + index}
+                        onSelect={onLineSelection}
+                        line={line} 
+                        plugin={textEditor.plugin}/>
+        })
+
+        return lineList
+    }
 
     /**
      * onClick text editor to focus on the text area always.
@@ -41,11 +79,12 @@ export default function TextEditor(props) {
         <div className="text-editor text-editor-theme" 
             onClick={onClick}>
             <div className="line-generator">
-                { lines }
+                { generateLines(textEditor.lines) }
             </div>
             <textarea className="text-input token"
                 ref={ ref => textArea = ref}
                 wrap="off"/>
+            <Caret position={caret.pos}/>
         </div>
     )
 }

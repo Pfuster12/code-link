@@ -25,3 +25,7 @@ export default function Gutter(props) {
         </div>
     )
 }
+
+Gutter.defaultProps = {
+    lines: [0]
+}
