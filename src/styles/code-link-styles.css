@@ -85,6 +85,7 @@ h1 {
     flex: 0 0 auto;
     flex-direction: column;
     white-space: pre;
+    z-index: 1;
 }
 
 .token-generator {
@@ -114,4 +115,8 @@ h1 {
 .caret {
     position: absolute;
     width: 2px;
+}
+
+.selection {
+    position: absolute;
 }

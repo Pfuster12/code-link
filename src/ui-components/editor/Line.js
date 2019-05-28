@@ -21,11 +21,6 @@ export default function Line(props) {
     /**
      * The string to generate highlighted tokens.
      */
-    const onSelect = props.onSelect
-
-    /**
-     * The string to generate highlighted tokens.
-     */
     const line = props.line
 
     /**
@@ -49,29 +44,13 @@ export default function Line(props) {
     console.log('Spans are', spans)
 
     /**
-     * Handles the mouse up event on the Line component.
-     * @param {React.SyntheticEvent} event 
-     */
-    function onLineMouseUp(event) {
-        // grab the selection rectangle,
-        const selRect = window.getSelection().getRangeAt(0).getBoundingClientRect()
-        console.log(selRect)
-
-        onSelect({
-            y: selRect.y,
-            x: selRect.x
-        })
-    }
-
-    /**
      * The App-wide context reference.
      * @see React
      */
     const [theme, setTheme] = useContext(ThemeContext)
 
     return (
-        <div className="token-generator"
-            onMouseUp={onLineMouseUp}>
+        <div className="token-generator">
             {
                 spans.map((span, index) => <span key={tokens[index].lastIndex} className={'token '+ tokens[index].id.replace(".", " ").trim()}>{span}</span>)
             }
