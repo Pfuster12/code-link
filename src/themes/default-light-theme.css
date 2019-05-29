@@ -34,10 +34,6 @@ Editor Theme
     height: 19px;
 }
 
-.selection-theme {
-    background-color: yellow
-}
-
 /*
     Theme for the text editor caret.
 */
@@ -51,12 +47,20 @@ Editor Theme
 ------------------------------------------
 */
 
+::selection {
+    background: transparent;
+}
+
+.selection {
+    background: yellow;
+}
+
 /*
     General token theme.
 */
 .token {
     color: black;
-    height: 19px;
+    line-height: 19px;
     font-size: 14px;
     font-family: 'consolas';
 }

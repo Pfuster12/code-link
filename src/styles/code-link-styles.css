@@ -77,7 +77,7 @@ h1 {
     flex-direction: column;
     overflow-x: auto;
     overflow-y: hidden;
-    cursor: text
+    cursor: text;
 }
 
 .line-generator {

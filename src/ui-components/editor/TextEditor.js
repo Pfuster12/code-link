@@ -21,8 +21,14 @@ export default function TextEditor(props) {
      */
     const [theme, setTheme] = useContext(ThemeContext)
 
+    /**
+     * The selection state.
+     * @see React
+     */
+    const [isSelecting, setIsSelecting] = useState(false)
+
      /**
-     * The caret position state.
+     * The selection position state.
      * @see React
      */
     const [selection, setSelection] = useState({
@@ -33,12 +39,7 @@ export default function TextEditor(props) {
             }
         },
         selection: {
-            lines: 1,
-            selPos: {
-                x: 0,
-                y: 0,
-                width: 0
-            }
+            selRects: []
         }
     })
 
@@ -69,7 +70,7 @@ export default function TextEditor(props) {
     }
 
     /**
-     * Handles the mouse up event on the Line component.
+     * Handles the mouse up event on the text editor.
      * @param {React.SyntheticEvent} event 
      */
     function onMouseUp(event) {
@@ -82,22 +83,11 @@ export default function TextEditor(props) {
         console.log(sel.getClientRects())
 
         // figure out if the selection spans more than one line,
-        const lines = selRect.height / sel.startContainer.parentElement.clientHeight
-        console.log(lines)
-        // grab the last rect in the client rects array to find the x pos of the end of selection,
-        const lastRect = clientRects[clientRects.length - 1]
-        const lastLineEnd = lastRect.left + lastRect.width
-
-        // calculate the selection highlight position and dimension,
-        const selPos = {
-            // the x position is the start containers offset left from the parent container,
-            x: selRect.left,
-            // the y position is the start containers offset top from the parent container,
-            y: selRect.top,
-            // to find the width we find the difference between the end span start position 
-            // and the start span start position, plus the width of the end span
-            width: selRect.width
-        }
+        var lineCount = selRect.height / sel.startContainer.parentElement.clientHeight
+        // round since height differs slighlt sometimes?
+        lineCount = Math.round(lineCount)
+        console.log(lineCount)
+        
 
         // set state,
         setSelection({
@@ -108,10 +98,45 @@ export default function TextEditor(props) {
                 }
             },
             selection: {
-                lines: Math.round(lines),
-                selPos: selPos,
+                selRects: Object.values(clientRects)
             }
         })
+        setIsSelecting(false)
+    }
+
+    /**
+     * Handles the mouse down event on the text editor.
+     * @param {React.SyntheticEvent} event 
+     */
+    function onMouseDown(event) {
+        setIsSelecting(true)
+    }
+
+    /**
+     * Handles the mouse move event on the text editor.
+     * @param {React.SyntheticEvent} event 
+     */
+    function onMouseMove(event) {
+        if (isSelecting) {
+            const sel = window.getSelection().getRangeAt(0)
+            console.log(sel);
+            // grab the selection rectangle,
+            const selRect = sel.getBoundingClientRect()
+            const clientRects = sel.getClientRects()
+    
+            // set state,
+            setSelection({
+                caret: {
+                    pos: {
+                        y: selRect.y,
+                        x: selRect.x
+                    }
+                },
+                selection: {
+                    selRects: Object.values(clientRects)
+                }
+            })
+        }
     }
 
     /**
@@ -125,8 +150,10 @@ export default function TextEditor(props) {
     return (
         <div className="text-editor text-editor-theme" 
             onClick={onClick}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}>
-            <Selection selection={selection.selection}/>
+            <Selection selection={selection.selection.selRects}/>
             <div className="line-generator">
                 { generateLines(textEditor.lines) }
             </div>

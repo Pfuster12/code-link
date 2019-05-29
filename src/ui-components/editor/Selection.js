@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 
 /**
@@ -13,13 +15,13 @@ export default function Selection(props) {
 
     // return views,
     return (
-        <>
+        <div className="selection-parent">
             {
-                new Array(selection.lines).fill(selection.lines).map(line => {
-                    return <div style={{width: selection.selPos.width, top: selection.selPos.y, left: selection.selPos.x}}
+                selection.map((rect: ClientRect) => {
+                    return <div style={{width: rect.width, top: rect.top, left: rect.left}}
                         className="selection selection-theme lineheight-theme"/>
                 })
             }
-        </>
+        </div>
     )
 }
