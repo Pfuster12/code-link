@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { ThemeContext } from '../../theme/theme-context'
 import Chopstring from '../../lexer/chopstring';
 
@@ -13,35 +13,40 @@ export default function Line(props) {
     /**
      * State for the line selection.
      */
-    const [lineState, setLineState] = useState({
-        selStart: 0,
-        selEnd: 0
+    const [line, setLine] = useState({
+        tokens: [],
+        spans: []
     })
 
     /**
      * The string to generate highlighted tokens.
      */
-    const line = props.line
+    const string = props.line
 
     /**
      * The language plugin to tokenise by.
      */
     const plugin = props.plugin
 
-    /**
-     * Instance of the tokeniser library.
-     */
-    const chopstring = Chopstring()
+    useEffect(() => {
+        /**
+         * Instance of the tokeniser library.
+         */
+        const chopstring = Chopstring()
 
-    // get the language plugin tokens from the line,
-    const tokens = plugin.features !== undefined ? chopstring.applyTokenPatterns(line, plugin) : []
+        // get the language plugin tokens from the line,
+        const tokens = plugin.features !== undefined ? chopstring.applyTokenPatterns(string, plugin) : []
 
-    // split the line by spans according to the language plugin tokens,
-    const spans = tokens.map(token => {
-        const span = line.substring(token.startIndex, token.lastIndex)
-        return span
-    })
-    console.log('Spans are', spans)
+        // split the line by spans according to the language plugin tokens,
+        setLine({
+            tokens: tokens,
+            spans: tokens.map(token => {
+                const span = string.substring(token.startIndex, token.lastIndex)
+                return span
+            })
+        })
+    },
+    [])
 
     /**
      * The App-wide context reference.
@@ -52,7 +57,7 @@ export default function Line(props) {
     return (
         <div className="token-generator">
             {
-                spans.map((span, index) => <span key={tokens[index].lastIndex} className={'token '+ tokens[index].id.replace(".", " ").trim()}>{span}</span>)
+                line.spans.map((span, index) => <span key={line.tokens[index].lastIndex} className={'token '+ line.tokens[index].id.replace(".", " ").trim()}>{span}</span>)
             }
         </div>
     )

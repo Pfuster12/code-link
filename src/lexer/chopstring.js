@@ -72,15 +72,19 @@ const Chopstring = () => {
             return accumulator
         }, {}))
 
+        // sort by index,
         result.sort((a, b) => a.startIndex - b.startIndex)
 
+        // reduce tokens that are included within a multi span token,
         const reducedTokens = Array()
         var previousToken = {
             startIndex: 0,
             lastIndex: 0
         }
         result.forEach(token => {
+            // if the last index is greater than the previous tokens last index,
             if (token.lastIndex > previousToken.lastIndex) {
+                // add this token,
                 reducedTokens.push(token)
                 previousToken = token
             }

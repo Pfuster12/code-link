@@ -78,7 +78,6 @@ export default function TextEditor(props) {
         console.log(sel);
         // grab the selection rectangle,
         const selRect = sel.getBoundingClientRect()
-        console.log(selRect)
         const clientRects = sel.getClientRects()
         console.log(sel.getClientRects())
 
@@ -86,15 +85,13 @@ export default function TextEditor(props) {
         var lineCount = selRect.height / sel.startContainer.parentElement.clientHeight
         // round since height differs slighlt sometimes?
         lineCount = Math.round(lineCount)
-        console.log(lineCount)
         
-
         // set state,
         setSelection({
             caret: {
                 pos: {
-                    y: selRect.y,
-                    x: selRect.x
+                    y: clientRects[0].y,
+                    x: clientRects[0].x
                 }
             },
             selection: {
@@ -120,16 +117,15 @@ export default function TextEditor(props) {
         if (isSelecting) {
             const sel = window.getSelection().getRangeAt(0)
             console.log(sel);
-            // grab the selection rectangle,
-            const selRect = sel.getBoundingClientRect()
+            // grab the selection rectangles,
             const clientRects = sel.getClientRects()
     
             // set state,
             setSelection({
                 caret: {
                     pos: {
-                        y: selRect.y,
-                        x: selRect.x
+                        y: clientRects[0].y,
+                        x: clientRects[0].x
                     }
                 },
                 selection: {
