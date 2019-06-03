@@ -74,8 +74,8 @@ export default function TextEditor(props) {
      * @param {React.SyntheticEvent} event 
      */
     function onMouseUp(event) {
+        window.getSelection().removeAllRanges()
         const sel = window.getSelection().getRangeAt(0)
-        console.log(sel);
         // grab the selection rectangle,
         const selRect = sel.getBoundingClientRect()
         const clientRects = sel.getClientRects()
@@ -119,6 +119,16 @@ export default function TextEditor(props) {
             console.log(sel);
             // grab the selection rectangles,
             const clientRects = sel.getClientRects()
+            const rectList = Object.values(clientRects)
+
+            // reduce the list of duplicates,
+            const reducedList = rectList.reduce((accumulator, currentRect) => {
+                accumulator[currentRect.left] = accumulator[currentRect.left] || {'top': currentRect.top, 'left' : currentRect.left, 'width': currentRect.width}
+                return accumulator
+            })
+
+            console.log(reducedList)
+        
     
             // set state,
             setSelection({
@@ -145,7 +155,6 @@ export default function TextEditor(props) {
 
     return (
         <div className="text-editor text-editor-theme" 
-            onClick={onClick}
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}>
