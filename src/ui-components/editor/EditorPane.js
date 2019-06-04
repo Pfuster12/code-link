@@ -64,11 +64,29 @@ export default function EditorPane() {
     },
     [])
 
+    /**
+     * Handles the text area text change from the text editor.
+     * @param event 
+     */
+    function onTextChange(event: React.SyntheticEvent) {
+        /**
+         * Tokeniser library chopstring.js
+         */
+        const chopstring = Chopstring()
+        
+        const lines = chopstring.splitLines(event.currentTarget.value)
+        // set the text editor state,
+        setTextEditor({
+            plugin: textEditor.plugin,
+            lines: lines
+        })
+    }
+
     return (
         <div className="editor-pane">
             {/* Pass the text value to the gutter. */}
             <Gutter lines={textEditor.lines}/>
-            <TextEditor textEditor={textEditor}/>
+            <TextEditor onTextChange={onTextChange} textEditor={textEditor}/>
         </div>
     )
 }

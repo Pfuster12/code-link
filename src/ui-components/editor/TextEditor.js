@@ -32,12 +32,7 @@ export default function TextEditor(props) {
      * @see React
      */
     const [selection, setSelection] = useState({
-        caret: {
-            pos: {
-                x: 0,
-                y: 0
-            }
-        },
+        caret: { pos: { x: 0, y: 0 } },
         selection: {
             selRects: []
         }
@@ -54,6 +49,11 @@ export default function TextEditor(props) {
     const textEditor = props.textEditor
 
     /**
+     * on Text changed callback for the text area.
+     */
+    const onTextChange = props.onTextChange
+
+    /**
      * Generate an array of {@link Line} components with end of line state for
      * multi-line features.
      * @param {Array<String>} lines 
@@ -61,7 +61,7 @@ export default function TextEditor(props) {
     function generateLines(lines: Array<String>): Array<Line> {
         var endOfLineState = ""
         const lineList = lines.map((line, index, stringList) => {
-            return <Line key={line + index}
+            return <Line key={index.toString() + line}
                         line={line} 
                         plugin={textEditor.plugin}/>
         })
@@ -70,43 +70,12 @@ export default function TextEditor(props) {
     }
 
     /**
-     * Handles the mouse up event on the text editor.
-     * @param {React.SyntheticEvent} event 
-     */
-    function onMouseUp(event) {
-        window.getSelection().removeAllRanges()
-        const sel = window.getSelection().getRangeAt(0)
-        // grab the selection rectangle,
-        const selRect = sel.getBoundingClientRect()
-        const clientRects = sel.getClientRects()
-        console.log(sel.getClientRects())
-
-        // figure out if the selection spans more than one line,
-        var lineCount = selRect.height / sel.startContainer.parentElement.clientHeight
-        // round since height differs slighlt sometimes?
-        lineCount = Math.round(lineCount)
-        
-        // set state,
-        setSelection({
-            caret: {
-                pos: {
-                    y: clientRects[0].y,
-                    x: clientRects[0].x
-                }
-            },
-            selection: {
-                selRects: Object.values(clientRects)
-            }
-        })
-        setIsSelecting(false)
-    }
-
-    /**
      * Handles the mouse down event on the text editor.
      * @param {React.SyntheticEvent} event 
      */
     function onMouseDown(event) {
         setIsSelecting(true)
+        window.getSelection().removeAllRanges()
     }
 
     /**
@@ -115,42 +84,59 @@ export default function TextEditor(props) {
      */
     function onMouseMove(event) {
         if (isSelecting) {
-            const sel = window.getSelection().getRangeAt(0)
-            console.log(sel);
-            // grab the selection rectangles,
-            const clientRects = sel.getClientRects()
-            const rectList = Object.values(clientRects)
-
-            // reduce the list of duplicates,
-            const reducedList = rectList.reduce((accumulator, currentRect) => {
-                accumulator[currentRect.left] = accumulator[currentRect.left] || {'top': currentRect.top, 'left' : currentRect.left, 'width': currentRect.width}
-                return accumulator
-            })
-
-            console.log(reducedList)
+            try {
+                const sel = window.getSelection().getRangeAt(0)
+                // grab the selection rectangles,
+                const clientRects = sel.getClientRects()
+                const rectList = Object.values(clientRects)
         
-    
+                // set state,
+                setSelection({
+                    caret: {
+                        pos: { y: clientRects[0].y, x: clientRects[0].x - 285 } 
+                    },
+                    selection: {
+                        selRects: rectList
+                    }
+                })
+            } catch (exception) {
+                setIsSelecting(false)
+            }
+        }
+    }
+
+    /**
+     * Handles the mouse up event on the text editor.
+     * @param {React.SyntheticEvent} event 
+     */
+    function onMouseUp(event) {
+        try {
+            const sel = window.getSelection().getRangeAt(0)
+            // grab the selection rectangle,
+            const selRect = sel.getBoundingClientRect()
+            const clientRects = sel.getClientRects()
+            console.log(sel.getClientRects())
+
+            // figure out if the selection spans more than one line,
+            var lineCount = selRect.height / sel.startContainer.parentElement.clientHeight
+            // round since height differs slighlt sometimes?
+            lineCount = Math.round(lineCount)
+            
             // set state,
             setSelection({
                 caret: {
-                    pos: {
-                        y: clientRects[0].y,
-                        x: clientRects[0].x
-                    }
+                    pos: { y: clientRects[0].y, x: clientRects[0].x - 285 } 
                 },
                 selection: {
                     selRects: Object.values(clientRects)
                 }
             })
+            setIsSelecting(false)
+            textArea.current.focus()
+        } catch (exception) {
+            setIsSelecting(false)
+            textArea.current.focus()
         }
-    }
-
-    /**
-     * onClick text editor to focus on the text area always.
-     * @param {React.SyntheticEvent} event 
-     */
-    function onClick(event) {
-        //textArea.focus()
     }
 
     return (
@@ -158,14 +144,17 @@ export default function TextEditor(props) {
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
             onMouseUp={onMouseUp}>
-            <Selection selection={selection.selection.selRects}/>
+            <div className="text-editor-overlays">
+                <Selection selection={selection.selection.selRects}/>
+                <Caret position={selection.caret.pos}/>
+            </div>
             <div className="line-generator">
                 { generateLines(textEditor.lines) }
             </div>
             <textarea className="text-input token"
-                ref={ ref => textArea = ref}
-                wrap="off"/>
-            <Caret position={selection.caret.pos}/>
+                wrap="off"
+                onChange={onTextChange}
+                ref={textArea}/>
         </div>
     )
 }
