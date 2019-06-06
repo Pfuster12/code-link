@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Gutter from './gutter/Gutter';
-import { ThemeContext } from '../../theme/theme-context'
 import TextEditor from './TextEditor';
 import PluginReader from '../../lexer/PluginReader';
 import Chopstring from '../../lexer/chopstring';
@@ -15,15 +14,8 @@ import Line from './Line';
 export default function EditorPane() {
 
     /**
-     * The App-wide context reference.
-     * @see ThemeContext
-     * @see useContext
-     */
-    const [theme, setTheme] = useContext(ThemeContext)
-
-    /**
-     * Text area editText state object stores the current value and the
-     * selection range of the text.
+     * Text area editor state object stores the current language plugin and the
+     * current lines of text in the editor.
      * @see useState
      */
     const [textEditor, setTextEditor] = useState({
@@ -32,19 +24,15 @@ export default function EditorPane() {
     })
 
     /**
-     * Read the current selected language plugin to parse the text.
+     * Effect to read the current selected language plugin to parse the text.
      */
     useEffect(() => {
         console.log('Startup Editor Pane. Reading plugin...')
 
-        /**
-         * Tokeniser library chopstring.js
-         */
+        // tokeniser library chopstring.js
         const chopstring = Chopstring()
         
-        /**
-         * Plugin reader to parse the language plugin.
-         */
+        // plugin reader to parse the language plugin.
         const pluginReader = PluginReader()
 
         // read the js plugin,
@@ -65,15 +53,14 @@ export default function EditorPane() {
     [])
 
     /**
-     * Handles the text area text change from the text editor.
+     * Handles the text area value change from the text editor.
      * @param event 
      */
     function onTextChange(event: React.SyntheticEvent) {
-        /**
-         * Tokeniser library chopstring.js
-         */
+        // initialise the chopstring lib,
         const chopstring = Chopstring()
         
+        // split the text
         const lines = chopstring.splitLines(event.currentTarget.value)
         // set the text editor state,
         setTextEditor({
