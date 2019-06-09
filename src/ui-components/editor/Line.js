@@ -2,6 +2,7 @@
 
 import React, { useState, useContext, useLayoutEffect } from 'react';
 import Chopstring from '../../lexer/chopstring';
+import Token from "../../objects/text-editor/Token";
 
 /**
  * Generates a highlighted syntax line from the given line string value in the props
@@ -17,8 +18,8 @@ export default function Line(props) {
      * string spans of the text separated by the tokens to be classed and rendered.
      */
     const [line, setLine] = useState({
-        tokens: [],
-        spans: []
+        tokens: Array<Token>(),
+        spans: Array<String>()
     })
 
     /**
@@ -38,9 +39,7 @@ export default function Line(props) {
      * painting to screen to avoid flickering.
      */
     useLayoutEffect(() => {
-        /**
-         * Instance of the tokeniser library.
-         */
+        // tokeniser library.
         const chopstring = Chopstring()
 
         // get the language plugin tokens from the line,
@@ -50,7 +49,7 @@ export default function Line(props) {
         setLine({
             tokens: tokens,
             spans: tokens.map(token => {
-                return string.substring(token.startIndex, token.lastIndex)
+                return string.substring(token.startIndex, token.endIndex)
             })
         })
     },
@@ -60,8 +59,8 @@ export default function Line(props) {
         <div className="token-generator">
             {
                 // map the spans
-                line.spans.map((span, index) => <span key={line.tokens[index].lastIndex}
-                                                     className={'token '+ line.tokens[index].id.replace(".", " ").trim()}>{span}</span>)
+                line.spans.map((span, index) => {
+                return <span key={line.tokens[index].endIndex} className={'token '+ line.tokens[index].createClass()}>{span}</span>})
             }
         </div>
     )

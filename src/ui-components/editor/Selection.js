@@ -18,7 +18,7 @@ export default function Selection(props) {
         <div className="selection-parent">
             {
                 selection.map((rect: ClientRect, index) => {
-                    return <div key={`${rect.left}-${index}`} style={{width: rect.width, top: rect.top, left: rect.left - 285}}
+                    return <div key={`${rect.left}-${index}`} style={{width: rect.width, top: rect.top, left: rect.left}}
                                 className="selection selection-theme lineheight-theme"/>
                 })
             }

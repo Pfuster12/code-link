@@ -14,23 +14,30 @@ import Line from './Line';
 export default function EditorPane() {
 
     /**
-     * Text area editor state object stores the current language plugin and the
-     * current lines of text in the editor.
-     * @see useState
+     * Stores the current value of this file's text.
      */
-    const [textEditor, setTextEditor] = useState({
-        plugin: {},
-        lines: []
-    })
+    const [text, setText] = useState('')
+
+    /**
+     * Stores the current language plugin to parse this Editor's text.
+     */
+    const [plugin, setPlugin] = useState({})
+    
+    /**
+     * The tokeniser library chopstring.js
+     */
+    const chopstring = Chopstring()
+
+    /**
+     * A Reference to the text area html element.
+     */
+    var textArea = React.createRef()
 
     /**
      * Effect to read the current selected language plugin to parse the text.
      */
     useEffect(() => {
         console.log('Startup Editor Pane. Reading plugin...')
-
-        // tokeniser library chopstring.js
-        const chopstring = Chopstring()
         
         // plugin reader to parse the language plugin.
         const pluginReader = PluginReader()
@@ -39,12 +46,9 @@ export default function EditorPane() {
         pluginReader.readPlugin('./src/lexer/language-plugins/javascript-plugin.json')
             .then(result => {
                 console.log(result)
-                const lines = chopstring.splitLines('// A comment "has been" made\nfunction \'But lwhayyy\' triple(param1: String) { // and why not?\n    const x = 101 +param1 + \'Hey \\\' now \'+  `Dont do it` // A comment + 42;\n    "Why tho?"\n}')
                 // set the text editor state,
-                setTextEditor({
-                    plugin: result,
-                    lines: lines
-                })
+                setPlugin(result)
+                setText('// A comment "has been" made\nfunction \'But lwhayyy\' triple(param1: String) { // and why not?\n    const x = 101 +param1 + \'Hey \\\' now \'+  `Dont do it` // A comment + 42;\n    "Why tho?"\n}')
             })
             .catch(error => {
                 console.log(error)
@@ -56,24 +60,23 @@ export default function EditorPane() {
      * Handles the text area value change from the text editor.
      * @param event 
      */
-    function onTextChange(event: React.SyntheticEvent) {
-        // initialise the chopstring lib,
-        const chopstring = Chopstring()
-        
-        // split the text
-        const lines = chopstring.splitLines(event.currentTarget.value)
+    function onTextChange(event: React.SyntheticEvent) {  
         // set the text editor state,
-        setTextEditor({
-            plugin: textEditor.plugin,
-            lines: lines
-        })
+        setText(event.currentTarget.value)
     }
 
     return (
         <div className="editor-pane">
             {/* Pass the text value to the gutter. */}
-            <Gutter lines={textEditor.lines}/>
-            <TextEditor onTextChange={onTextChange} textEditor={textEditor}/>
+            <Gutter lines={chopstring.splitLines(text)}/>
+            {/* Text editor handles displaying the text and selection */}
+            <TextEditor plugin={plugin} text={text} textAreaRef={textArea}/>
+            {/* Text area to take in user input. */}
+            <textarea className="text-input token"
+                wrap="off"
+                value={text}
+                onChange={onTextChange}
+                ref={textArea}/>
         </div>
     )
 }

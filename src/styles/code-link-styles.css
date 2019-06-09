@@ -43,14 +43,6 @@ h1 {
     padding: 0;
 }
 
-.gutter {
-    display: flex;
-    flex: 0 0 auto;
-    width: 60px;
-    flex-direction: column;
-    -webkit-user-select: none;
-}
-
 .row-split-pane {
     display: flex;
     flex: 1;
@@ -96,6 +88,18 @@ h1 {
     white-space: pre;
 }
 
+/*
+ * Gutter and line number.
+ */
+ 
+.gutter {
+    display: flex;
+    flex: 0 0 auto;
+    width: 60px;
+    flex-direction: column;
+    -webkit-user-select: none;
+}
+
 .line-number-parent {
     width: 100%;
 }
@@ -113,9 +117,17 @@ h1 {
     opacity: 1;
 }
 
+/*
+ * Selection and Caret styles.
+ */
+
 .caret {
     position: absolute;
     width: 2px;
+}
+
+.selection-parent {
+    
 }
 
 .selection {

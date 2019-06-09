@@ -1,3 +1,5 @@
+import Token from "../objects/text-editor/Token";
+
 // @flow
 
 /**
@@ -8,12 +10,6 @@ type LanguagePlugin = {
     features: Object,
     features_multi: Object,
     patterns: Array<string>
-}
-
-type Token = {
-    id: String,
-    startIndex?: Number,
-    lastIndex: Number
 }
 
 /**
@@ -51,24 +47,22 @@ const Chopstring = () => {
 
             // loop the match expression to get every match result,
             while ((matchResults = regex.exec(text)) !== null) {
-                tokens.push({
-                    id: feature.id,
-                    startIndex: regex.lastIndex - matchResults[0].length,
-                    lastIndex: regex.lastIndex
-                })
+                tokens.push(new Token(feature.id, regex.lastIndex - matchResults[0].length, regex.lastIndex))
             }
         })
 
         // sort by start index,
         tokens.sort((a, b) => a.startIndex - b.startIndex)
 
+        console.log(tokens)
+
         // make the object values into an array,
-        const result = Object.values(tokens.reduce((accumulator, {id, startIndex, lastIndex}) => {
+        const result = Object.values(tokens.reduce((accumulator, {id, startIndex, endIndex}) => {
             // assign the index to an existing value if it exists, or if the accumulator is undefined
             // create a new object with the id empty.
-            accumulator[lastIndex] = accumulator[lastIndex] || { startIndex, lastIndex, id: "" }
+            accumulator[endIndex] = accumulator[endIndex] || { startIndex, endIndex, id: "" }
             // assign the accumulator id the previous id if it exists and the current id,
-            accumulator[lastIndex].id = id + (accumulator[lastIndex].id ? (" " + accumulator[lastIndex].id) : "")
+            accumulator[endIndex].id = id + (accumulator[endIndex].id ? (" " + accumulator[endIndex].id) : "")
             return accumulator
         }, {}))
 
@@ -79,11 +73,11 @@ const Chopstring = () => {
         const reducedTokens = Array()
         var previousToken = {
             startIndex: 0,
-            lastIndex: 0
+            endIndex: 0
         }
         result.forEach(token => {
             // if the last index is greater than the previous tokens last index,
-            if (token.lastIndex > previousToken.lastIndex) {
+            if (token.endIndex > previousToken.endIndex) {
                 // add this token,
                 reducedTokens.push(token)
                 previousToken = token
@@ -91,10 +85,10 @@ const Chopstring = () => {
         })
 
           // make the object values into an array,
-          const reducedResult = Object.values(reducedTokens.reduce((accumulator, {id, startIndex, lastIndex}) => {
+          const reducedResult = Object.values(reducedTokens.reduce((accumulator, {id, startIndex, endIndex}) => {
             // assign the index to an existing value if it exists, or if the accumulator is undefined
             // create a new object with the id empty.
-            accumulator[startIndex] = accumulator[startIndex] ? (accumulator[startIndex].lastIndex < lastIndex ? { startIndex, lastIndex, id: "" } : accumulator[startIndex]) : { startIndex, lastIndex, id: "" }
+            accumulator[startIndex] = accumulator[startIndex] ? (accumulator[startIndex].endIndex < endIndex ? new Token("", startIndex, endIndex) : accumulator[startIndex]) : new Token("", startIndex, endIndex)
             // assign the accumulator id the previous id if it exists and the current id,
             accumulator[startIndex].id = id + (accumulator[startIndex].id ? (" " + accumulator[startIndex].id) : "")
             return accumulator

@@ -38,20 +38,30 @@ export default function TextEditor(props) {
         }
     })
 
-     /**
-      * A Reference to the text area html element.
-      */
-     var textArea = React.createRef()
+    /**
+     * The text to display in this editor.
+     */
+    const text = props.text
 
     /**
-     * The {@link Line} array to display.
+     * The {@link LanguagePlugin} to parse this text by.
      */
-    const textEditor = props.textEditor
+    const plugin = props.plugin
 
     /**
      * on Text changed callback for the text area.
      */
     const onTextChange = props.onTextChange
+
+    /**
+     * A Reference to the text area html element.
+     */
+    const textArea = props.textAreaRef
+
+    /**
+     * The tokeniser library chopstring.js
+     */
+    const chopstring = Chopstring()
 
     /**
      * Generate an array of {@link Line} components with end of line state for
@@ -63,7 +73,7 @@ export default function TextEditor(props) {
         const lineList = lines.map((line, index, stringList) => {
             return <Line key={index.toString() + line}
                         line={line} 
-                        plugin={textEditor.plugin}/>
+                        plugin={plugin}/>
         })
 
         return lineList
@@ -93,7 +103,7 @@ export default function TextEditor(props) {
                 // set state,
                 setSelection({
                     caret: {
-                        pos: { y: clientRects[0].y, x: clientRects[0].x - 285 } 
+                        pos: { y: clientRects[0].y, x: clientRects[0].x } 
                     },
                     selection: {
                         selRects: rectList
@@ -112,10 +122,10 @@ export default function TextEditor(props) {
     function onMouseUp(event) {
         try {
             const sel = window.getSelection().getRangeAt(0)
+            console.log(window.getSelection())
             // grab the selection rectangle,
             const selRect = sel.getBoundingClientRect()
             const clientRects = sel.getClientRects()
-            console.log(sel.getClientRects())
 
             // figure out if the selection spans more than one line,
             var lineCount = selRect.height / sel.startContainer.parentElement.clientHeight
@@ -125,7 +135,7 @@ export default function TextEditor(props) {
             // set state,
             setSelection({
                 caret: {
-                    pos: { y: clientRects[0].y, x: clientRects[0].x - 285 } 
+                    pos: { y: clientRects[0].y, x: clientRects[0].x } 
                 },
                 selection: {
                     selRects: Object.values(clientRects)
@@ -149,12 +159,13 @@ export default function TextEditor(props) {
                 <Caret position={selection.caret.pos}/>
             </div>
             <div className="line-generator">
-                { generateLines(textEditor.lines) }
+                { generateLines(chopstring.splitLines(text)) }
             </div>
-            <textarea className="text-input token"
-                wrap="off"
-                onChange={onTextChange}
-                ref={textArea}/>
         </div>
     )
+}
+
+TextEditor.defaultProps = {
+    plugin: {},
+    text: ''
 }

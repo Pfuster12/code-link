@@ -67,7 +67,7 @@
             "id": "template-literal"
         },
         "line_comment": {
-            "match": "\/\/.+?\\n",
+            "match": "\/\/.+",
             "id": "line-comment"
         }
     },
