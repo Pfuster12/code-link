@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import SplitPane from './ui-components/SplitPane';
-import { themes, ThemeContext } from './theme/theme-context'
 import EditorPane from './ui-components/editor/EditorPane';
 
 /**
@@ -16,22 +15,14 @@ import './styles/code-link-styles.css'
  */
 export default function App() {
 
-    /**
-     * A state variable for the App-wide theme. Default to the light theme.
-     */
-    const [theme, setTheme] = useState(themes.light)
-
     return (
         <>
-            {/* The context is passed to a Theme Context Provider app-wide. */}
-            <ThemeContext.Provider value={[theme, setTheme]}>
-                <main>
-                    <SplitPane>
-                        <h1>CL</h1>
-                        <EditorPane/>
-                    </SplitPane>
-                </main>
-            </ThemeContext.Provider>
+            <main>
+                <SplitPane>
+                    <h1>CL</h1>
+                    <EditorPane/>
+                </SplitPane>
+            </main>
         </>
     )
 }

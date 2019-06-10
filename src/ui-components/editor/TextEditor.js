@@ -2,7 +2,6 @@
 
 import React, { useState, useContext } from 'react';
 import Gutter from './gutter/Gutter';
-import { ThemeContext } from '../../theme/theme-context'
 import Chopstring from '../../lexer/chopstring';
 import Line from './Line';
 import Caret from './Caret';
@@ -14,12 +13,6 @@ import Selection from './Selection';
  * @see Gutter
  */
 export default function TextEditor(props) {
-
-    /**
-     * The App-wide context reference.
-     * @see React
-     */
-    const [theme, setTheme] = useContext(ThemeContext)
 
     /**
      * The selection state.

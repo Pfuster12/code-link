@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import LineNumber from './LineNumber';
-import { ThemeContext } from '../../../theme/theme-context'
 
 /**
  * Handles the Gutter for the code {@link Editor}, displaying the line 
@@ -8,12 +7,6 @@ import { ThemeContext } from '../../../theme/theme-context'
  * @see Editor
  */
 export default function Gutter(props) {
-
-    /**
-     * The App-wide context reference.
-     * @see React
-     */
-    const [theme, setTheme] = useContext(ThemeContext)
 
     // split the lines from the text with the regex,
     const lines = props.lines
