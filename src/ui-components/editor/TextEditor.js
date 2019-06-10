@@ -122,7 +122,7 @@ export default function TextEditor(props) {
     function onMouseUp(event) {
         try {
             const sel = window.getSelection().getRangeAt(0)
-            console.log(window.getSelection())
+            console.log(sel)
             // grab the selection rectangle,
             const selRect = sel.getBoundingClientRect()
             const clientRects = sel.getClientRects()
@@ -142,10 +142,10 @@ export default function TextEditor(props) {
                 }
             })
             setIsSelecting(false)
-            textArea.current.focus()
+            //textArea.current.focus()
         } catch (exception) {
             setIsSelecting(false)
-            textArea.current.focus()
+            //textArea.current.focus()
         }
     }
 
@@ -158,9 +158,9 @@ export default function TextEditor(props) {
                 <Selection selection={selection.selection.selRects}/>
                 <Caret position={selection.caret.pos}/>
             </div>
-            <div className="line-generator">
+            <span className="line-generator">
                 { generateLines(chopstring.splitLines(text)) }
-            </div>
+            </span>
         </div>
     )
 }
