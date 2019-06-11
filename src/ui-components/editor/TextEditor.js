@@ -6,6 +6,7 @@ import Chopstring from '../../lexer/chopstring';
 import Line from './Line';
 import Caret from './Caret';
 import Selection from '../../objects/text-editor/Selection'
+import LineGenerator from './LineGenerator';
 
 /**
  * Editor handling text input and displaying code text. Displays a code editor
@@ -46,27 +47,6 @@ export default function TextEditor(props) {
     var textArea = React.createRef()
 
     /**
-     * The tokeniser library chopstring.js
-     */
-    const chopstring = Chopstring()
-
-    /**
-     * Generate an array of {@link Line} components with end of line state for
-     * multi-line features.
-     * @param {Array<String>} lines 
-     */
-    function generateLines(lines: Array<String>): Array<Line> {
-        var endOfLineState = ""
-        const lineList = lines.map((line, index, stringList) => {
-            return <Line key={index.toString() + line}
-                        line={line} 
-                        plugin={plugin}/>
-        })
-
-        return lineList
-    }
-
-    /**
      * Handles the mouse up event on the text editor.
      * @param {React.SyntheticEvent} event 
      */
@@ -83,12 +63,9 @@ export default function TextEditor(props) {
     return (
         <div className="text-editor text-editor-theme">
             <div className="text-editor-overlays">
-                {/*<Selection selection={selection}/>*/}
                 {/*<Caret position={selection.caret}/>*/}
             </div>
-            <span className="line-generator">
-                { generateLines(chopstring.splitLines(text)) }
-            </span>
+            <LineGenerator plugin={plugin} text={text}/>
             {/* Text area to take in user input. */}
             <textarea className="text-input text-input-theme token"
                 wrap="off"

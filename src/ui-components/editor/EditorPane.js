@@ -32,7 +32,7 @@ export default function EditorPane() {
      * Effect to read the current selected language plugin to parse the text.
      */
     useEffect(() => {
-        console.log('Startup Editor Pane. Reading plugin...')
+        console.log('Starting up the Editor Pane. Reading plugin...')
         
         // plugin reader to parse the language plugin.
         const pluginReader = PluginReader()

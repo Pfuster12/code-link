@@ -25,7 +25,7 @@ Editor Theme
     Theme for the text editor input controlling caret.
 */
 .text-input-theme {
-    caret-color: black;
+    caret-color: blue;
 }
 
 /*
@@ -50,25 +50,10 @@ Editor Theme
 }
 
 /*
-    Theme for the text editor caret.
-*/
-.caret-theme {
-    background-color: red
-}
-
-/*
 ------------------------------------------
  Syntax tokens theme.
 ------------------------------------------
 */
-
-::selection {
-    background: transparent;
-}
-
-.selection {
-    background: yellow;
-}
 
 /*
     General token theme.

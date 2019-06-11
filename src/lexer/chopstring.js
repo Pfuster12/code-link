@@ -98,19 +98,30 @@ const Chopstring = () => {
     }
 
     /**
-     * Helper function to split a given text by new line.
+     * Helper function to split a given text by new line, adding an empty line if
+     * the last character of the array is a new line.
      * @param {string} text 
      */
     function splitLines(text: string): Array<string> {
-        /*
-          A new-line separator RegEx for any platform (respecting an optional Windows and
-          Mac CRLF) with positive lookbehind to split a line by newline while keeping
-          the delimiters.
-         */
+        // A new-line separator RegEx for any platform (respecting an optional Windows and
+        // Mac CRLF) with positive lookbehind to split a line by newline while keeping
+        // the delimiters.
         const lineRegex = /(?<=\r?\n)/gm
 
-        // split the text,
+        // A new line regex to match a string with.
+        const newLineRegex = /\r?\n/gm
+
+        // split the text by the new line regex,
         const lines = text.split(lineRegex)
+
+        // grab the last line of the array,
+        const lastLine = lines[lines.length - 1]
+
+        // if the last line is only a new line push an empty line to complete the array,
+        if (newLineRegex.test(lastLine.substring(lastLine.length - 1, lastLine.length))) {
+            lines.push('')
+        }
+        console.log(lines)
 
         // return the line array
         return lines

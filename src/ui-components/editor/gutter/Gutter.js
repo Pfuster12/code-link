@@ -8,8 +8,11 @@ import LineNumber from './LineNumber';
  */
 export default function Gutter(props) {
 
-    // split the lines from the text with the regex,
+    /**
+     * The array of lines in the text editor text.
+     */
     const lines = props.lines
+    console.log('Gutter initialised.')
 
     return (
         <div className="gutter gutter-theme">
