@@ -1,3 +1,7 @@
+/*
+ * HTML elements styles.
+ */
+
 html, body {
     overflow: hidden;
 }
@@ -21,34 +25,15 @@ h1 {
     margin: 0px;
 }
 
+/*
+ * Split pane and resizer styles.
+ */
+
 .pane {
     display: flex;
     flex-direction: column;
     min-width: 100px;
     width: calc(50%)
-}
-
-#first-pane {
-    width: calc(20%)
-}
-
-#second-pane {
-    width: calc(80%)
-}
-
-.text-input {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 242px;
-    padding: 0;
-    background-color: transparent;
-    caret-color: black;
-    color: transparent;
-}
-
-.text-input::selection {
-    background-color: yellow;
 }
 
 .row-split-pane {
@@ -64,6 +49,18 @@ h1 {
     cursor: e-resize
 }
 
+#first-pane {
+    width: calc(20%)
+}
+
+#second-pane {
+    width: calc(80%)
+}
+
+/*
+ * Editor and text editor styles.
+ */
+ 
 .editor-pane {
     display: flex;
     flex-direction: row;
@@ -80,7 +77,15 @@ h1 {
     overflow-y: hidden;
     cursor: text;
     background-color: transparent;
-    user-select: none;
+}
+
+.text-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background-color: transparent;
+    color: transparent;
 }
 
 .line-generator {
@@ -90,6 +95,7 @@ h1 {
     white-space: pre;
     z-index: 1;
     user-select: none;
+    pointer-events: none;
 }
 
 .token-generator {
@@ -98,6 +104,7 @@ h1 {
     flex-direction: row;
     white-space: pre;
     user-select: none;
+    pointer-events: none;
 }
 
 /*
@@ -136,6 +143,7 @@ h1 {
 .caret {
     position: absolute;
     width: 2px;
+    user-select: none;
 }
 
 .selection-parent {
@@ -144,4 +152,5 @@ h1 {
 
 .selection {
     position: absolute;
+    user-select: none;
 }

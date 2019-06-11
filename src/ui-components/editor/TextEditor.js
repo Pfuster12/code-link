@@ -5,7 +5,7 @@ import Gutter from './gutter/Gutter';
 import Chopstring from '../../lexer/chopstring';
 import Line from './Line';
 import Caret from './Caret';
-import Selection from './Selection';
+import Selection from '../../objects/text-editor/Selection'
 
 /**
  * Editor handling text input and displaying code text. Displays a code editor
@@ -20,15 +20,11 @@ export default function TextEditor(props) {
      */
     const [isSelecting, setIsSelecting] = useState(false)
 
-     /**
-     * The selection position state.
-     * @see React
+    /**
+     * Stores the current {@link Selection} of this {@link EditorPane}
      */
-    const selection = props.selection
-
-    console.log(selection);
+    const [selection, setSelection] = useState(new Selection(0, 0, new Caret(0, 0)))
     
-
     /**
      * The text to display in this editor.
      */
@@ -47,7 +43,7 @@ export default function TextEditor(props) {
     /**
      * A Reference to the text area html element.
      */
-    const textArea = props.textAreaRef
+    var textArea = React.createRef()
 
     /**
      * The tokeniser library chopstring.js
@@ -70,85 +66,36 @@ export default function TextEditor(props) {
         return lineList
     }
 
-    // /**
-    //  * Handles the mouse down event on the text editor.
-    //  * @param {React.SyntheticEvent} event 
-    //  */
-    // function onMouseDown(event) {
-    //     setIsSelecting(true)
-    //     window.getSelection().removeAllRanges()
-    // }
-
-    // /**
-    //  * Handles the mouse move event on the text editor.
-    //  * @param {React.SyntheticEvent} event 
-    //  */
-    // function onMouseMove(event) {
-    //     if (isSelecting) {
-    //         try {
-    //             const sel = window.getSelection().getRangeAt(0)
-    //             // grab the selection rectangles,
-    //             const clientRects = sel.getClientRects()
-    //             const rectList = Object.values(clientRects)
-        
-    //             // set state,
-    //             setSelection({
-    //                 caret: {
-    //                     pos: { y: clientRects[0].y, x: clientRects[0].x } 
-    //                 },
-    //                 selection: {
-    //                     selRects: rectList
-    //                 }
-    //             })
-    //         } catch (exception) {
-    //             setIsSelecting(false)
-    //         }
-    //     }
-    // }
-
-    // /**
-    //  * Handles the mouse up event on the text editor.
-    //  * @param {React.SyntheticEvent} event 
-    //  */
-    // function onMouseUp(event) {
-    //     try {
-    //         const sel = window.getSelection().getRangeAt(0)
-    //         console.log(sel)
-    //         // grab the selection rectangle,
-    //         const selRect = sel.getBoundingClientRect()
-    //         const clientRects = sel.getClientRects()
-
-    //         // figure out if the selection spans more than one line,
-    //         var lineCount = selRect.height / sel.startContainer.parentElement.clientHeight
-    //         // round since height differs slighlt sometimes?
-    //         lineCount = Math.round(lineCount)
-            
-    //         // set state,
-    //         setSelection({
-    //             caret: {
-    //                 pos: { y: clientRects[0].y, x: clientRects[0].x } 
-    //             },
-    //             selection: {
-    //                 selRects: Object.values(clientRects)
-    //             }
-    //         })
-    //         setIsSelecting(false)
-    //         //textArea.current.focus()
-    //     } catch (exception) {
-    //         setIsSelecting(false)
-    //         //textArea.current.focus()
-    //     }
-    // }
+    /**
+     * Handles the mouse up event on the text editor.
+     * @param {React.SyntheticEvent} event 
+     */
+    function onMouseUp(event) {
+        try {
+            const caret = new Caret(0, 0)
+            // set the selection state object,
+            setSelection(new Selection(textArea.current.selectionStart, textArea.current.selectionEnd, caret))
+        } catch (exception) {
+            // do nothing...
+        }
+    }
 
     return (
         <div className="text-editor text-editor-theme">
             <div className="text-editor-overlays">
                 {/*<Selection selection={selection}/>*/}
-                <Caret position={selection.caret}/>
+                {/*<Caret position={selection.caret}/>*/}
             </div>
             <span className="line-generator">
                 { generateLines(chopstring.splitLines(text)) }
             </span>
+            {/* Text area to take in user input. */}
+            <textarea className="text-input text-input-theme token"
+                wrap="off"
+                value={text}
+                onMouseUp={onMouseUp}
+                onChange={onTextChange}
+                ref={textArea}/>
         </div>
     )
 }

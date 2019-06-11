@@ -20,6 +20,21 @@ Editor Theme
     background-color: #F8F8F8;
 }
 
+
+/*
+    Theme for the text editor input controlling caret.
+*/
+.text-input-theme {
+    caret-color: black;
+}
+
+/*
+    Theme for the text editor input selection background color.
+*/
+.text-input-theme::selection {
+    background-color: yellow;
+}
+
 /*
     Theme for the gutter.
 */

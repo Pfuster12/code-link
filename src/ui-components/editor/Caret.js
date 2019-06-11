@@ -31,7 +31,7 @@ export default function Caret(props) {
 
     // return views,
     return (
-    <div style={{top: position.y, left: position.x, visibility: blink ? 'hidden' : 'visible'}} 
+    <div style={{top: position ? position.y : 0, left: position ? position.x : 0, visibility: blink ? 'hidden' : 'visible'}} 
         className="caret lineheight-theme token caret-theme"/>
     )
 }

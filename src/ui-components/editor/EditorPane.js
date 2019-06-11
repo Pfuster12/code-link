@@ -4,8 +4,6 @@ import TextEditor from './TextEditor';
 import PluginReader from '../../lexer/PluginReader';
 import Chopstring from '../../lexer/chopstring';
 import Line from './Line';
-import Selection from '../../objects/text-editor/Selection'
-import Caret from '../../objects/text-editor/Caret'
 
 /**
  * Editor window handling text input and displaying code text. Displays a code editor
@@ -21,11 +19,6 @@ export default function EditorPane() {
     const [text, setText] = useState('')
 
     /**
-     * Stores the current {@link Selection} of this {@link EditorPane}
-     */
-    const [selection, setSelection] = useState(new Selection(0, 0, new Caret(0, 0)))
-
-    /**
      * Stores the current language plugin to parse this Editor's text.
      */
     const [plugin, setPlugin] = useState({})
@@ -34,11 +27,6 @@ export default function EditorPane() {
      * The tokeniser library chopstring.js
      */
     const chopstring = Chopstring()
-
-    /**
-     * A Reference to the text area html element.
-     */
-    var textArea = React.createRef()
 
     /**
      * Effect to read the current selected language plugin to parse the text.
@@ -71,26 +59,6 @@ export default function EditorPane() {
         // set the text editor state,
         setText(event.currentTarget.value)
     }
-    
-    /**
-     * Handles the mouse up event on the text editor.
-     * @param {React.SyntheticEvent} event 
-     */
-    function onMouseUp(event) {
-        try {
-            // get the selection range,
-            const sel = window.getSelection().getRangeAt(0)
-            // grab the selection rectangles,
-            const clientRects = sel.getClientRects()
-            console.log(clientRects);
-            
-            const caret = new Caret(clientRects[0].x, clientRects[0].y)
-            // set the selection state object,
-            setSelection(new Selection(textArea.current.selectionStart, textArea.current.selectionEnd, caret))
-        } catch (exception) {
-            // do nothing...
-        }
-    }
 
     return (
         <div className="editor-pane">
@@ -99,15 +67,7 @@ export default function EditorPane() {
             {/* Text editor handles displaying the text and selection */}
             <TextEditor plugin={plugin}
                 text={text}
-                textAreaRef={textArea}
-                selection={selection}/>
-            {/* Text area to take in user input. */}
-            <textarea className="text-input token"
-                wrap="off"
-                value={text}
-                onMouseUp={onMouseUp}
-                onChange={onTextChange}
-                ref={textArea}/>
+                onTextChange={onTextChange}/>
         </div>
     )
 }
