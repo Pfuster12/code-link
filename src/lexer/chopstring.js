@@ -54,8 +54,6 @@ const Chopstring = () => {
         // sort by start index,
         tokens.sort((a, b) => a.startIndex - b.startIndex)
 
-        console.log(tokens)
-
         // make the object values into an array,
         const result = Object.values(tokens.reduce((accumulator, {id, startIndex, endIndex}) => {
             // assign the index to an existing value if it exists, or if the accumulator is undefined

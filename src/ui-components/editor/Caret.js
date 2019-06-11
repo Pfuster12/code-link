@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 /**
  * Displays a blinking caret in the text editor.
  * @function
@@ -36,8 +37,5 @@ export default function Caret(props) {
 }
 
 Caret.defaultProps = {
-    position: {
-        x: 0,
-        y: 0
-    }
+    position: { x: 0, y: 0}
 }

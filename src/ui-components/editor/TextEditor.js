@@ -24,12 +24,10 @@ export default function TextEditor(props) {
      * The selection position state.
      * @see React
      */
-    const [selection, setSelection] = useState({
-        caret: { pos: { x: 0, y: 0 } },
-        selection: {
-            selRects: []
-        }
-    })
+    const selection = props.selection
+
+    console.log(selection);
+    
 
     /**
      * The text to display in this editor.
@@ -72,84 +70,81 @@ export default function TextEditor(props) {
         return lineList
     }
 
-    /**
-     * Handles the mouse down event on the text editor.
-     * @param {React.SyntheticEvent} event 
-     */
-    function onMouseDown(event) {
-        setIsSelecting(true)
-        window.getSelection().removeAllRanges()
-    }
+    // /**
+    //  * Handles the mouse down event on the text editor.
+    //  * @param {React.SyntheticEvent} event 
+    //  */
+    // function onMouseDown(event) {
+    //     setIsSelecting(true)
+    //     window.getSelection().removeAllRanges()
+    // }
 
-    /**
-     * Handles the mouse move event on the text editor.
-     * @param {React.SyntheticEvent} event 
-     */
-    function onMouseMove(event) {
-        if (isSelecting) {
-            try {
-                const sel = window.getSelection().getRangeAt(0)
-                // grab the selection rectangles,
-                const clientRects = sel.getClientRects()
-                const rectList = Object.values(clientRects)
+    // /**
+    //  * Handles the mouse move event on the text editor.
+    //  * @param {React.SyntheticEvent} event 
+    //  */
+    // function onMouseMove(event) {
+    //     if (isSelecting) {
+    //         try {
+    //             const sel = window.getSelection().getRangeAt(0)
+    //             // grab the selection rectangles,
+    //             const clientRects = sel.getClientRects()
+    //             const rectList = Object.values(clientRects)
         
-                // set state,
-                setSelection({
-                    caret: {
-                        pos: { y: clientRects[0].y, x: clientRects[0].x } 
-                    },
-                    selection: {
-                        selRects: rectList
-                    }
-                })
-            } catch (exception) {
-                setIsSelecting(false)
-            }
-        }
-    }
+    //             // set state,
+    //             setSelection({
+    //                 caret: {
+    //                     pos: { y: clientRects[0].y, x: clientRects[0].x } 
+    //                 },
+    //                 selection: {
+    //                     selRects: rectList
+    //                 }
+    //             })
+    //         } catch (exception) {
+    //             setIsSelecting(false)
+    //         }
+    //     }
+    // }
 
-    /**
-     * Handles the mouse up event on the text editor.
-     * @param {React.SyntheticEvent} event 
-     */
-    function onMouseUp(event) {
-        try {
-            const sel = window.getSelection().getRangeAt(0)
-            console.log(sel)
-            // grab the selection rectangle,
-            const selRect = sel.getBoundingClientRect()
-            const clientRects = sel.getClientRects()
+    // /**
+    //  * Handles the mouse up event on the text editor.
+    //  * @param {React.SyntheticEvent} event 
+    //  */
+    // function onMouseUp(event) {
+    //     try {
+    //         const sel = window.getSelection().getRangeAt(0)
+    //         console.log(sel)
+    //         // grab the selection rectangle,
+    //         const selRect = sel.getBoundingClientRect()
+    //         const clientRects = sel.getClientRects()
 
-            // figure out if the selection spans more than one line,
-            var lineCount = selRect.height / sel.startContainer.parentElement.clientHeight
-            // round since height differs slighlt sometimes?
-            lineCount = Math.round(lineCount)
+    //         // figure out if the selection spans more than one line,
+    //         var lineCount = selRect.height / sel.startContainer.parentElement.clientHeight
+    //         // round since height differs slighlt sometimes?
+    //         lineCount = Math.round(lineCount)
             
-            // set state,
-            setSelection({
-                caret: {
-                    pos: { y: clientRects[0].y, x: clientRects[0].x } 
-                },
-                selection: {
-                    selRects: Object.values(clientRects)
-                }
-            })
-            setIsSelecting(false)
-            //textArea.current.focus()
-        } catch (exception) {
-            setIsSelecting(false)
-            //textArea.current.focus()
-        }
-    }
+    //         // set state,
+    //         setSelection({
+    //             caret: {
+    //                 pos: { y: clientRects[0].y, x: clientRects[0].x } 
+    //             },
+    //             selection: {
+    //                 selRects: Object.values(clientRects)
+    //             }
+    //         })
+    //         setIsSelecting(false)
+    //         //textArea.current.focus()
+    //     } catch (exception) {
+    //         setIsSelecting(false)
+    //         //textArea.current.focus()
+    //     }
+    // }
 
     return (
-        <div className="text-editor text-editor-theme" 
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}>
+        <div className="text-editor text-editor-theme">
             <div className="text-editor-overlays">
-                <Selection selection={selection.selection.selRects}/>
-                <Caret position={selection.caret.pos}/>
+                {/*<Selection selection={selection}/>*/}
+                <Caret position={selection.caret}/>
             </div>
             <span className="line-generator">
                 { generateLines(chopstring.splitLines(text)) }

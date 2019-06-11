@@ -42,8 +42,13 @@ h1 {
     height: 100%;
     left: 242px;
     padding: 0;
-    opacity: 0;
-    z-index: 10;
+    background-color: transparent;
+    caret-color: black;
+    color: transparent;
+}
+
+.text-input::selection {
+    background-color: yellow;
 }
 
 .row-split-pane {
@@ -74,6 +79,8 @@ h1 {
     overflow-x: auto;
     overflow-y: hidden;
     cursor: text;
+    background-color: transparent;
+    user-select: none;
 }
 
 .line-generator {
@@ -82,6 +89,7 @@ h1 {
     flex-direction: column;
     white-space: pre;
     z-index: 1;
+    user-select: none;
 }
 
 .token-generator {
@@ -89,6 +97,7 @@ h1 {
     flex: 1;
     flex-direction: row;
     white-space: pre;
+    user-select: none;
 }
 
 /*
@@ -100,7 +109,7 @@ h1 {
     flex: 0 0 auto;
     width: 60px;
     flex-direction: column;
-    -webkit-user-select: none;
+    user-select: none;
 }
 
 .line-number-parent {
