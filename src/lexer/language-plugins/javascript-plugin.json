@@ -69,6 +69,10 @@
         "line_comment": {
             "match": "\/\/.+",
             "id": "line-comment"
+        },
+        "multi_line_comment": {
+            "match": "\/*.+",
+            "id": "multi-line-comment"
         }
     },
     "keywords": [

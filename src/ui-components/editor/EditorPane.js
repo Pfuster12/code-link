@@ -22,11 +22,6 @@ export default function EditorPane() {
      * Stores the current language plugin to parse this Editor's text.
      */
     const [plugin, setPlugin] = useState({})
-    
-    /**
-     * The tokeniser library chopstring.js
-     */
-    const chopstring = Chopstring()
 
     /**
      * Effect to read the current selected language plugin to parse the text.
@@ -63,7 +58,7 @@ export default function EditorPane() {
     return (
         <div className="editor-pane">
             {/* Pass the text value to the gutter. */}
-            <Gutter lines={chopstring.splitLines(text)}/>
+            <Gutter lines={Chopstring().splitLines(text).length}/>
             {/* Text editor handles displaying the text and selection */}
             <TextEditor plugin={plugin}
                 text={text}

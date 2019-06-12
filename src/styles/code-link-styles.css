@@ -18,6 +18,7 @@ textarea {
     border-color: transparent;
     outline: none;
     border: none;
+    overflow: hidden;
 }
 
 h1 {

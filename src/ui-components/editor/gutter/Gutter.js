@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import LineNumber from './LineNumber';
 
 /**
@@ -12,16 +12,17 @@ export default function Gutter(props) {
      * The array of lines in the text editor text.
      */
     const lines = props.lines
-    console.log('Gutter initialised.')
+
+    console.log('Gutter here.')
 
     return (
         <div className="gutter gutter-theme">
             {/* Map the lines to LineNumber components. */}
-            {lines.map((line, index) => <LineNumber key={index + 1} lineNumber={index + 1}/>)}
+            {Array(lines).fill(lines).map((line, index) => <LineNumber key={index + 1} lineNumber={index + 1}/>)}
         </div>
     )
 }
 
 Gutter.defaultProps = {
-    lines: [0]
+    lines: 0
 }
