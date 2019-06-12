@@ -38,7 +38,7 @@ export default function EditorPane() {
                 console.log(result)
                 // set the text editor state,
                 setPlugin(result)
-                setText('// A comment "has been" made\nfunction \'But lwhayyy\' triple(param1: String) { // and why not?\n    const x = 101 +param1 + \'Hey \\\' now \'+  `Dont do it` // A comment + 42;\n    "Why tho?"\n}')
+                setText('// A comment "has been" made\n\n/**\n * This is a JSDOC comment.\n */\nfunction \'But lwhayyy\' triple(param1: String) { // and why not?\n    const x = 101 +param1 + \'Hey \\\' now \'+  `Dont do it` // A comment + 42;\n    "Why tho?"\n}')
             })
             .catch(error => {
                 console.log(error)

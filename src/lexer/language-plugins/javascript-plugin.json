@@ -70,9 +70,13 @@
             "match": "\/\/.+",
             "id": "line-comment"
         },
-        "multi_line_comment": {
-            "match": "\/*.+",
-            "id": "multi-line-comment"
+        "multiline_comment": {
+            "match": "\/\\*.+?\\*\/",
+            "id": "multiline-comment",
+            "multi": {
+                "start": "\/\\*",
+                "end": "\\*\/"
+            }
         }
     },
     "keywords": [

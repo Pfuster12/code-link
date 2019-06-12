@@ -31,9 +31,7 @@ export default function LineGenerator(props) {
      */
     useLayoutEffect(() => {
 
-        /**
-         * The tokeniser library chopstring.js.
-         */
+        // the tokeniser library chopstring.js,
         const chopstring = Chopstring()
 
         // split the text by new line,
@@ -41,7 +39,7 @@ export default function LineGenerator(props) {
 
         // map the text lines to Line components...
         var endOfLineState = ""
-        const lineList = textLines.map((line, index, stringList) => {
+        const lineList = textLines.map((line, index) => {
             return <Line key={index.toString() + line}
                         line={line} 
                         plugin={plugin}/>

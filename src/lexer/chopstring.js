@@ -15,7 +15,7 @@ type LanguagePlugin = {
 /**
  * This is a library to tokenise text by the rules implemented in a given language plugin.
  * 
- * When a string is passed to this library methods, we can output each token according
+ * When a string is passed to the applyTokenPatterns() method, we can output each token according
  * to its LanguagePlugin token and multi-token rules. These tokens are then passed to a
  * html <span/> generator which can apply the token id as classNames to assign each token
  * a style by CSS.

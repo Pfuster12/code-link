@@ -12,15 +12,9 @@ import Token from "../../objects/text-editor/Token";
 export default function Line(props) {
 
     /**
-     * State for this line component. 
-     * 
-     * It holds the tokens of this line text (className and index) and the
-     * string spans of the text separated by the tokens to be classed and rendered.
+     * Holds the {@link Token} of this component.
      */
-    const [line, setLine] = useState({
-        tokens: Array<Token>(),
-        spans: Array<String>()
-    })
+    const [tokens, setTokens] = useState([])
 
     /**
      * The string to generate highlighted tokens.
@@ -43,24 +37,24 @@ export default function Line(props) {
         const chopstring = Chopstring()
 
         // get the language plugin tokens from the line,
-        const tokens = plugin.features !== undefined ? chopstring.applyTokenPatterns(string, plugin) : []
+        const tokenArray = plugin.features !== undefined ? chopstring.applyTokenPatterns(string, plugin) : []
 
-        // split the line by spans according to the language plugin tokens,
-        setLine({
-            tokens: tokens,
-            spans: tokens.map(token => {
-                return string.substring(token.startIndex, token.endIndex)
-            })
-        })
+        // set the tokens to state,
+        setTokens(tokenArray)
     },
+    // run only when the string line changes...
     [string])
 
     return (
         <div className="token-generator">
             {
-                // map the spans
-                line.spans.map((span, index) => {
-                return <span key={line.tokens[index].endIndex} className={'token '+ line.tokens[index].createClass()}>{span}</span>})
+                // map the spans,
+                tokens.map((token, index) => {
+                    return <span key={token.endIndex}
+                            // class name is prefixed by the default token theme class,
+                            className={'token '+ token.createClass()}>
+                                {string.substring(token.startIndex, token.endIndex)}
+                            </span>})
             }
         </div>
     )
