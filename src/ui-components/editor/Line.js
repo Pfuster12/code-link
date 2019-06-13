@@ -42,22 +42,36 @@ export default function Line(props) {
 
             if (tokenArray.length > 0) {
                 // see if the the last token ends in a multi line token,
-                const lastToken = tokenArray[tokenArray.length - 1]
+                const lastToken = tokenArray.find(token => token.id.includes('multi'))
 
-                const classes = lastToken.id.split(" ")
+                if (lastToken) {
+                    const classes = lastToken.id.split(" ")
 
-                const featureName = classes[classes.length - 1].replace("-", "_")
+                    const featureName = classes[classes.length - 1].replace("-", "_")
+    
+                    const feature = plugin.features[featureName]
+    
+                    console.log(feature)
+    
+                    if (feature) {
+                        console.log('We have a multi line token in this line...')
+                        // check if the end match is found in this line...
+                        const endMatch = feature.multi.end
+    
+                        var endMatchFound = false
+                        var i = 0
 
-                const feature = plugin.features[featureName]
-
-                console.log(feature)
-
-                if (feature.multi) {
-                    console.log('We have a multi line token in this line...')
-                    // check if the end match is found in this line...
-                    
+                        while (!endMatchFound && i < tokenArray.length) {
+                            const token = tokenArray[i]
+                            if (token.id.includes(endMatch.id)) {
+                                endMatchFound = true
+                                console.log('End matchfound');
+                            }
+                            token.id += " multiline-comment"
+                            i++
+                        }
+                    }
                 }
-
                 // set the tokens to state,
                 setTokens(tokenArray)
             }
