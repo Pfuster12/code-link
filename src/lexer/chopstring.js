@@ -54,7 +54,7 @@ const Chopstring = () => {
         // sort by start index,
         tokens.sort((a, b) => a.startIndex - b.startIndex)
 
-        // make the object values into an array,
+        // Reduce into one token those which share the same end index,
         const result = Object.values(tokens.reduce((accumulator, {id, startIndex, endIndex}) => {
             // assign the index to an existing value if it exists, or if the accumulator is undefined
             // create a new object with the id empty.
@@ -82,8 +82,8 @@ const Chopstring = () => {
             }
         })
 
-          // make the object values into an array,
-          const reducedResult = Object.values(reducedTokens.reduce((accumulator, {id, startIndex, endIndex}) => {
+        // reduce the tokens that have the same start index
+        const reducedResult = Object.values(reducedTokens.reduce((accumulator, {id, startIndex, endIndex}) => {
             // assign the index to an existing value if it exists, or if the accumulator is undefined
             // create a new object with the id empty.
             accumulator[startIndex] = accumulator[startIndex] ? (accumulator[startIndex].endIndex < endIndex ? new Token("", startIndex, endIndex) : accumulator[startIndex]) : new Token("", startIndex, endIndex)

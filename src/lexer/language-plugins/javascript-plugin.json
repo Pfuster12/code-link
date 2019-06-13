@@ -71,12 +71,16 @@
             "id": "line-comment"
         },
         "multiline_comment": {
-            "match": "\/\\*.+?\\*\/",
+            "match": "\/\\*.+",
             "id": "multiline-comment",
             "multi": {
                 "start": "\/\\*",
                 "end": "\\*\/"
             }
+        },
+        "multiline_comment_end": {
+            "match": "\\*\/",
+            "id": "multiline-comment-end"
         }
     },
     "keywords": [

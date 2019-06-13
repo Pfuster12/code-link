@@ -36,11 +36,32 @@ export default function Line(props) {
         // tokeniser library.
         const chopstring = Chopstring()
 
-        // get the language plugin tokens from the line,
-        const tokenArray = plugin.features !== undefined ? chopstring.applyTokenPatterns(string, plugin) : []
+        if (plugin.features) {
+            // get the language plugin tokens from the line,
+            const tokenArray = chopstring.applyTokenPatterns(string, plugin)
 
-        // set the tokens to state,
-        setTokens(tokenArray)
+            if (tokenArray.length > 0) {
+                // see if the the last token ends in a multi line token,
+                const lastToken = tokenArray[tokenArray.length - 1]
+
+                const classes = lastToken.id.split(" ")
+
+                const featureName = classes[classes.length - 1].replace("-", "_")
+
+                const feature = plugin.features[featureName]
+
+                console.log(feature)
+
+                if (feature.multi) {
+                    console.log('We have a multi line token in this line...')
+                    // check if the end match is found in this line...
+                    
+                }
+
+                // set the tokens to state,
+                setTokens(tokenArray)
+            }
+        }
     },
     // run only when the string line changes...
     [string])
