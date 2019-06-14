@@ -84,9 +84,9 @@
                 }
             }
         },
-        "multiline_comment_end": {
-            "match": "\\*\/",
-            "id": "multiline-comment-end"
+        "multiline_comment_line": {
+            "match": "\/\\*.+?\\*\/",
+            "id": "multiline-comment-line"
         }
     },
     "keywords": [
