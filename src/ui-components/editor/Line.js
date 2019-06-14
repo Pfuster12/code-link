@@ -42,15 +42,21 @@ export default function Line(props) {
 
             if (tokenArray.length > 0) {
                 // check if the token of this line matches with a multi token,
-                const lastToken = tokenArray[tokenArray.length - 1]
+                const lastToken = tokenArray.find(token => token.id.includes("multi"))
 
-                const tokenClasses = lastToken.id.split(" ")
-                const lastClass = tokenClasses[tokenClasses.length - 1]
-                const featureClass = lastClass.replace("-", "_")
+                if (lastToken) {
+                    const tokenClasses = lastToken.id.split(" ")
+                    console.log(tokenClasses);
+                    
+                    const lastClass = tokenClasses[tokenClasses.length - 1]
+                    const featureClass = lastClass.replace("-", "_")
 
-                const feature = plugin.features[featureClass]
-                const isMulti = feature.multi !== undefined
-                console.log(isMulti);
+                    console.log(featureClass);
+                    
+                    const feature = plugin.features[featureClass]
+                    const isMulti = feature.multi !== undefined
+                    console.log(isMulti)
+                }
                 
                 // set the tokens to state,
                 setTokens(tokenArray)
