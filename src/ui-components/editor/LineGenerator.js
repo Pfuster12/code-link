@@ -16,6 +16,13 @@ export default function LineGenerator(props) {
     const [lines, setLines] = useState([])
 
     /**
+     * Stores the multi token flag to indicate a multi line token is open.
+     * The token is stored to send into the next Lines and these match the 'end'
+     * property of the multi token
+     */
+    const [multiToken, setMultiToken] = useState({})
+
+    /**
      * The text for this component to generate lines from.
      */
     const text = props.text
@@ -24,6 +31,15 @@ export default function LineGenerator(props) {
      * The {@link LanguagePlugin} to parse this text by.
      */
     const plugin = props.plugin
+
+    /**
+     * Callback to listen for multi token flags.
+     */
+    function onMultiTokenTriggered(token) {
+        console.log('LineGenerator callback triggered: Multi token is:', token);
+        
+        setMultiToken(token)
+    }
     
     /**
      * Layout effect to generate the lines. Changes only if the 
@@ -39,16 +55,19 @@ export default function LineGenerator(props) {
 
         // map the text lines to Line components...
         var endOfLineState = ""
+
         const lineList = textLines.map((line, index) => {
             return <Line key={index.toString() + line}
                         line={line} 
-                        plugin={plugin}/>
+                        plugin={plugin}
+                        onMultiTokenTriggered={onMultiTokenTriggered}
+                        multiToken={multiToken}/>
         })
 
         // and set state to store the lines,
         setLines(lineList)
     },
-    [text])
+    [text, multiToken])
 
     // return views,
     return (

@@ -27,6 +27,16 @@ export default function Line(props) {
     const plugin = props.plugin
 
     /**
+     * The multi token flag callback.
+     */
+    const onMultiTokenTriggered = props.onMultiTokenTriggered
+
+    /**
+     * The multi token passed from the previous line to match its 'end' property in this line.
+     */
+    const multiToken = props.multiToken
+
+    /**
      * LayoutEffect run to tokenise the line on before paint.
      * 
      * Use this instead of useEffect() because we want the tokeniser to set state before
@@ -41,7 +51,12 @@ export default function Line(props) {
             const tokenArray = chopstring.applyTokenPatterns(string, plugin)
 
             if (tokenArray.length > 0) {
-                // check if the token of this line matches with a multi token,
+                if (Object.keys(multiToken).length > 0) {
+                    console.log('This line has inherited a multi token! Token is: ', multiToken);
+                    tokenArray.forEach(token => token.id += " " + multiToken.id)
+                }
+
+                // find the first ocurrence of a multi token in this line's tokens, if there is,
                 const lastToken = tokenArray.find(token => token.id.includes("multi"))
 
                 if (lastToken) {
@@ -51,11 +66,20 @@ export default function Line(props) {
                     const lastClass = tokenClasses[tokenClasses.length - 1]
                     const featureClass = lastClass.replace("-", "_")
 
-                    console.log(featureClass);
+                    console.log('The multi feature class is: ', featureClass);
                     
                     const feature = plugin.features[featureClass]
-                    const isMulti = feature.multi !== undefined
-                    console.log(isMulti)
+
+                    if (feature) {          
+                        const isMulti = feature.multi !== undefined
+
+                        // trigger the multi token flag callback,
+                        if (isMulti) {
+                            console.log('Multi token language feature is: ', feature.multi);
+                            onMultiTokenTriggered(feature.multi)
+                        }
+                        console.log(isMulti)
+                    }
                 }
                 
                 // set the tokens to state,
