@@ -6,10 +6,11 @@ import Token from "../../objects/text-editor/Token";
 
 /**
  * Generates a highlighted syntax line from the given line string value in the props
- * using a given language plugin.
+ * using a given language plugin. This component is memoized using the React.memo 
+ * function to optimize performance.
  * @see TextEditor
  */
-export default function Line(props) {
+function Line(props) {
 
     /**
      * Holds the {@link Token} of this component.
@@ -27,67 +28,40 @@ export default function Line(props) {
     const plugin = props.plugin
 
     /**
-     * The multi token flag callback.
+     * Index of this Line component.
      */
-    const onMultiTokenTriggered = props.onMultiTokenTriggered
+    const index = props.index
 
     /**
-     * The multi token passed from the previous line to match its 'end' property in this line.
+     * An inherited multitoken from the {@link LineGenerator}.
      */
-    const multiToken = props.multiToken
+    const multitoken = props.multitoken
 
     /**
      * LayoutEffect run to tokenise the line on before paint.
      * 
      * Use this instead of useEffect() because we want the tokeniser to set state before
-     * painting to screen to avoid flickering.
+     * rendering to screen to avoid flickering.
      */
     useLayoutEffect(() => {
         // tokeniser library.
         const chopstring = Chopstring()
 
+        // with a
         if (plugin.features) {
             // get the language plugin tokens from the line,
             const tokenArray = chopstring.applyTokenPatterns(string, plugin)
 
+            // if token array is not empty,
             if (tokenArray.length > 0) {
-                if (Object.keys(multiToken).length > 0) {
-                    console.log('This line has inherited a multi token! Token is: ', multiToken);
-                    tokenArray.forEach(token => token.id += " " + multiToken.id)
-                }
+                console.info(`%c Line ${index + 1} parsed. Tokens are: `, 'color: royalblue;', tokenArray)
 
-                // find the first ocurrence of a multi token in this line's tokens, if there is,
-                const lastToken = tokenArray.find(token => token.id.includes("multi"))
-
-                if (lastToken) {
-                    const tokenClasses = lastToken.id.split(" ")
-                    console.log(tokenClasses);
-                    
-                    const lastClass = tokenClasses[tokenClasses.length - 1]
-                    const featureClass = lastClass.replace("-", "_")
-
-                    console.log('The multi feature class is: ', featureClass);
-                    
-                    const feature = plugin.features[featureClass]
-
-                    if (feature) {          
-                        const isMulti = feature.multi !== undefined
-
-                        // trigger the multi token flag callback,
-                        if (isMulti) {
-                            console.log('Multi token language feature is: ', feature.multi);
-                            onMultiTokenTriggered(feature.multi)
-                        }
-                        console.log(isMulti)
-                    }
-                }
-                
-                // set the tokens to state,
+                // save the tokens to state,
                 setTokens(tokenArray)
             }
         }
     },
-    // run only when the string line changes...
+    // run only when the string line or the multitoken changes...
     [string])
 
     return (
@@ -104,3 +78,19 @@ export default function Line(props) {
         </div>
     )
 }
+
+Line.defaultProps = {
+ 
+}
+
+/**
+ * The component is memoized.
+ * @see https://reactjs.org/docs/react-api.html#reactmemo
+ * React.memo is a higher order component. It’s similar to React.PureComponent but for function components instead of classes.
+ * If your function component renders the same result given the same props, you can wrap it in a call to React.memo for a performance
+ * boost in some cases by memoizing the result. This means that React will skip rendering the component, and reuse the last rendered
+ * result.
+ * By default it will only shallowly compare complex objects in the props object. If you want control over the comparison,
+ * you can also provide a custom comparison function as the second argument.
+ */
+export default React.memo(Line)

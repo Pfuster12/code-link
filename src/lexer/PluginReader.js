@@ -23,7 +23,7 @@ const PluginReader = () => {
      * @returns {Promise} A Promise of the JSON object.
      */
     function readPlugin(path: string): Promise {
-        console.log('Reading plugin from ' + path)
+        console.info('%c Reading plugin from ' + path, 'color: royalblue;')
         return fs.readFile(path).then(parseJson)
     }
 
@@ -33,14 +33,14 @@ const PluginReader = () => {
      * @returns {Promise} A Promise of the JSON object.
      */
     function parseJson(str: string): Promise {
-        console.log('Parsing JSON...')
+        console.info('%c Parsing JSON...', 'color: royalblue;')
         return new Promise((resolve, reject) => {
             try {
                 resolve(JSON.parse(str))
-                console.log('Success! JSON parsed...')
+                console.info('%c Success! JSON parsed...', 'color: royalblue;')
             } catch (error) {
                 reject(error)
-                console.log('Error! JSON error...')
+                console.info('%c Error! JSON error...', 'color: royalblue;')
             }
         })
     }

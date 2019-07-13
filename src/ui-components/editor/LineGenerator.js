@@ -11,16 +11,9 @@ import Line from './Line';
 export default function LineGenerator(props) {
 
     /**
-     * Stores the line components from this line generator.
+     * Stores the string of lines from this line generator.
      */
     const [lines, setLines] = useState([])
-
-    /**
-     * Stores the multi token flag to indicate a multi line token is open.
-     * The token is stored to send into the next Lines and these match the 'end'
-     * property of the multi token
-     */
-    const [multiToken, setMultiToken] = useState({})
 
     /**
      * The text for this component to generate lines from.
@@ -33,46 +26,46 @@ export default function LineGenerator(props) {
     const plugin = props.plugin
 
     /**
-     * Callback to listen for multi token flags.
+     * Callback trigger for a multitoken.
+     * @param token 
+     * @param startIndex 
+     * @param endIndex 
      */
-    function onMultiTokenTriggered(token) {
-        console.log('LineGenerator callback triggered: Multi token is:', token);
+    function multiTokenTrigger(token, startIndex, endIndex) {
+        console.log('%c MultiToken triggered at line ', 'color: brown', startIndex);
         
-        setMultiToken(token)
     }
     
     /**
-     * Layout effect to generate the lines. Changes only if the 
-     * text prop changes.
+     * Layout effect to generate the lines. Changes only if the text prop changes.
+     * @see Chopstring
      */
     useLayoutEffect(() => {
-
         // the tokeniser library chopstring.js,
         const chopstring = Chopstring()
 
         // split the text by new line,
         const textLines = chopstring.splitLines(text)
 
-        // map the text lines to Line components...
-        var endOfLineState = ""
-
-        const lineList = textLines.map((line, index) => {
-            return <Line key={index.toString() + line}
-                        line={line} 
-                        plugin={plugin}
-                        onMultiTokenTriggered={onMultiTokenTriggered}
-                        multiToken={multiToken}/>
-        })
-
-        // and set state to store the lines,
-        setLines(lineList)
+        // and set state to store the lines of strings split by new line,
+        setLines(textLines)
     },
-    [text, multiToken])
+    // pass to the array the text value to trigger re-renders on text change
+    [text])
 
     // return views,
     return (
         <span className="line-generator">
-            { lines }
+            { 
+                 // map the text lines to the Line components,
+                lines.map((line, index) => {
+                    // return the line,
+                    return <Line key={index.toString() + line}
+                                line={line} 
+                                plugin={plugin}
+                                index={index}/>
+                })
+            }
         </span>
     )
 }

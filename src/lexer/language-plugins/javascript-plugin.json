@@ -71,7 +71,7 @@
             "id": "line-comment"
         },
         "multiline_comment": {
-            "match": "\/\\*",
+            "match": "\/\\*.+",
             "id": "multiline-comment",
             "multi": {
                 "start": {

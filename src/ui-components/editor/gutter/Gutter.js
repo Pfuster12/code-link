@@ -13,8 +13,6 @@ export default function Gutter(props) {
      */
     const lines = props.lines
 
-    console.log('Gutter here.')
-
     return (
         <div className="gutter gutter-theme">
             {/* Map the lines to LineNumber components. */}

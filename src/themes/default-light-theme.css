@@ -106,21 +106,24 @@ Editor Theme
     Line comment token theme.
 */
 .line-comment {
-    color: grey
+    color: grey;
+    font-weight: normal 
 }
 
 /*
     Multi Line comment token theme.
 */
 .multiline-comment {
-    color: teal
+    color: teal;
+    font-weight: normal 
 }
 
 /*
     Multi Line comment token theme.
 */
 .multiline-comment-line {
-    color: teal
+    color: teal;
+    font-weight: normal 
 }
 
 /*

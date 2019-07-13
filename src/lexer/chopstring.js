@@ -92,8 +92,6 @@ const Chopstring = () => {
             return accumulator
         }, {}))
 
-        console.log('After reduction', reducedResult)
-
         return reducedResult
     }
 
@@ -117,7 +115,7 @@ const Chopstring = () => {
         // grab the last line of the array,
         const lastLine = lines[lines.length - 1]
 
-        // if the last line is only a new line push an empty line to complete the array,
+        // if the last line token is a new line push an empty line to complete the array,
         if (newLineRegex.test(lastLine.substring(lastLine.length - 1, lastLine.length))) {
             lines.push('')
         }
