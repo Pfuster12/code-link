@@ -127,6 +127,14 @@ Editor Theme
 }
 
 /*
+    Multi Line comment token theme.
+*/
+.multiline-comment-end {
+    color: teal;
+    font-weight: normal 
+}
+
+/*
     String double quotes token theme.
 */
 .string-template {

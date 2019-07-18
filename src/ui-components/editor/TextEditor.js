@@ -63,7 +63,7 @@ export default function TextEditor(props) {
     return (
         <div className="text-editor text-editor-theme">
             <div className="text-editor-overlays">
-                {/*<Caret position={selection.caret}/>*/}
+                
             </div>
             <LineGenerator plugin={plugin} text={text}/>
             {/* Text area to take in user input. */}

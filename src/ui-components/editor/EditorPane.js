@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useMemo, useContext, useEffect } from 'react';
 import Gutter from './gutter/Gutter';
 import TextEditor from './TextEditor';
 import PluginReader from '../../lexer/PluginReader';
@@ -14,7 +14,7 @@ import Line from './Line';
 export default function EditorPane() {
 
     /**
-     * Stores the current value of this file's text.
+     * Stores the current value of this file's text. Default to an empty string for now.
      */
     const [text, setText] = useState('')
 
@@ -23,8 +23,19 @@ export default function EditorPane() {
      */
     const [plugin, setPlugin] = useState({})
 
+    // memoize the length of the text lines array in order to pass it to the gutter,
+    // pass the text as a dependency,
+    const length = useMemo(() => {
+        // init chopstring library helper method once.
+        const chopstring = Chopstring()
+
+        // return the length
+        return chopstring.splitLines(text).length
+    }, [text])
+
     /**
      * Effect to read the current selected language plugin to parse the text.
+     * Run only once for now...
      */
     useEffect(() => {
         console.log('%c Starting up the Editor Pane. Reading plugin...', 'color: royalblue;')
@@ -58,7 +69,7 @@ export default function EditorPane() {
     return (
         <div className="editor-pane">
             {/* Pass the text value to the gutter. */}
-            <Gutter lines={Chopstring().splitLines(text).length}/>
+            <Gutter lines={length}/>
             {/* Text editor handles displaying the text and selection */}
             <TextEditor plugin={plugin}
                 text={text}

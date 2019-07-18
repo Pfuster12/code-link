@@ -27,8 +27,10 @@ const Chopstring = () => {
 
     /**
      * Apply the language plugin single token patterns to the input text.
-     * @param text The String text to tokenise.
+     * @param {string} text The String text to tokenise.
      * @param plugin The plugin to parse the text with.
+     * 
+     * @Returns an array of {@link Token} objects.
      */
     function applyTokenPatterns(text: string, plugin: LanguagePlugin): Token[] {
         // create an array from the features object,
@@ -54,7 +56,8 @@ const Chopstring = () => {
         // sort by start index,
         tokens.sort((a, b) => a.startIndex - b.startIndex)
 
-        // Reduce into one token those which share the same end index,
+        // Reduce into one token those which share the same end index and create an array
+        // with the given values,
         const result = Object.values(tokens.reduce((accumulator, {id, startIndex, endIndex}) => {
             // assign the index to an existing value if it exists, or if the accumulator is undefined
             // create a new object with the id empty.
@@ -82,7 +85,7 @@ const Chopstring = () => {
             }
         })
 
-        // reduce the tokens that have the same start index
+        // reduce the tokens that have the same start index and then create an array with the given values,
         const reducedResult = Object.values(reducedTokens.reduce((accumulator, {id, startIndex, endIndex}) => {
             // assign the index to an existing value if it exists, or if the accumulator is undefined
             // create a new object with the id empty.
@@ -122,6 +125,16 @@ const Chopstring = () => {
 
         // return the line array
         return lines
+    }
+
+    /**
+     * Apply the multi token pattern triggered in the given text and returns the index 
+     * of the lines where it is found.
+     * @param {string} text
+     * @param multiToken
+     */
+    function applyMultiTokenPatterns(text, multiToken: Token) {
+        
     }
 
     return Object.freeze({

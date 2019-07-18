@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import Chopstring from '../../lexer/chopstring';
 import Line from './Line';
 
@@ -11,12 +11,7 @@ import Line from './Line';
 export default function LineGenerator(props) {
 
     /**
-     * Stores the string of lines from this line generator.
-     */
-    const [lines, setLines] = useState([])
-
-    /**
-     * The text for this component to generate lines from.
+     * The string text for this component to generate lines from.
      */
     const text = props.text
 
@@ -26,29 +21,17 @@ export default function LineGenerator(props) {
     const plugin = props.plugin
 
     /**
-     * Callback trigger for a multitoken.
-     * @param token 
-     * @param startIndex 
-     * @param endIndex 
+     * The chopstring library memoized.
      */
-    function multiTokenTrigger(token, startIndex, endIndex) {
-        console.log('%c MultiToken triggered at line ', 'color: brown', startIndex);
-        
-    }
+    const chopstring = useMemo(() => Chopstring())
     
     /**
      * Layout effect to generate the lines. Changes only if the text prop changes.
      * @see Chopstring
      */
-    useLayoutEffect(() => {
-        // the tokeniser library chopstring.js,
-        const chopstring = Chopstring()
-
-        // split the text by new line,
-        const textLines = chopstring.splitLines(text)
-
-        // and set state to store the lines of strings split by new line,
-        setLines(textLines)
+    const lines = useMemo(() => {
+        // return the split lines,
+        return chopstring.splitLines(text)
     },
     // pass to the array the text value to trigger re-renders on text change
     [text])
@@ -57,15 +40,37 @@ export default function LineGenerator(props) {
     return (
         <span className="line-generator">
             { 
-                 // map the text lines to the Line components,
-                lines.map((line, index) => {
-                    // return the line,
-                    return <Line key={index.toString() + line}
-                                line={line} 
-                                plugin={plugin}
-                                index={index}/>
-                })
+                 // map the text lines to the Line components...
+                 // the line component is going to re render everytime the "key" attribute
+                 // changes, therefore we have to pass a unique key that won't change if
+                 // the only the position of the line changes because it leads to performance
+                 // issues when adding only new lines before the unchanged line,
+                lines.map((line, index, array) => <Line key={line}
+                                                line={line} 
+                                                plugin={plugin}
+                                                index={index}/>
+                )
             }
         </span>
     )
+}
+
+/**
+ * Calculate a 32 bit FNV-1a hash
+ * Found here: https://gist.github.com/vaiorabbit/5657561
+ * Ref.: http://isthe.com/chongo/tech/comp/fnv/
+ *
+ * @param {string} str the input value
+ * @param {integer} [seed] optionally pass the hash of the previous chunk
+ * @returns {integer | string}
+ */
+function hashFnv32a(str, seed) {
+    var i, l,
+        hval = (seed === undefined) ? 0x811c9dc5 : seed;
+
+    for (i = 0, l = str.length; i < l; i++) {
+        hval ^= str.charCodeAt(i);
+        hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
+    }
+    return hval >>> 0;
 }
