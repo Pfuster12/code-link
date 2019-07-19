@@ -16,14 +16,12 @@ import './styles/code-link-styles.css'
 export default function App() {
 
     return (
-        <>
-            <main>
-                <SplitPane>
-                    <h1>CL</h1>
-                    <EditorPane/>
-                </SplitPane>
-            </main>
-        </>
+        <main>
+            <SplitPane>
+                <h1>CL</h1>
+                <EditorPane/>
+            </SplitPane>
+        </main>
     )
 }
 

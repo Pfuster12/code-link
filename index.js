@@ -39,7 +39,7 @@ if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) |
   // Add the React dev tools manually to the chromium window,
   // Make sure you have the FULL path here or it won't work
   BrowserWindow.addDevToolsExtension(
-    "C:/Users/pfust/AppData/Local/Google/Chrome/User Data/Profile 2/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0"
+    "C:/Users/Pablo/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0"
   );
  } else {
    indexPath = url.format({

@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Chopstring from '../../lexer/chopstring';
 import Line from './Line';
 
@@ -8,7 +8,7 @@ import Line from './Line';
  * Displays an array of generated {@link Line} components from a given text.
  * @function
  */
-export default function LineGenerator(props) {
+const LineGenerator = React.memo((props) => {
 
     /**
      * The string text for this component to generate lines from.
@@ -26,7 +26,7 @@ export default function LineGenerator(props) {
     const chopstring = useMemo(() => Chopstring())
     
     /**
-     * Layout effect to generate the lines. Changes only if the text prop changes.
+     * Memoize the array of lines split from the text value. Changes only if the text prop changes.
      * @see Chopstring
      */
     const lines = useMemo(() => {
@@ -42,10 +42,10 @@ export default function LineGenerator(props) {
             { 
                  // map the text lines to the Line components...
                  // the line component is going to re render everytime the "key" attribute
-                 // changes, therefore we have to pass a unique key that won't change if
-                 // the only the position of the line changes because it leads to performance
-                 // issues when adding only new lines before the unchanged line,
-                lines.map((line, index, array) => <Line key={line}
+                 // changes, therefore we have to pass a unique key that won't change by 
+                 // position of the line, as it leads to performance issues when adding new 
+                 // line before the unchanged line,
+                lines.map((line, index, array) => <Line key={index + line}
                                                 line={line} 
                                                 plugin={plugin}
                                                 index={index}/>
@@ -53,24 +53,11 @@ export default function LineGenerator(props) {
             }
         </span>
     )
-}
+// pass a comparison function as a second argument to cancel
+// an update if the line props has not changed,
+}, (prevProps, nextProps) => {
+    // compare if the text has changed or if the language plugin id has changed,
+    return (prevProps.text == nextProps.text) && (prevProps.plugin.id == nextProps.plugin.id)
+})
 
-/**
- * Calculate a 32 bit FNV-1a hash
- * Found here: https://gist.github.com/vaiorabbit/5657561
- * Ref.: http://isthe.com/chongo/tech/comp/fnv/
- *
- * @param {string} str the input value
- * @param {integer} [seed] optionally pass the hash of the previous chunk
- * @returns {integer | string}
- */
-function hashFnv32a(str, seed) {
-    var i, l,
-        hval = (seed === undefined) ? 0x811c9dc5 : seed;
-
-    for (i = 0, l = str.length; i < l; i++) {
-        hval ^= str.charCodeAt(i);
-        hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
-    }
-    return hval >>> 0;
-}
+export default LineGenerator
