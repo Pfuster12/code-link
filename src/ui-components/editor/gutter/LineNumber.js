@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 
 /**
  * Component representing the line number in the gutter.
  */
-export default function LineNumber(props) {
+const LineNumber = React.memo((props) => {
 
     /**
      * The line number passed in this component props.
@@ -15,8 +15,12 @@ export default function LineNumber(props) {
             <span className="line-number token">{lineNumber}</span>
         </div>
     )
-}
+}, (prevProps, nextProps) => {
+    return prevProps.lineNumber === nextProps.lineNumber
+})
 
 LineNumber.defaultProps = {
     lineNumber: 0
 }
+
+export default LineNumber

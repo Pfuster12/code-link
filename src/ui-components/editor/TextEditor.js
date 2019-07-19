@@ -1,10 +1,6 @@
 // @flow
 
 import React, { useState, useContext } from 'react';
-import Gutter from './gutter/Gutter';
-import Chopstring from '../../lexer/chopstring';
-import Line from './Line';
-import Caret from './Caret';
 import Selection from '../../objects/text-editor/Selection'
 import LineGenerator from './LineGenerator';
 
@@ -14,17 +10,6 @@ import LineGenerator from './LineGenerator';
  * @see Gutter
  */
 export default function TextEditor(props) {
-
-    /**
-     * The selection state.
-     * @see React
-     */
-    const [isSelecting, setIsSelecting] = useState(false)
-
-    /**
-     * Stores the current {@link Selection} of this {@link EditorPane}
-     */
-    const [selection, setSelection] = useState(new Selection(0, 0, new Caret(0, 0)))
     
     /**
      * The text to display in this editor.
@@ -40,11 +25,6 @@ export default function TextEditor(props) {
      * on Text changed callback for the text area.
      */
     const onTextChange = props.onTextChange
-
-    /**
-     * A Reference to the text area html element.
-     */
-    var textArea = React.createRef()
 
     /**
      * Handles the mouse up event on the text editor.
@@ -71,8 +51,7 @@ export default function TextEditor(props) {
                 wrap="off"
                 value={text}
                 onMouseUp={onMouseUp}
-                onChange={onTextChange}
-                ref={textArea}/>
+                onChange={onTextChange}/>
         </div>
     )
 }
