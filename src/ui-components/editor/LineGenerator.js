@@ -45,7 +45,7 @@ const LineGenerator = React.memo((props) => {
                  // changes, therefore we have to pass a unique key that won't change by 
                  // position of the line, as it leads to performance issues when adding new 
                  // line before the unchanged line,
-                lines.map((line, index, array) => <Line key={index + '_' + line}
+                lines.map((line, index, array) => <Line key={`${index}_${line}`}
                                                 line={line} 
                                                 plugin={plugin}
                                                 index={index}/>
