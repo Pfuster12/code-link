@@ -76,7 +76,9 @@ const Line = React.memo((props) => {
                             // class name is prefixed by the default token theme class,
                             // add the token class created by the prototype function in Token,
                             className={'token '+ token.createClass()}>
-                                {line.substring(token.startIndex, token.endIndex)}
+                                {
+                                    line.substring(token.startIndex, token.endIndex)
+                                }
                             </span>
                 })
             }

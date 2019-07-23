@@ -3,7 +3,6 @@ import Gutter from './gutter/Gutter';
 import TextEditor from './TextEditor';
 import PluginReader from '../../lexer/PluginReader';
 import Chopstring from '../../lexer/chopstring';
-import Line from './Line';
 
 /**
  * Editor window handling text input and displaying code text. Displays a code editor
@@ -68,7 +67,7 @@ export default function EditorPane() {
 
     return (
         <div className="editor-pane">
-            {/* Pass the text value to the gutter. */}
+            {/* Pass the amount of lines to the gutter. */}
             <Gutter lines={length}/>
             {/* Text editor handles displaying the text and selection */}
             <TextEditor plugin={plugin}
