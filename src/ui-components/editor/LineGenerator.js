@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import Chopstring from '../../lexer/chopstring';
 import Line from './Line';
 
@@ -24,7 +24,7 @@ const LineGenerator = React.memo((props) => {
      * The chopstring library memoized.
      */
     const chopstring = useMemo(() => Chopstring())
-    
+
     /**
      * Memoize the array of lines split from the text value. Changes only if the text prop changes.
      * @see Chopstring
@@ -45,7 +45,7 @@ const LineGenerator = React.memo((props) => {
                  // changes, therefore we have to pass a unique key that won't change by 
                  // position of the line, as it leads to performance issues when adding new 
                  // line before the unchanged line,
-                lines.map((line, index, array) => <Line key={index + line}
+                lines.map((line, index, array) => <Line key={index + '_' + line}
                                                 line={line} 
                                                 plugin={plugin}
                                                 index={index}/>

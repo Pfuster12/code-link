@@ -49,7 +49,6 @@ const Line = React.memo((props) => {
      * rendering to screen to avoid flickering.
      */
     const tokens = useMemo(() => {
-        // with a
         if (plugin.features) {
             // get the language plugin tokens from the line,
             const tokenArray = chopstring.applyTokenPatterns(line, plugin)
@@ -62,6 +61,7 @@ const Line = React.memo((props) => {
                 return tokenArray
             }
         }
+        // always return an empty array if the plugin features are not applied,
         return []
     },
     // run only when the string line or the plugin changes...
@@ -77,7 +77,8 @@ const Line = React.memo((props) => {
                             // add the token class created by the prototype function in Token,
                             className={'token '+ token.createClass()}>
                                 {line.substring(token.startIndex, token.endIndex)}
-                            </span>})
+                            </span>
+                })
             }
         </div>
     )
