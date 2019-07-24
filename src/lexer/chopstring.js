@@ -102,8 +102,9 @@ const Chopstring = () => {
      * Helper function to split a given text by new line, adding an empty line if
      * the last character of the array is a new line.
      * @param {string} text 
+     * @returns {string[]} Array of lines from the text.
      */
-    function splitLines(text: string): Array<string> {
+    function splitLines(text: string): string[] {
         // A new-line separator RegEx for any platform (respecting an optional Windows and
         // Mac CRLF) with positive lookbehind to split a line by newline while keeping
         // the delimiters.
@@ -125,6 +126,21 @@ const Chopstring = () => {
 
         // return the line array
         return lines
+    }
+
+    /**
+     * Map an array of string lines to unique id's among its siblings.
+     * In order to create unique id's for the keys we use the value of the string. For
+     * those cases where the value is duplicated we find the duplicate string indices in the array 
+     * and mark them with an incremental counter of how many times its repeated.
+     * @param {string[]} lines Array of lines to map.
+     * 
+     * @returns {Map<number, string} of key-line pairs.
+     */
+    function mapLineKeys(lines: string[]) {
+        const duplicates = lines.reduce((prevValue, currentValue, index, array) => {
+            if (array.findIndex((value, index) => value == currentValue) !== index)
+        })
     }
 
     /**
