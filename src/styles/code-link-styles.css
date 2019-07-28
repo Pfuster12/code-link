@@ -93,6 +93,7 @@ h1 {
     display: flex;
     flex: 0 0 auto;
     flex-direction: column;
+    position: absolute;
     white-space: pre;
     z-index: 1;
     user-select: none;

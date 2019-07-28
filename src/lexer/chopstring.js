@@ -1,6 +1,6 @@
-import Token from "../objects/text-editor/Token";
-
 // @flow
+
+import Token from "../objects/text-editor/Token";
 
 /**
  * The Language Plugin type. A plugin defines a language's grammar,
@@ -15,7 +15,7 @@ type LanguagePlugin = {
 /**
  * This is a library to tokenise text by the rules implemented in a given language plugin.
  * 
- * When a string is passed to the applyTokenPatterns() method, we can output each token according
+ * When a string is passed to the applyTokenPatterns method, we can output each token according
  * to its LanguagePlugin token and multi-token rules. These tokens are then passed to a
  * html <span/> generator which can apply the token id as classNames to assign each token
  * a style by CSS.
@@ -70,37 +70,45 @@ const Chopstring = () => {
         // sort by index,
         result.sort((a, b) => a.startIndex - b.startIndex)
 
-        // reduce tokens that are included within a multi span token,
-        const reducedTokens = Array()
+        // init a previous token to hold the last indexed token,
         var previousToken = {
             startIndex: 0,
             endIndex: 0
         }
-        result.forEach(token => {
-            // if the last index is greater than the previous tokens last index,
-            if (token.endIndex > previousToken.endIndex) {
-                // add this token,
-                reducedTokens.push(token)
-                previousToken = token
+
+        // reduce the result to remove tokens that are encompassed by longer ones,
+        const reducedTokens = result.reduce((acc, el) => {
+             // if the last index is greater than the previous tokens last index,
+             if (el.endIndex > previousToken.endIndex) {
+                // push this token,
+                acc.push(el)
+                previousToken = el
             }
-        })
+            // return the accumulator,
+            return acc
+        },
+        [])
 
         // reduce the tokens that have the same start index and then create an array with the given values,
         const reducedResult = Object.values(reducedTokens.reduce((accumulator, {id, startIndex, endIndex}) => {
-            // assign the index to an existing value if it exists, or if the accumulator is undefined
-            // create a new object with the id empty.
-            accumulator[startIndex] = accumulator[startIndex] ? (accumulator[startIndex].endIndex < endIndex ? new Token("", startIndex, endIndex) : accumulator[startIndex]) : new Token("", startIndex, endIndex)
+            // assign the index to an existing value if it exists,
+            accumulator[startIndex] = accumulator[startIndex]
+                // create a new token if the end index is not encompassed by the current token, else use the same,
+                ? (accumulator[startIndex].endIndex < endIndex ? new Token("", startIndex, endIndex) : accumulator[startIndex]) 
+                // if no token exists create a new one,
+                : new Token("", startIndex, endIndex)
             // assign the accumulator id the previous id if it exists and the current id,
             accumulator[startIndex].id = id + (accumulator[startIndex].id ? (" " + accumulator[startIndex].id) : "")
             return accumulator
         }, {}))
 
+        // return the reduced array,
         return reducedResult
     }
 
     /**
-     * Helper function to split a given text by new line, adding an empty line if
-     * the last character of the array is a new line.
+     * Helper function to split a given text by new line, adding an empty line at the end of
+     * the array if the last character of the array is a new line.
      * @param {string} text 
      * @returns {string[]} Array of lines from the text.
      */
@@ -135,12 +143,31 @@ const Chopstring = () => {
      * and mark them with an incremental counter of how many times its repeated.
      * @param {string[]} lines Array of lines to map.
      * 
-     * @returns {Map<number, string} of key-line pairs.
+     * @returns {Map<number, string>} Map of key-line pairs.
      */
     function mapLineKeys(lines: string[]) {
-        const duplicates = lines.reduce((prevValue, currentValue, index, array) => {
-            if (array.findIndex((value, index) => value == currentValue) !== index)
-        })
+        var counter = 0
+        // reduce the lines array to get the duplicate lines marked with an index,
+        const map = lines.reduce((acc, el, i, arr) => {
+            // first find if the current element (el) has a duplicate element; it doesn't matter where 
+            // that element is, only that it occurs and push to the accumulator if the index found doesn't
+            // equal the current element,
+            if (arr.findIndex(val => val === el) !== i) {
+                acc.set(counter, el)
+                counter++
+            } else {
+                acc.set(el, el)
+            }
+
+            // return the accumulator array for the array of duplicate indices,
+            return acc
+        },
+        // pass in an empty array as the initial value for the accumulator param, 
+        new Map())
+
+        console.log(map)
+
+        return map
     }
 
     /**
@@ -155,7 +182,8 @@ const Chopstring = () => {
 
     return Object.freeze({
         applyTokenPatterns,
-        splitLines
+        splitLines,
+        mapLineKeys
     })
 }
 

@@ -60,7 +60,7 @@ export default function EditorPane() {
      * Handles the text area value change from the text editor.
      * @param event 
      */
-    function onTextChange(event: React.SyntheticEvent) {  
+    function onTextChange(event: React.SyntheticEvent) {
         // set the text editor state,
         setText(event.currentTarget.value)
     }
@@ -70,9 +70,16 @@ export default function EditorPane() {
             {/* Pass the amount of lines to the gutter. */}
             <Gutter lines={length}/>
             {/* Text editor handles displaying the text and selection */}
-            <TextEditor plugin={plugin}
-                text={text}
-                onTextChange={onTextChange}/>
+            {
+                text
+                ? 
+                <TextEditor plugin={plugin}
+                    text={text}
+                    onTextChange={onTextChange}/>
+                :
+                <>
+                </>
+            }
         </div>
     )
 }

@@ -68,8 +68,16 @@ const Line = React.memo((props) => {
     [line, plugin])
 
     return (
-        <div className="token-generator">
+        <div className="token-generator"
+            style={
+                {
+                    top: `${(index + 1) * 19}`,
+                    left: `${0}`
+                }
+            }>
             {
+                tokens.length > 0
+                ?
                 // map the spans,
                 tokens.map((token, index) => {
                     return <span key={token.endIndex}
@@ -81,6 +89,8 @@ const Line = React.memo((props) => {
                                 }
                             </span>
                 })
+                :
+                <span className="token">{line}</span>
             }
         </div>
     )
