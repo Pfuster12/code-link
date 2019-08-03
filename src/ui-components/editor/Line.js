@@ -38,7 +38,7 @@ const Line = React.memo((props) => {
     const plugin = props.plugin
 
     /**
-     * Index of this Line component.
+     * This Line's natural index in the text.
      */
     const index = props.index
 
@@ -55,7 +55,7 @@ const Line = React.memo((props) => {
 
             // if token array is not empty,
             if (tokenArray.length > 0) {
-                console.info(`%c Line ${index + 1} parsed. Tokens are: `, 'color: royalblue;', tokenArray)
+                console.info(`%c Line ${index} parsed. Tokens are: `, 'color: royalblue;', tokenArray)
 
                 // save the tokens to state,
                 return tokenArray
@@ -68,17 +68,12 @@ const Line = React.memo((props) => {
     [line, plugin])
 
     return (
-        <div className="token-generator"
-            style={
-                {
-                    top: `${(index + 1) * 19}`,
-                    left: `${0}`
-                }
-            }>
+        <div className="token-generator">
             {
+                // if the length is valid,
                 tokens.length > 0
                 ?
-                // map the spans,
+                // map the token spans,
                 tokens.map((token, index) => {
                     return <span key={token.endIndex}
                             // class name is prefixed by the default token theme class,
@@ -90,6 +85,7 @@ const Line = React.memo((props) => {
                             </span>
                 })
                 :
+                // If no tokens are found display the original line with a basic token class.
                 <span className="token">{line}</span>
             }
         </div>

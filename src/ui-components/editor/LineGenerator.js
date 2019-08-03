@@ -21,20 +21,14 @@ const LineGenerator = React.memo( function LineGenerator(props) {
     const plugin = props.plugin
 
     /**
-     * The chopstring library memoized.
+     * The line array keys. They are unique in order to optimise React rendering.
      */
-    const chopstring = useMemo(() => Chopstring())
+    const keys = props.keys
 
     /**
-     * Memoize the array of lines split from the text value. Changes only if the text prop changes.
-     * @see Chopstring
+     * The key-line Map of strings to tokenise by the {@link Line} components.
      */
-    const lines = useMemo(() => {
-        // return the split lines,
-        return chopstring.splitLines(text)
-    },
-    // pass to the array the text value to trigger re-renders on text change
-    [text])
+    const lines = props.lines
 
     // return views,
     return (
@@ -45,11 +39,12 @@ const LineGenerator = React.memo( function LineGenerator(props) {
                  // changes, therefore we have to pass a unique key that won't change by 
                  // position of the line, as it leads to performance issues when adding new 
                  // line before the unchanged line,
-                 lines.map((value, index) => <Line key={index + value}
-                                                line={value} 
-                                                plugin={plugin}
-                                                index={index}/>
-                )
+                 lines.map(([key, value], index) => {
+                    return <Line key={key}
+                            line={value}
+                            index={index} 
+                            plugin={plugin}/>
+                 })
             }
         </span>
     )
@@ -57,7 +52,7 @@ const LineGenerator = React.memo( function LineGenerator(props) {
 // an update if the line props has not changed,
 }, (prevProps, nextProps) => {
     // compare if the text has changed or if the language plugin id has changed,
-    return prevProps.text === nextProps.text && prevProps.plugin.id === nextProps.plugin.id
+    return false //prevProps.lines === nextProps.lines && prevProps.plugin.id === nextProps.plugin.id
 })
 
 export default LineGenerator
