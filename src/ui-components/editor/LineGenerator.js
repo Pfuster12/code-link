@@ -8,7 +8,7 @@ import Line from './Line';
  * Displays an array of generated {@link Line} components from a given text.
  * @function
  */
-const LineGenerator = React.memo( function LineGenerator(props) {
+export default function LineGenerator(props) {
 
     /**
      * The string text for this component to generate lines from.
@@ -50,9 +50,4 @@ const LineGenerator = React.memo( function LineGenerator(props) {
     )
 // pass a comparison function as a second argument to cancel
 // an update if the line props has not changed,
-}, (prevProps, nextProps) => {
-    // compare if the text has changed or if the language plugin id has changed,
-    return false //prevProps.lines === nextProps.lines && prevProps.plugin.id === nextProps.plugin.id
-})
-
-export default LineGenerator
+}

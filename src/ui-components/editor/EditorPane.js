@@ -3,6 +3,7 @@ import Gutter from './gutter/Gutter';
 import TextEditor from './TextEditor';
 import PluginReader from '../../lexer/PluginReader';
 import Chopstring from '../../lexer/chopstring';
+import FileReader from '../../io/FileReader';
 
 /**
  * Editor window handling text input and displaying code text. Displays a code editor
@@ -48,22 +49,30 @@ export default function EditorPane() {
                 console.log(result)
                 // set the text editor state,
                 setPlugin(result)
-                setText('// A comment "has been" made\n\n/*\n * This is a JSDOC comment.\n */\nfunction \'But lwhayyy\' triple(param1: String) { // and why not?\n    const x = 101 +param1 + \'Hey \\\' now \'+  `Dont do it` // A comment + 42;\n    "Why tho?"\n}// A comment "has been" made\n\n/**\n * This is a JSDOC comment.\n */\nfunction \'But lwhayyy\' triple(param1: String) { // and why not?\n    const x = 101 +param1 + \'Hey \\\' now \'+  `Dont do it` // A comment + 42;\n    "Why tho?"\n}')
+
+                // TEMP
+                // get an instance of the file reader,
+                const fr = FileReader()
+
+                // read a test file...
+                fr.readFile('./src/test/files/coffee.txt')
+                    .then(res => {
+                        console.log(res);
+
+                        // set the text result,
+                        setText(res)
+                    })
+                    .catch(err => {
+                        console.log('Error reading from file', err);
+                    
+                        setText(err)
+                    })
             })
             .catch(error => {
                 console.log(error)
             })
     },
     [])
-
-    /**
-     * Handles the text area value change from the text editor.
-     * @param event 
-     */
-    function onTextChange(event: React.SyntheticEvent) {
-        // set the text editor state,
-        setText(event.currentTarget.value)
-    }
 
     return (
         <div className="editor-pane">
@@ -74,8 +83,7 @@ export default function EditorPane() {
                 text
                 ? 
                 <TextEditor plugin={plugin}
-                    text={text}
-                    onTextChange={onTextChange}/>
+                    text={text}/>
                 :
                 <>
                 </>

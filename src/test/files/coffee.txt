@@ -1,0 +1,17 @@
+import Coffee from './coffee/Coffee.js'
+import Espresso from './coffee/Espresso.js'
+import Mug from './coffee/Mug.js'
+
+/**
+ * Brews a cup of coffee.
+ */
+ function brew(): Coffee {
+    // create a two shot espresso with arabica grounds,
+    const espresso = Espresso(shots = 2, grounds = "arabica")
+    
+    // get yourself a mug...
+    const cuppa = Mug(color = Colors.BLUE)
+
+    // create the cup of coffee!
+    return Coffee(espresso, mug)
+}

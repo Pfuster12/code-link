@@ -1,6 +1,5 @@
 {
     "id": "javascript",
-    "patterns": ["function_expression"],
     "features": {
         "punctuation": {
             "match": "\\W",
