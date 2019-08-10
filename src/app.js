@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import SplitPane from './ui-components/SplitPane';
-import EditorPane from './ui-components/editor/EditorPane';
+import SplitPane from './ui/SplitPane'
+import EditorPane from './ui/editor/EditorPane'
 
 /**
  * Load the Code Link private styles file. These are not user-facing customisable styles,
  * but essential, under-the-hood styles for the app to work properly.
  */
-import './styles/code-link-styles.css'
+import './ui/styles/code-link-styles.css'
 
 /**
  * This is the entry point of this React Electron Editor Program.

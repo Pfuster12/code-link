@@ -79,6 +79,14 @@ export default function TextEditor(props) {
 
         // if the key press is Enter,
         switch (event.keyCode) {
+            case KeyCode.KEY_Z:
+                if (event.ctrlKey) {
+                    // split the lines,
+                    const lines = chopstring.splitLines(editor.value)
+                    // map to keys,
+                    setLines(chopstring.mapLineKeys(lines))
+                }
+                break;
             case KeyCode.KEY_ENTER:
                 console.log("Enter has been pressed...")
 
@@ -150,46 +158,17 @@ export default function TextEditor(props) {
      * Find the possible multi-line selection object of the text area.
      */
     function findLineSelection(): Object {
-        // get the current selection,
-        const selection = getSelection(textareaRef)
-
-        // slice the array from beginning to start,
-        const startText = editor.value.slice(0, selection.start)
-
-        // split the text into new lines,
-        const arrayStart = chopstring.splitLines(startText)
-
-        // get the index of the start index where the text was split,
-        const startIndex = arrayStart[arrayStart.length - 1].length
-
-        // get the line count,
-        const startLineIndex = arrayStart.length - 1
-
-        // slice the array from beginning to start,
-        const endText = editor.value.slice(selection.end)
-
-        // split the text into new lines,
-        const arrayEnd = chopstring.splitLines(endText)
-
-        console.log(`from text`, endText)
-
-        console.log(`Last line is`, arrayEnd)
-
-        // get the index of the end index where the text was split,
-        const endIndex = arrayEnd[0].length
-
-        // get the line index,
-        const endLineIndex = 0
+        console.log(document.getSelection())
 
         // create the selection object,
         return {
             start: {
-                line: startLineIndex,
-                index: startIndex,
+                line: 0,
+                index: 0,
             },
             end: {
-                line: startLineIndex + endLineIndex,
-                index: startIndex,
+                line: 0,
+                index: 0,
             }
         }
     }
