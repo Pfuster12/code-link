@@ -67,16 +67,12 @@ h1 {
     flex-direction: row;
     flex: 1;
     min-width: 100px;
-    overflow-y: hidden;
 }
 
 .text-editor {
-    position: relative;
     display: flex;
     flex: 1;
     flex-direction: column;
-    overflow-x: auto;
-    overflow-y: auto;
     cursor: text;
 }
 
@@ -91,22 +87,19 @@ h1 {
 
 .line-generator {
     display: flex;
-    flex: 0 0 auto;
+    flex: 1;
     flex-direction: column;
-    position: absolute;
     white-space: pre;
     z-index: 1;
-    user-select: none;
-    pointer-events: none;
+    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 .token-generator {
     display: flex;
-    flex: 1;
+    flex: 0 0 auto;
     flex-direction: row;
     white-space: pre;
-    user-select: none;
-    pointer-events: none;
 }
 
 /*

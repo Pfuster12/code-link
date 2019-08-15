@@ -146,28 +146,8 @@ const Chopstring = () => {
      * @returns {Map<number, string>} Map of key-line pairs.
      */
     function mapLineKeys(lines: string[]) {
-        var counter = 0
-        // reduce the lines array to get the duplicate lines marked with an index,
-        const map = lines.reduce((acc, el, i, arr) => {
-            // first find if the current element (el) has a duplicate element; it doesn't matter where 
-            // that element is, only that it occurs and push to the accumulator if the index found doesn't
-            // equal the current element,
-            if (arr.findIndex(val => val === el) !== i) {
-                acc.push([counter, el])
-                counter++
-            } else {
-                acc.push([el, el])
-            }
-
-            // return the accumulator array for the array of duplicate indices,
-            return acc
-        },
-        // pass in an empty array as the initial value for the accumulator param, 
-        [])
-
-        console.log(map)
-
-        return map
+        // map the line array to a key-value map array,
+        return lines.map(line => [Math.random(), line])
     }
 
     /**

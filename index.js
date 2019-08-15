@@ -4,64 +4,64 @@ const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
+var win
 
 function createWindow () {
-  // Create the browser window.
-  win = new BrowserWindow({ 
-    width: 1600,
-    height: 1000,
-    webPreferences: {
-      nodeIntegration: true,
-      nodeIntegrationInWorker: true
-    }
-  })
+	// Create the browser window.
+	win = new BrowserWindow({ 
+	width: 1600,
+	height: 1000,
+	webPreferences: {
+		nodeIntegration: true,
+		nodeIntegrationInWorker: true
+	}
+	})
 
-  // Keep a reference for dev mode
-let dev = false
+	// Keep a reference for dev mode
+	var dev = false
 
-if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
-  dev = true
-}
+	if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
+	dev = true
+	}
 
-  // and load the index.html of the app.
- let indexPath
+	// and load the index.html of the app.
+	var indexPath
 
- // Implementing Webpack
- if (dev) {
-   indexPath = url.format({
-     protocol: 'http:',
-     host: 'localhost:8080',
-     pathname: 'index.html',
-     slashes: true
-   })
-    
-  // Add the React dev tools manually to the chromium window,
-  // Make sure you have the FULL path here or it won't work
-  BrowserWindow.addDevToolsExtension(
-    "C:/Users/pfust/AppData/Local/Google/Chrome/User Data/Profile 2/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0"
-  );
- } else {
-   indexPath = url.format({
-     protocol: 'file:',
-     pathname: path.join(__dirname, 'dist', 'index.html'),
-     slashes: true
-   })
- }
+	// Implementing Webpack
+	if (dev) {
+	indexPath = url.format({
+		protocol: 'http:',
+		host: 'localhost:8080',
+		pathname: 'index.html',
+		slashes: true
+	})
 
- win.loadURL(indexPath)
+	// Add the React dev tools manually to the chromium window,
+	// Make sure you have the FULL path here or it won't work
+	BrowserWindow.addDevToolsExtension(
+	"C:/Users/pfust/AppData/Local/Google/Chrome/User Data/Profile 2/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.6.0_0"
+	);
+	} else {
+	indexPath = url.format({
+		protocol: 'file:',
+		pathname: path.join(__dirname, 'dist', 'index.html'),
+		slashes: true
+	})
+	}
+
+	win.loadURL(indexPath)
 
 
-  // Open the DevTools.
-  win.webContents.openDevTools()
+	// Open the DevTools.
+	win.webContents.openDevTools()
 
-  // Emitted when the window is closed.
-  win.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    win = null
-  })
+	// Emitted when the window is closed.
+	win.on('closed', () => {
+	// Dereference the window object, usually you would store windows
+	// in an array if your app supports multi windows, this is the time
+	// when you should delete the corresponding element.
+	win = null
+	})
 }
 
 // This method will be called when Electron has finished
