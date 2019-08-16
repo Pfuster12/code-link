@@ -23,15 +23,10 @@ export default function EditorPane() {
      */
     const [plugin, setPlugin] = useState({})
 
-    // memoize the length of the text lines array in order to pass it to the gutter,
-    // pass the text as a dependency,
-    const length = useMemo(() => {
-        // init chopstring library helper method once.
-        const chopstring = Chopstring()
-
-        // return the length
-        return chopstring.splitLines(text).length
-    }, [text])
+    /**
+     * Stores the line count in the {@link TextEditor} for the {@link Gutter} component.
+     */
+    const [lines, setLines] = useState(1)
 
     /**
      * Effect to read the current selected language plugin to parse the text.
@@ -49,24 +44,6 @@ export default function EditorPane() {
                 console.log(result)
                 // set the text editor state,
                 setPlugin(result)
-
-                // TEMP
-                // get an instance of the file reader,
-                const fr = FileReader()
-
-                // read a test file...
-                fr.readFile('./src/test/files/coffee.txt')
-                    .then(res => {
-                        console.log(res);
-
-                        // set the text result,
-                        setText(res)
-                    })
-                    .catch(err => {
-                        console.log('Error reading from file', err);
-                    
-                        setText(err)
-                    })
             })
             .catch(error => {
                 console.log(error)
@@ -74,19 +51,47 @@ export default function EditorPane() {
     },
     [])
 
+    /**
+     * Effect to read the current selected file and set the text state of this editor pane.
+     */
+    useEffect(() => {
+        // TEMP
+        // get an instance of the file reader,
+        const fr = FileReader()
+
+        // read a test file...
+        fr.readFile('./src/test/files/coffee.txt')
+            .then(res => {
+                console.log(res);
+
+                // set the text result,
+                setText(res)
+            })
+            .catch(err => {
+                console.log('Error reading from file', err);
+            
+                // set an empty text value,
+                setText('')
+            })
+    },
+    [])
+
+    /**
+     * TextEditor line array listener.
+     */
+    function editorListener(length: number) {
+        setLines(length)
+    }
+
     return (
         <div className="editor-pane">
             {/* Pass the amount of lines to the gutter. */}
-            <Gutter lines={length}/>
+            <Gutter lines={lines}/>
             {/* Text editor handles displaying the text and selection */}
             {
-                text
-                ? 
                 <TextEditor plugin={plugin}
-                    text={text}/>
-                :
-                <>
-                </>
+                    text={text}
+                    editorListener={editorListener}/>
             }
         </div>
     )

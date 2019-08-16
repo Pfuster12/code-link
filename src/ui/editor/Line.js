@@ -90,8 +90,6 @@ const Line = React.memo(props => {
         :
         // If no tokens are found display the original line with a basic token class.
         <span className="token">{value}</span>)
-
-        console.log(spans)
         
         return spans
     },
