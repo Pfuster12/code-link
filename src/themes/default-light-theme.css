@@ -1,5 +1,7 @@
 
 /*
+
+code-link default-light-theme
 ------------------------------------------
 This is a code-link theme .css file. Every class and id selector is available to customise by the user
 and applies to the App's 'theme'. This file is bundled into a ./themes/ folder when distributed where
@@ -12,6 +14,20 @@ more custom themes can be saved for use.
 Editor Theme
 ------------------------------------------
 */
+
+/*
+     Theme for the scrollbar
+*/
+::-webkit-scrollbar {
+    background-color: #F8F8F8
+}
+
+/*
+     Theme for the scrollbar thumb
+*/
+::-webkit-scrollbar-thumb {
+    background-color: steelblue;
+}
 
 /*
     Theme for the text editor pane.

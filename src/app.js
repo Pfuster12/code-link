@@ -18,7 +18,7 @@ export default function App() {
     return (
         <main>
             <SplitPane>
-                <h1>CL</h1>
+                <h1>code-link</h1>
                 <EditorPane/>
             </SplitPane>
         </main>

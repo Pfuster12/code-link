@@ -93,8 +93,15 @@ export default function TextEditor(props) {
             */
             case KeyCode.KEY_ENTER:
                 setLines(prevLines => {
-                    const map = [[Math.random(), ' '], ...prevLines]
+                    // slice the array from the selection,
+                    const firstChunk = prevLines.slice(0, selection.start.line)
+                    const lastChunk = prevLines.slice(selection.end.line, prevLines.length)
+                    // add a new item with the spread operator,
+                    const map = [...firstChunk, [Math.random(), ' '], ...lastChunk]
+
+                    // callback to the editor,
                     editorListener(map.length)
+
                     return map
                 })
                 // break case,
@@ -106,8 +113,13 @@ export default function TextEditor(props) {
             case KeyCode.KEY_BACKSPACE:
                 
                 setLines(prevLines => {
+                    // clone the array,
                     const l = prevLines.slice()
+
+                    // poo the first item,
                     l.shift()
+
+                    // callback to the editor,
                     editorListener(l.length)
                     return l
                 })
@@ -138,11 +150,13 @@ export default function TextEditor(props) {
         // get the selection object,
         const sel = getSelectionOffsets()
 
-        // focus on the text area ref to consume keyboard events,
-        textareaRef.current.focus()
+        console.log(sel);
 
         // set the selection of the text editor,
         setSelection(sel)
+
+        // focus on the text area ref to consume keyboard events,
+        textareaRef.current.focus()
     }
     
     /**
@@ -192,7 +206,7 @@ export default function TextEditor(props) {
      * @param {Node} node Document node to get the offset from the beginning of the node container.
      * @param {number} offset Offset of text from the given node the selection reaches.
      */
-    function getBodyTextOffset(node: Node, offset: number): number {
+    function getBodyTextOffset(node: Node, offset: number): Object {
         // get the window selection,
         var sel = window.getSelection();
 
@@ -206,6 +220,14 @@ export default function TextEditor(props) {
         // the given node plus the offset from that node.
         range.setEnd(node, offset);
 
+        // get the bounding rectangle,
+        const rect = range.getBoundingClientRect()
+
+        // divide it by the text editor lineheight set in theme, round to nearest digit,
+        const line = Math.round(rect.height / 19)
+
+        console.log(Math.round(line))
+        
         // remove selection ranges,
         sel.removeAllRanges()
 
@@ -213,7 +235,10 @@ export default function TextEditor(props) {
         sel.addRange(range);
 
         // return the range length to find the index of this node selection.
-        return sel.toString().length;
+        return {
+            index: sel.toString().length,
+            line: line
+        }
     }
 
     return (

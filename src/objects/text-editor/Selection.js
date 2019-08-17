@@ -3,10 +3,10 @@
 /**
  * A selection is the start and end index of the text edited in the {@link TextEditor}
  * when the user makes a selection.
- * @property {Number} start Selection start of this {@link Selection}.
- * @property {Number} end Selection end of this {@link Selection}.
+ * @property {} start Selection start object of this {@link Selection}.
+ * @property {} end Selection end object of this {@link Selection}.
  */
-export default function Selection(start: Number, end: Number) {
+export default function Selection(start: {}, end: {}) {
     this.start = start
     this.end = end
 }

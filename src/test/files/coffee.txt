@@ -13,5 +13,5 @@ import Mug from './coffee/Mug.js'
     const cuppa = Mug(color = Colors.BLUE)
 
     // create the cup of coffee!
-    return Coffee(espresso, mug)
+    return Coffee(espresso, cuppa)
 }
