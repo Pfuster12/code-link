@@ -103,7 +103,7 @@ const Line = React.memo(props => {
         </div>
     )
 }, (prevProps, nextProps) => {
-    return prevProps.value == nextProps.value && prevProps.index == nextProps.index
+    return prevProps.value == nextProps.value
 })
 
 Line.defaultProps = {

@@ -47,7 +47,7 @@ Editor Theme
 /*
     Theme for the text editor input selection background color.
 */
-.text-input-theme::selection {
+::selection {
     background-color: yellow;
 }
 

@@ -54,7 +54,18 @@ export default function TextEditor(props) {
      * Store this {@link TextEditor}'s {@link Selection} in state.
      * Default to an initial selection.
      */
-    const [selection, setSelection] = useState(new Selection(0, 0))
+    const [selection, setSelection] = useState(new Selection({
+        start: { 
+            offset: 0, 
+            line: 0,
+            lineOffset: 0
+        },
+        end: {
+            offset: 0, 
+            line: 0,
+            lineOffset: 0
+        }
+    }))
 
     /**
      * Effect to update the lines array on a text prop change.
@@ -116,7 +127,7 @@ export default function TextEditor(props) {
                     // clone the array,
                     const l = prevLines.slice()
 
-                    // poo the first item,
+                    // shift the first item,
                     l.shift()
 
                     // callback to the editor,
@@ -138,66 +149,120 @@ export default function TextEditor(props) {
                 // use an alphanumeric symbol regex to listen to character we want only,
                 // from start ^, for only this char set [a-z0-9], until end of line $, ignoring case (i flag),
                 const isAlphaNumeric = /^[a-z0-9\(\)\{\}\[\]\:\;\'\'\=\+\-\_\*\&\^\%\$\"\"\!\`\@\<\>\\\|\/\~\,\.\?]$/i.test(event.key)
+
+                if (isAlphaNumeric) {
+                    setLines(prevLines => {
+                        // clone,
+                        const l = prevLines.slice()
+
+                        return l
+                    })
+                }
                 break;
         }
     }
 
     /**
-     * Handles a onclick event on the line generator component.
+     * Handles the onclick event on the line generator component.
      * @param event
      */
-    function handleLineGeneratorClick(event: React.SyntheticEvent) {
-        // get the selection object,
-        const sel = getSelectionOffsets()
+    function handleEditorClick(event: React.SyntheticEvent) {
+        // get the selection indices,
+        const sel = getSelection()
 
         console.log(sel);
 
-        // set the selection of the text editor,
+        // set the editor selection,
         setSelection(sel)
 
-        // focus on the text area ref to consume keyboard events,
         textareaRef.current.focus()
     }
     
     /**
-     * Helper function to get the selection indices of the currently selection in the
+     * Get the selection indices of the current document selection in the
      * this {@link TextEditor} using the document selection API.
      * 
-     * @returns Selection indices object.
+     * @returns A Selection indices object.
      */
-    function getSelectionOffsets(): Selection {
-        // init a selection and a range,
-        var sel, range;
+    function getSelection(): Selection {
+        // get the line generator element,
+        const editor = document.getElementsByClassName('line-generator')[0]
 
-        // init start and end indices to 0,
-        var start = 0, end = 0;
+        // grab the document selection object, we know it will only be contained
+        const sel = document.getSelection()
 
-        // with a valid selection,
-        if (window.getSelection) {
-            // get the selection,
-            sel = window.getSelection()
+        // get the range object of the selection,
+        const range = sel.getRangeAt(0)
 
-            // if the range count is valid,
-            if (sel.rangeCount) {
-                // get the first range,
-                range = sel.getRangeAt(sel.rangeCount - 1)
+        // get the text selection indices,
+        const offset = getSelectionTextOffset(editor, range)
 
-                // get the text offset of the start node,
-                start = getBodyTextOffset(range.startContainer, range.startOffset)
+        // get the selection range line numbers,
+        const lineNumbers = getSelectionLineNumber(range)
 
-                // get the text offset of the end node,
-                end = getBodyTextOffset(range.endContainer, range.endOffset)
+        // get the line offset index,
+        const lineOffsets = getLineOffsets(editor.textContent, offset.start, offset.end)
 
-                // remove the existing ranges,
-                sel.removeAllRanges()
-
-                // add the new range to the range,
-                sel.addRange(range)
+        return new Selection(
+            { 
+                offset: offset.start, 
+                line: lineNumbers.start,
+                lineOffset: lineOffsets.start
+            },
+            {
+                offset: offset.start, 
+                line: lineNumbers.end,
+                lineOffset: lineOffsets.end
             }
-        }
+        )
+    }
 
-        // return a new selection object with the calculated indices,
-        return new Selection(start, end)
+    /**
+     * Gets the line numbers of the current text selection range. A range can span
+     * multiple lines, and can start in both directions, i.e. start high to low.
+     * @param {Range} range The range object of the current selection.
+     * 
+     * @returns Line numbers object for start and end selection range.
+     */
+    function getSelectionLineNumber(range: Range): Object {
+        // find the line number of the current start selection by dividing by the
+        // lineheight and round the division to find the whole number, the line
+        // is added 1 to find the 1 based line,
+        const startLine = Math.round((range.getBoundingClientRect().top / 19))
+
+        // find the line number of the current start selection,
+        const endLine = Math.round((range.getBoundingClientRect().bottom / 19)) - 1
+
+        return { 
+            start: startLine,
+            end: endLine 
+        }
+    }
+
+    /**
+     * Gets the offsets from the start of the line.
+     * @param {string} text Text content to get the line offset.
+     * @param {number} startIndex Start index of the text.
+     * @param {number} endIndex End index of the text.
+     */
+    function getLineOffsets(text: string, startIndex: number, endIndex: number): Object {
+        // extract the first chunk of the text,
+        const firstChunk = text.slice(0, startIndex)
+
+        // extract the second chunk of the text,
+        const secondChunk = text.slice(endIndex, text.length)
+
+        // find the offset of the first line selection by getting the index
+        // of the new line character starting from the end of the offset,
+        const startOffset = startIndex - firstChunk.lastIndexOf('\n')
+
+        // repeat for the end offset of the line,
+        const endOffset = secondChunk.indexOf('\n')
+
+        return {
+            start: startOffset,
+            end: endOffset
+        }
     }
 
     /**
@@ -206,38 +271,34 @@ export default function TextEditor(props) {
      * @param {Node} node Document node to get the offset from the beginning of the node container.
      * @param {number} offset Offset of text from the given node the selection reaches.
      */
-    function getBodyTextOffset(node: Node, offset: number): Object {
-        // get the window selection,
-        var sel = window.getSelection();
+    function getSelectionTextOffset(editor: Element, range: Range) {
+        // init a start range
+        const startrange = new Range()
 
-        // create a new range,
-        var range = document.createRange();
+        // set the start to the beginning,
+        startrange.setStart(editor, 0)
 
-        // select all the node contents of the line-generator...
-        range.selectNodeContents(document.getElementsByClassName('line-generator')[0]);
+        // set the end to the start container to find the start index from the text,
+        startrange.setEnd(range.startContainer, range.startOffset)
 
-        // knowing the start of the range is at the beginning set the end of the range to
-        // the given node plus the offset from that node.
-        range.setEnd(node, offset);
+        // get the index by finding the length of the string,
+        const startIndex = startrange.toString().length
 
-        // get the bounding rectangle,
-        const rect = range.getBoundingClientRect()
+        // init an end range,
+        const endrange = new Range()
 
-        // divide it by the text editor lineheight set in theme, round to nearest digit,
-        const line = Math.round(rect.height / 19)
+        // set the start to the beginning,
+        endrange.setStart(editor, 0)
 
-        console.log(Math.round(line))
-        
-        // remove selection ranges,
-        sel.removeAllRanges()
+        // set the end to the end container to find the end index fom the text,
+        endrange.setEnd(range.endContainer, range.endOffset)
 
-        // add the created one,
-        sel.addRange(range);
+        // get the index by finding the length of the string,
+        const endIndex = endrange.toString().length
 
-        // return the range length to find the index of this node selection.
-        return {
-            index: sel.toString().length,
-            line: line
+        return { 
+            start: startIndex,
+            end: endIndex 
         }
     }
 
@@ -247,7 +308,7 @@ export default function TextEditor(props) {
                 
             </div>
             <div className="line-generator"
-                onClick={handleLineGeneratorClick}>
+                onClick={handleEditorClick}>
                 {
                     lines.map(([key, line], index) => {
                         return <Line key={key}
