@@ -1,8 +1,7 @@
 // @flow
 
-import React, { useState, useMemo, useRef, useEffect } from 'react';
-import Selection from '../../objects/text-editor/Selection'
-import LineGenerator from './LineGenerator';
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import { Selection, SelOffset } from '../../objects/text-editor/Selection'
 import KeyCode from './KeyCode';
 import Chopstring from '../../lexer/chopstring';
 import Line from './Line';
@@ -31,12 +30,12 @@ export default function TextEditor(props) {
     const editorListener = props.editorListener
 
      /**
-     * The chopstring library memoized.
+     * The {@link Chopstring} library memoized.
      */
     const chopstring = useMemo(() => Chopstring())
 
     /**
-     * Selection Manager for this text editor.
+     * {@link SelectionManager} for this text editor memoized.
      */
     const selectionManager = useMemo(() => SelectionManager())
 
@@ -60,18 +59,7 @@ export default function TextEditor(props) {
      * Store this {@link TextEditor}'s {@link Selection} in state.
      * Default to an initial selection.
      */
-    const [selection, setSelection] = useState(new Selection({
-        start: { 
-            offset: 0, 
-            line: 0,
-            lineOffset: 0
-        },
-        end: {
-            offset: 0, 
-            line: 0,
-            lineOffset: 0
-        }
-    }))
+    const [selection, setSelection] = useState(new Selection(new SelOffset(), new SelOffset()))
 
     /**
      * Effect to update the lines array on a text prop change.
@@ -83,13 +71,16 @@ export default function TextEditor(props) {
          // map the lines to keys,
          const map = chopstring.mapLineKeys(lines)
 
-         editorListener(map.length)
-
-         // set the state,
+         // set the lines state,
          setLines(map)
     },
     // run on text change,
     [text])
+
+    /**
+     * Memoize the editor listener for the lines length callback.
+     */
+    useCallback(editorListener(lines.length), [lines.length])
 
     /**
      * Handles the Key Down event in the text area.
@@ -109,18 +100,48 @@ export default function TextEditor(props) {
              Key Enter
             */
             case KeyCode.KEY_ENTER:
-                setLines(prevLines => {
-                    // slice the array from the selection,
-                    const firstChunk = prevLines.slice(0, selection.start.line)
-                    const lastChunk = prevLines.slice(selection.end.line, prevLines.length)
-                    // add a new item with the spread operator,
-                    const map = [...firstChunk, [Math.random(), ' '], ...lastChunk]
+                // if selection is collapsed perform a simple slice of the array,
+                if (selection.isCollapsed()) {
+                    // set the new line map array state,
+                    setLines(prevLines => {
+                        // get the selected line,
+                        const enterLine = prevLines[selection.start.line][1]
+    
+                        // slice the line in the given line offset,
+                        // first chunk...
+                        const firstChunk = enterLine.slice(0, selection.start.lineOffset)
+    
+                        // second chunk...
+                        const secondChunk = enterLine.slice(selection.start.lineOffset, enterLine.length)
+    
+                        // slice the array from the selection,
+                        const firstSlice = prevLines.slice(0, selection.start.line)
+    
+                        // slice other half,
+                        const lastSlice = prevLines.slice(selection.end.line, prevLines.length)
+    
+                        // spread the new line in between slices...
+                        // if the sliced chunk is empty then add a newline character only...
+                        const map = [...firstSlice, [Math.random(), firstChunk.length > 0 ? firstChunk : '\n'], ...lastSlice]
+    
+                        // set the start line to the first chunk sliced,
+                        map[selection.start.line + 1][1] = secondChunk
+    
+                        return map
+                    })
 
-                    // callback to the editor,
-                    editorListener(map.length)
-
-                    return map
-                })
+                    // set the selection to be at the start offset of the new line added,
+                    setSelection(new Selection(
+                        new SelOffset(selection.start.offset - selection.start.lineOffset,
+                            selection.start.line + 1, 
+                            0),
+                        new SelOffset(selection.start.offset - selection.start.lineOffset,
+                            selection.start.line + 1, 
+                            0)))
+               // else we need to perform a deletion of the selected lines/text of the multiple spans,
+               } else {
+                   
+               }
                 // break case,
                 break;
 
@@ -130,15 +151,17 @@ export default function TextEditor(props) {
             case KeyCode.KEY_BACKSPACE:
                 
                 setLines(prevLines => {
-                    // clone the array,
-                    const l = prevLines.slice()
+                    if (prevLines.length > 1) {
+                        // clone the array,
+                        const l = prevLines.slice()
 
-                    // shift the first item,
-                    l.shift()
+                        // shift the first item,
+                        l.shift()
 
-                    // callback to the editor,
-                    editorListener(l.length)
-                    return l
+                        return l
+                    } else {
+                        return prevLines
+                    }
                 })
                 break;
 
@@ -146,6 +169,10 @@ export default function TextEditor(props) {
              Key Space.
             */
             case KeyCode.KEY_SPACE:
+                break;
+
+            case KeyCode.KEY_ESCAPE:
+                window.getSelection().removeAllRanges()
                 break;
                 
             /*
@@ -157,12 +184,7 @@ export default function TextEditor(props) {
                 const isAlphaNumeric = /^[a-z0-9\(\)\{\}\[\]\:\;\'\'\=\+\-\_\*\&\^\%\$\"\"\!\`\@\<\>\\\|\/\~\,\.\?]$/i.test(event.key)
 
                 if (isAlphaNumeric) {
-                    setLines(prevLines => {
-                        // clone,
-                        const l = prevLines.slice()
-
-                        return l
-                    })
+                   
                 }
                 break;
         }
@@ -170,17 +192,17 @@ export default function TextEditor(props) {
 
     /**
      * Handles the onclick event on the line generator component.
-     * @param event
+     * @param {React.SyntheticEvent} event
      */
     function handleEditorClick(event: React.SyntheticEvent) {
         // get the line generator element,
         const editor = document.getElementsByClassName('line-generator')[0]
    
-        // save the range of the user selection,
+        // store temporarily the range of the user selection,
         const range = selectionManager.saveSelection()
 
         // get the selection indices,
-        const sel = selectionManager.getSelection(editor)
+        var sel = selectionManager.getSelection(editor)
 
         console.log(sel);
 
@@ -190,7 +212,9 @@ export default function TextEditor(props) {
         // focus on the text area to consume key events,
         textareaRef.current.focus()
 
+        // if range and selection is valid,
         if (range && window.getSelection) {
+            // add the range back after losing it by focusing on the text area,
             sel = window.getSelection();
             sel.removeAllRanges();
             sel.addRange(range);
@@ -202,10 +226,11 @@ export default function TextEditor(props) {
             <div className="text-editor-overlays">
                 
             </div>
+            {/* Map the line map-array to Line components */}
             <div className="line-generator"
                 onClick={handleEditorClick}>
                 {
-                    lines.map(([key, line], index) => {
+                    lines.map(([key, line]) => {
                         return <Line key={key}
                                 value={line}
                                 plugin={plugin}/>

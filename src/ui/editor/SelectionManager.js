@@ -1,3 +1,7 @@
+import { Selection, SelOffset } from "../../objects/text-editor/Selection";
+
+// @flow
+
 /**
  * This is a library to manage DOM selection in the {@link TextEditor} component.
  * The DOM editor consists of a series of CSS styled spans which can be selected
@@ -22,7 +26,7 @@ const SelectionManager = () => {
         try {
               // get the range object of the selection,
             const range = sel.getRangeAt(0)
-
+            
             // get the text selection indices,
             const offset = getSelectionTextOffset(editor, range)
 
@@ -32,19 +36,14 @@ const SelectionManager = () => {
             // get the line offset index,
             const lineOffsets = getLineOffsets(editor.textContent, offset.start, offset.end)
 
-            return new Selection(
-                { 
-                    offset: offset.start, 
-                    line: lineNumbers.start,
-                    lineOffset: lineOffsets.start
-                },
-                {
-                    offset: offset.start, 
-                    line: lineNumbers.end,
-                    lineOffset: lineOffsets.end
-                }
-            )
+            return new Selection(new SelOffset(offset.start, 
+                    lineNumbers.start, 
+                    lineOffsets.start),
+                new SelOffset(offset.end, 
+                    lineNumbers.end, 
+                    lineOffsets.end))
         } catch (err) {
+            console.error(err)
             // return an empty object,
             return {}
         }
@@ -102,7 +101,7 @@ const SelectionManager = () => {
         const endOffset = secondChunk.indexOf('\n')
 
         return {
-            start: startOffset,
+            start: startOffset - 1,
             end: endOffset
         }
     }
@@ -151,7 +150,7 @@ const SelectionManager = () => {
      */
     function saveSelection(): Range {
         if (window.getSelection) {
-            sel = window.getSelection();
+            const sel = window.getSelection();
             if (sel.getRangeAt && sel.rangeCount) {
                 return sel.getRangeAt(0);
             }

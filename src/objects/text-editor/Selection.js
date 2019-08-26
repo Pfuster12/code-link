@@ -7,7 +7,7 @@
  * @property {SelOffset} start Selection start object of this {@link Selection}.
  * @property {SelOffset} end Selection end object of this {@link Selection}.
  */
-export default function Selection(start: SelOffset, end: SelOffset) {
+export function Selection(start: SelOffset, end: SelOffset) {
     this.start = start
     this.end = end
 }
@@ -16,8 +16,8 @@ export default function Selection(start: SelOffset, end: SelOffset) {
  * Checks if the selection object is one span.
  * @returns whether the selection spans the same index.
  */
-Selection.prototype.isSelCollapsed = function () {
-    return this.start === this.end
+Selection.prototype.isCollapsed = function () {
+    return this.start.offset === this.end.offset
 }
 
 /**
@@ -26,7 +26,7 @@ Selection.prototype.isSelCollapsed = function () {
  * @param {number} line The line number of the selection index.
  * @param {number} lineOffset The offset of the selection from the line in this selection.
  */
-function SelOffset(offset: number, line: number, lineOffset: number) {
+export function SelOffset(offset: ?number, line: ?number, lineOffset: ?number) {
     this.offset = offset
     this.line = line
     this.lineOffset = lineOffset
