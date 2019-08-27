@@ -42,18 +42,18 @@ Once you have the [Prerequisites](#prerequisites) covered:
    Replace `USER_PROFILE` with a profile name on which you've the React Developer Tools Extension installed. Example, Profile 1, Profile 2, etc,. <br>
    Replace `VERSION` with whatever the current extension version is.
 
-   1. On Windows:
-      ```
-      EXTENSION_PATH="C:/Users/USER_NAME/AppData/Local/Google/Chrome/User Data/USER_PROFILE/Extensions/fmkadmapgofadopljbjfkapdkoienihi/VERSION"
-      ```
-   1. On MAC:
-      ```
-      EXTENSION_PATH="~/Library/Application\ Support/Google/Chrome/USER_PROFILE/Extensions/fmkadmapgofadopljbjfkapdkoienihi/VERSION"
-      ```
-   1. On Linux:
-      ```
-      EXTENSION_PATH="~/.config/google-chrome/USER_PROFILE/Extensions/fmkadmapgofadopljbjfkapdkoienihi/VERSION"
-      ```
+   - On Windows:
+     ```
+     EXTENSION_PATH="C:/Users/USER_NAME/AppData/Local/Google/Chrome/User Data/USER_PROFILE/Extensions/fmkadmapgofadopljbjfkapdkoienihi/VERSION"
+     ```
+   - On MAC:
+     ```
+     EXTENSION_PATH="~/Library/Application\ Support/Google/Chrome/USER_PROFILE/Extensions/fmkadmapgofadopljbjfkapdkoienihi/VERSION"
+     ```
+   - On Linux:
+     ```
+     EXTENSION_PATH="~/.config/google-chrome/USER_PROFILE/Extensions/fmkadmapgofadopljbjfkapdkoienihi/VERSION"
+     ```
 
 1. You can now run
 
