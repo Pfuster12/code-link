@@ -38,8 +38,8 @@ Once you have the [Prerequisites](#prerequisites) covered:
 
 1. Update/set `EXTENSION_PATH` variable in `.env` to proper value
 
-   Replace `USER_NAME` with your logged in username of computer. Example, ironman, wonderwoman etc,. <br>
-   Replace `USER_PROFILE` with a profile name on which you've the React Developer Tools Extension installed. Example, Profile 1, Profile 2, etc,. <br>
+   Replace `USER_NAME` with your logged-in username of the computer. Example, ironman, wonderwoman, etc. <br>
+   Replace `USER_PROFILE` with a profile name on which you have the React Developer Tools Extension installed. Example, Profile 1, Profile 2, etc. <br>
    Replace `VERSION` with whatever the current extension version is.
 
    - On Windows:
