@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
+require('dotenv').config()
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -38,9 +39,7 @@ function createWindow () {
 
 		// Add the React dev tools manually to the chromium window,
 		// Make sure you have the FULL path here or it won't work
-		BrowserWindow.addDevToolsExtension(
-		"C:/Users/pfust/AppData/Local/Google/Chrome/User Data/Profile 2/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.0.5_0"
-		);
+		BrowserWindow.addDevToolsExtension(process.env.EXTENSION_PATH);
 
 		// Open the DevTools.
 		win.webContents.openDevTools()
