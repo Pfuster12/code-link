@@ -1,11 +1,12 @@
 // @flow
 
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
-import { Selection, SelOffset } from '../../objects/text-editor/Selection'
+import { Selection, SelOffset, CaretPos } from '../../objects/text-editor/Selection'
 import KeyCode from './KeyCode';
 import Chopstring from '../../lexer/chopstring';
 import Line from './Line';
 import SelectionManager from './SelectionManager';
+import Caret from './Caret';
 
 /**
  * Editor handling text input and displaying code text. Displays a code editor
@@ -59,7 +60,10 @@ export default function TextEditor(props) {
      * Store this {@link TextEditor}'s {@link Selection} in state.
      * Default to an initial selection.
      */
-    const [selection, setSelection] = useState(new Selection(new SelOffset(), new SelOffset()))
+    const [selection, setSelection] = useState(
+        new Selection(new SelOffset(),
+            new SelOffset(),
+            new CaretPos(0, 0)))
 
     /**
      * Effect to update the lines array on a text prop change.
@@ -137,7 +141,8 @@ export default function TextEditor(props) {
                             0),
                         new SelOffset(selection.start.offset - selection.start.lineOffset,
                             selection.start.line + 1, 
-                            0)))
+                            0),
+                            selection.caret))
                // else we need to perform a deletion of the selected lines/text of the multiple spans,
                } else {
                    
@@ -197,28 +202,44 @@ export default function TextEditor(props) {
     function handleEditorClick(event: React.SyntheticEvent) {
         // get the line generator element,
         const editor = document.getElementsByClassName('line-generator')[0]
-   
-        // store temporarily the range of the user selection,
-        const range = selectionManager.saveSelection()
 
         // get the selection indices,
         var sel = selectionManager.getSelection(editor)
 
-        console.log(sel);
+        // store temporarily the range of the user selection,
+        const range = selectionManager.saveSelection()
 
         // set the editor selection,
         setSelection(sel)
 
+        console.log(sel);
+        
         // focus on the text area to consume key events,
-        textareaRef.current.focus()
+        //textareaRef.current.focus()
 
         // if range and selection is valid,
-        if (range && window.getSelection) {
-            // add the range back after losing it by focusing on the text area,
-            sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);
-        }
+        // if (range && window.getSelection) {
+        //     // add the range back after losing it by focusing on the text area,
+        //     sel = window.getSelection()
+
+        //     // remove all new ranges,
+        //     sel.removeAllRanges()
+
+        //     // add the stored range back,
+        //     sel.addRange(range)
+        // }
+    }
+
+    function onMouseDown(event) {
+        setSelection(prevSelection => {
+            var caret;
+            
+            if (window.getSelection().rangeCount > 0) {
+                caret = selectionManager.getCaretPosition(window.getSelection().getRangeAt(0))
+            }
+
+            return new Selection(prevSelection.start, prevSelection.end, caret ? caret : prevSelection.caret)
+        })
     }
 
     return (
@@ -226,9 +247,11 @@ export default function TextEditor(props) {
             <div className="text-editor-overlays">
                 
             </div>
+            <Caret position={selection.caret}/>
             {/* Map the line map-array to Line components */}
             <div className="line-generator"
-                onClick={handleEditorClick}>
+                onClick={handleEditorClick}
+                onMouseDown={onMouseDown}>
                 {
                     lines.map(([key, line]) => {
                         return <Line key={key}

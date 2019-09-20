@@ -50,7 +50,8 @@ h1 {
     display: flex;
     flex-direction: column;
     min-width: 100px;
-    width: calc(50%)
+    width: calc(50%);
+    overflow: hidden;
 }
 
 .row-split-pane {
@@ -94,8 +95,8 @@ h1 {
 
 .text-input {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 1px;
+    height: 1px;
     padding: 0;
     background-color: transparent;
     color: lightgray;
@@ -155,6 +156,7 @@ h1 {
     position: absolute;
     width: 2px;
     user-select: none;
+    z-index: 4;
 }
 
 .selection-parent {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { CaretPos } from '../../objects/text-editor/Selection';
 
 /**
  * Displays a blinking caret in the text editor.
@@ -20,22 +21,29 @@ export default function Caret(props) {
      * Effect to set blink interval
      */
     useEffect(() => {
-        const interval = setInterval(() => {
-            setBlink(!blink);
-        }, 500);
+        // const interval = setInterval(() => {
+        //     setBlink(!blink);
+        // }, 600);
 
-        return () => {
-            clearInterval(interval);
-          };
-      }, [blink]);
+        // return () => {
+        //     clearInterval(interval);
+        //   };
+      },
+      []);
 
     // return views,
     return (
-    <div style={{top: position ? position.y : 0, left: position ? position.x : 0, visibility: blink ? 'hidden' : 'visible'}} 
+    <div style={
+        {
+            top: position.y,
+            left: position.x,
+            visibility: blink ? 'hidden' : 'visible'
+        }
+    } 
         className="caret lineheight-theme token caret-theme"/>
     )
 }
 
 Caret.defaultProps = {
-    position: { x: 0, y: 0}
+    position: new CaretPos(0, 0)
 }

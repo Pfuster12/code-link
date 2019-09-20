@@ -1,4 +1,5 @@
-import { Selection, SelOffset } from "../../objects/text-editor/Selection";
+import { Selection, SelOffset, CaretPos } from "../../objects/text-editor/Selection";
+import { log } from "util";
 
 // @flow
 
@@ -36,17 +37,32 @@ const SelectionManager = () => {
             // get the line offset index,
             const lineOffsets = getLineOffsets(editor.textContent, offset.start, offset.end)
 
+            // get the caret position,
+            const caret = getCaretPosition(range)
+
             return new Selection(new SelOffset(offset.start, 
                     lineNumbers.start, 
                     lineOffsets.start),
                 new SelOffset(offset.end, 
                     lineNumbers.end, 
-                    lineOffsets.end))
+                    lineOffsets.end),
+                    caret)
         } catch (err) {
             console.error(err)
             // return an empty object,
             return {}
         }
+    }
+
+    /**
+     * Gets the caret position of the current dom selection.
+     * 
+     * @returns {CaretPos}
+     */
+    function getCaretPosition(range: Range): CaretPos {
+        const rect = range.getClientRects()[0]
+
+        return new CaretPos(rect.x, rect.y)
     }
 
     /**
@@ -151,6 +167,7 @@ const SelectionManager = () => {
     function saveSelection(): Range {
         if (window.getSelection) {
             const sel = window.getSelection();
+
             if (sel.getRangeAt && sel.rangeCount) {
                 return sel.getRangeAt(0);
             }
@@ -160,7 +177,8 @@ const SelectionManager = () => {
 
     return Object.freeze({
         getSelection,
-        saveSelection
+        saveSelection,
+        getCaretPosition
     })
 }
 

@@ -66,6 +66,13 @@ Editor Theme
 }
 
 /*
+ Caret theme.
+*/
+.caret-theme {
+    background-color: blue
+}
+
+/*
 ------------------------------------------
  Syntax tokens theme.
 ------------------------------------------
