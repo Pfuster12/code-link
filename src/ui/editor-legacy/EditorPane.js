@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext, useEffect } from 'react';
+import React, { useState, useMemo, useContext, useEffect } from './react';
 import Gutter from './gutter/Gutter';
 import TextEditor from './TextEditor';
 import PluginReader from '../../lexer/PluginReader';

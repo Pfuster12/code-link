@@ -7,6 +7,7 @@ interface PaneProps {
 
 /** 
  * Represents a container of any view that can be resized.
+ * @property props
  */
 export default function Pane(props: PaneProps) {
 

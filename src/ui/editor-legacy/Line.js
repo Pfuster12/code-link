@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useMemo, useLayoutEffect } from 'react';
+import React, { useState, useMemo, useLayoutEffect } from './react';
 import Chopstring from '../../lexer/chopstring';
 import Token from "../../objects/text-editor/Token";
 

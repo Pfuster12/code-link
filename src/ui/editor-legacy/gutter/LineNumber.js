@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './react';
 
 /**
  * Component representing the line number in the gutter.

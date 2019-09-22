@@ -5,7 +5,7 @@
  * 
  * @returns {Token[]} Token array.
  */
-function tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {
+export function tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {
      // create an array from the grammars object,
      // ATT use <any> hack for ES6 ts to discover the values method,
      // @see stackoverflow.com/questions/42166914/there-is-an-object-values-on-typescript
@@ -44,7 +44,7 @@ function tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {
  * 
  * @returns {string[]} Line array.
  */
-function split(text: string): string[] {
+export function split(text: string): string[] {
     // A new-line separator RegEx for any platform (respecting an optional Windows and
     // Mac CRLF) with positive lookbehind to split a line by newline while keeping
     // the delimiters.
@@ -71,7 +71,7 @@ function split(text: string): string[] {
 /**
  * Typescripst namespace for the Lexer interfaces.
  */
-declare namespace Lexer {
+export declare namespace Lexer {
 
     /**
      * A Plugin in the lexer is a Language grammar with an id and a list of Grammar rules

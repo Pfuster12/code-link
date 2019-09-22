@@ -5,17 +5,20 @@ import SplitPane from './ui/SplitPane'
 // Load the Code Link private styles file. These are not user-facing customisable styles,
 // but essential, under-the-hood styles for the app to work properly.
 import './ui/styles/code-link-styles.css'
+import Editor from './ui/editor/Editor';
 
 /**
  * This is the entry point of this react x electron editor application.
  */
 export default function App() {
 
+    const file = './test/files/coffee.txt'
+
     return (
         <main>
             <SplitPane>
                 <h1>pane-1</h1>
-                <h1>pane-2</h1>
+                <Editor file={file}/>
             </SplitPane>
         </main>
     )

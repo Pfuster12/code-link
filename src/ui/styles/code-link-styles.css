@@ -76,43 +76,18 @@ h1 {
 }
 
 /*
- * Editor and text editor styles.
+ * Editor styles.
  */
  
-.editor-pane {
+.editor {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex: 1;
     min-width: 100px;
-}
-
-.text-editor {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
     cursor: text;
 }
 
-.text-input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    background-color: transparent;
-    color: lightgray;
-}
-
-.line-generator {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    white-space: pre;
-    z-index: 1;
-    overflow-x: scroll;
-    overflow-y: scroll;
-}
-
-.token-generator {
+.line {
     display: flex;
     flex: 0 0 auto;
     flex-direction: row;
@@ -146,24 +121,4 @@ h1 {
 
 .line-number:hover {
     opacity: 1;
-}
-
-/*
- * Selection and Caret styles.
- */
-
-.caret {
-    position: absolute;
-    width: 2px;
-    user-select: none;
-    z-index: 4;
-}
-
-.selection-parent {
-    
-}
-
-.selection {
-    position: absolute;
-    user-select: none;
 }

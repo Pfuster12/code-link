@@ -1,6 +1,6 @@
 // @flow
 
-import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useCallback } from './react';
 import { Selection, SelOffset, CaretPos } from '../../objects/text-editor/Selection'
 import KeyCode from './KeyCode';
 import Chopstring from '../../lexer/chopstring';
