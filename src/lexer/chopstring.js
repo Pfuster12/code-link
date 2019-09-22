@@ -45,7 +45,7 @@ const Chopstring = () => {
             const regex = new RegExp(feature.match, 'gms')
       
             // array to store match results,
-            var matchResults: Array
+            var matchResults: Array  
 
             // loop the match expression to get every match result,
             while ((matchResults = regex.exec(text)) !== null) {

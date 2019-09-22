@@ -1,9 +1,14 @@
-import React from 'react'
+import * as React from 'react'
+
+interface PaneProps {
+    children: JSX.Element,
+    id: string
+}
 
 /** 
  * Represents a container of any view that can be resized.
  */
-export default function Pane(props) {
+export default function Pane(props: PaneProps) {
 
     /**
      * The children views of this Pane.

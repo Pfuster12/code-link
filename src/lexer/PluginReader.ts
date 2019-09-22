@@ -22,7 +22,7 @@ const PluginReader = () => {
      * @param {string} path The relative file path.
      * @returns {Promise} A Promise of the JSON object.
      */
-    function readPlugin(path: string): Promise<Object> {
+    function readPlugin(path: string): Promise<Lexer.Plugin> {
         console.info('%c Reading plugin from ' + path, 'color: royalblue;')
         return fs.readFile(path).then(parseJson)
     }
@@ -32,7 +32,7 @@ const PluginReader = () => {
      * @param {string} str String to parse into JSON.
      * @returns {Promise} A Promise of the JSON object.
      */
-    function parseJson(str: string): Promise<Object> {
+    function parseJson(str: string): Promise<Lexer.Plugin> {
         console.info('%c Parsing JSON...', 'color: royalblue;')
         return new Promise((resolve, reject) => {
             try {

@@ -1,14 +1,23 @@
-import React, { useState } from 'react'
+import * as React from 'react'
+import { useState } from 'react'
 import Pane from './Pane'
 import Resizer from './Resizer'
-import EditorPane from './editor/EditorPane';
+
+interface SplitPaneProps {
+    children: JSX.Element[]
+}
+
+interface SplitPaneState {
+    isDragging: boolean,
+    dragX: number
+}
 
 /** 
  * A set of two panes that respond to each others resizing by a Resizer.
  * @see Pane
  * @see Resizer
  */
-export default function SplitPane(props) {
+export default function SplitPane(props: SplitPaneProps) {
 
     /**
      * This SplitPane children.
@@ -26,9 +35,9 @@ export default function SplitPane(props) {
 
     /**
      * Handles the mouse down event.
-     * @param {React.SyntheticEvent} event Contains event data.
+     * @param event contains event data.
      */
-    function onMouseDown(event) {
+    function onMouseDown(event: React.MouseEvent) {
         // set dragging to true and the startX,
         setSplitPaneState({
             isDragging: true,
@@ -38,19 +47,23 @@ export default function SplitPane(props) {
 
     /**
      * Handles the mouse move event.
-     * @param {React.SyntheticEvent} event Contains event data.
+     * @param {React.SyntheticEvent} event contains event data.
      */
-    function onMouseMove(event) {
+    function onMouseMove(event:  React.MouseEvent) {
         // if in dragging state,
         if (splitPaneState.isDragging) {
             // get the split pane element,
-            const splitPane = document.getElementsByClassName("row-split-pane")[0];
+            const splitPane: HTMLElement = document.getElementsByClassName("row-split-pane")[0] as HTMLElement
+
             // set the cursor to a resize,
             splitPane.style.cursor = 'col-resize'
+
             // set user select to none,
             splitPane.style.userSelect = 'none'
+
             // get the current x pos,
             const currentX = event.clientX
+
             // find the delta,
             var deltaX = currentX - splitPaneState.dragX
     
@@ -84,10 +97,12 @@ export default function SplitPane(props) {
      * Handles the mouse down event.
      * @param {React.SyntheticEvent} event Contains event data.
      */
-    function onMouseUp(event) {
+    function onMouseUp(event: React.MouseEvent) {
         // grab the splitpane,
-        const splitPane = document.getElementsByClassName("row-split-pane")[0];
+        const splitPane: HTMLElement = document.getElementsByClassName("row-split-pane")[0] as HTMLElement
+        // set cursor to default,
         splitPane.style.cursor = 'default'
+
         // set user select to none,
         splitPane.style.userSelect = 'default'
         
