@@ -19,7 +19,7 @@ const SelectionManager = () => {
      * @param {Element} editor The editor HTML element.
      * @returns A Selection indices object.
      */
-    function getSelection(editor: Element): Selection {
+    function getSelection(editor) {
         // grab the document selection object, we know it will only be contained
         const sel = document.getSelection()
 
@@ -59,7 +59,7 @@ const SelectionManager = () => {
      * 
      * @returns {CaretPos}
      */
-    function getCaretPosition(range: Range): CaretPos {
+    function getCaretPosition(range) {
         const rect = range.getClientRects()[0]
 
         return new CaretPos(rect.x, rect.y)
@@ -72,7 +72,7 @@ const SelectionManager = () => {
      * 
      * @returns Line numbers object for start and end selection range.
      */
-    function getSelectionLineNumber(range: Range): Object {
+    function getSelectionLineNumber(range) {
         // find a token text editor element,
         const editor = document.getElementsByClassName('text-input')[0]
 
@@ -102,7 +102,7 @@ const SelectionManager = () => {
      * @param {number} startIndex Start index of the text.
      * @param {number} endIndex End index of the text.
      */
-    function getLineOffsets(text: string, startIndex: number, endIndex: number): Object {
+    function getLineOffsets(text, startIndex, endIndex) {
         // extract the first chunk of the text,
         const firstChunk = text.slice(0, startIndex)
 
@@ -128,7 +128,7 @@ const SelectionManager = () => {
      * @param {Node} node Document node to get the offset from the beginning of the node container.
      * @param {number} offset Offset of text from the given node the selection reaches.
      */
-    function getSelectionTextOffset(editor: Element, range: Range) {
+    function getSelectionTextOffset(editor, range) {
         // init a start range
         const startrange = new Range()
 
@@ -164,7 +164,7 @@ const SelectionManager = () => {
      * 
      * @returns Range object of the selection.
      */
-    function saveSelection(): Range {
+    function saveSelection() {
         if (window.getSelection) {
             const sel = window.getSelection();
 

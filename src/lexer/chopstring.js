@@ -1,17 +1,3 @@
-// @flow
-
-import Token from "../objects/text-editor/Token";
-
-/**
- * The Language Plugin type. A plugin defines a language's grammar,
- * keywords, symbols ...etc in an object we can parse.
- */
-type LanguagePlugin = {
-    features: Object,
-    features_multi: Object,
-    patterns: Array<string>
-}
-
 /**
  * This is a library to tokenise text by the rules implemented in a given language plugin.
  * 
@@ -32,7 +18,7 @@ const Chopstring = () => {
      * 
      * @Returns an array of {@link Token} objects.
      */
-    function applyTokenPatterns(text: string, plugin: LanguagePlugin): Token[] {
+    function applyTokenPatterns(text, plugin) {
         // create an array from the features object,
         const features = Object.values(plugin.features)
 
@@ -45,7 +31,7 @@ const Chopstring = () => {
             const regex = new RegExp(feature.match, 'gms')
       
             // array to store match results,
-            var matchResults: Array  
+            var matchResults 
 
             // loop the match expression to get every match result,
             while ((matchResults = regex.exec(text)) !== null) {
@@ -112,7 +98,7 @@ const Chopstring = () => {
      * @param {string} text 
      * @returns {string[]} Array of lines from the text.
      */
-    function splitLines(text: string): string[] {
+    function splitLines(text) {
         // A new-line separator RegEx for any platform (respecting an optional Windows and
         // Mac CRLF) with positive lookbehind to split a line by newline while keeping
         // the delimiters.
@@ -145,7 +131,7 @@ const Chopstring = () => {
      * 
      * @returns {Map<number, string>} Map of key-line pairs.
      */
-    function mapLineKeys(lines: string[]) {
+    function mapLineKeys(lines) {
         // map the line array to a key-value map array,
         return lines.map(line => [Math.random(), line])
     }
@@ -156,7 +142,7 @@ const Chopstring = () => {
      * @param {string} text
      * @param multiToken
      */
-    function applyMultiTokenPatterns(text, multiToken: Token) {
+    function applyMultiTokenPatterns(text, multiToken) {
         
     }
 

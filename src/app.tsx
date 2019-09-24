@@ -8,7 +8,7 @@ import './ui/styles/code-link-styles.css'
 import Editor from './ui/editor/Editor';
 
 /**
- * This is the entry point of this react x electron editor application.
+ * The entry point component of this editor application main window.
  */
 export default function App() {
 
