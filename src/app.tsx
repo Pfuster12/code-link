@@ -12,6 +12,7 @@ import Editor from './ui/editor/Editor';
  */
 export default function App() {
 
+    // temp file path...
     const file = './test/files/coffee.txt'
 
     return (

@@ -45,7 +45,7 @@ export default function Editor(props: EditorProps) {
                 setLines(map)
             })
             .catch(err => {
-
+                console.log(`Error reading file ${props.file} in editor`);
             })
     },
     [])
@@ -54,8 +54,9 @@ export default function Editor(props: EditorProps) {
      * Load the default language plugin into this editor.
      */
     useEffect(() => {
+        // read the plugin using the reader library,
         PluginReader()
-            .readPlugin('./src/io/lexer/plugins/javascript-plugin.json')
+            .readPlugin('./src/lexer/plugins/javascript-plugin.json')
             .then(res => {
                 console.log('Plugin read ', res);
                 
@@ -63,7 +64,7 @@ export default function Editor(props: EditorProps) {
                 setPlugin(res)
             })
             .catch(err => {
-
+                console.log(`Error reading plugin in editor`);
             })
     },
     [])

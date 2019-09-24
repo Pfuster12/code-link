@@ -1,31 +1,47 @@
 {
     "id": "javascript",
     "grammars": {
-        "punctuation": {
-            "rule": "\\W",
-            "name": "punctuation" 
-        },
         "whitespace": {
             "rule": "\\s",
             "name": ""
         },
-        "function": {
-            "rule": "\\b[a-z][\\w]*?(?=\\()\\b",
-            "name": "function"
+        "number": {
+            "rule": "[0-9]+",
+            "name": "number"
         },
-        "paren_begin": {
+        "identifier": {
+            "rule": "[a-zA-Z_]+",
+            "name": "identifier"
+        },
+        "semicolon": {
+            "rule": "\\;",
+            "name": "semicolon"
+        },
+        "comma": {
+            "rule": "\\,",
+            "name": "comma"
+        },
+        "period": {
+            "rule": "\\.",
+            "name": "period"
+        },
+        "colon": {
+            "rule": "\\:",
+            "name": "colon"
+        },
+        "paren.open": {
             "rule": "\\(",
             "name": "paren.open"
         },
-        "paren_end": {
+        "paren.close": {
             "rule": "\\)",
             "name": "paren.close"
         },
-        "bracket_begin": {
+        "bracket.open": {
             "rule": "\\{",
             "name": "bracket.open"
         },
-        "bracket_end": {
+        "bracket.close": {
             "rule": "\\}",
             "name": "bracket.close"
         },
@@ -33,16 +49,8 @@
             "rule": "\\b(abstract|break|char|debugger|double|export|finally|goto|in|let|null|public|super|throw|try|volatile|arguments|byte|class|default|else|extends|float|if|instanceof|long|package|return|switch|throws|typeof|while|await|case|const|delete|enum|false|for|implements|int|native|private|short|synchronized|transient|var|with|boolean|catch|continue|do|eval|final|function|import|interface|new|protected|static|this|true|voname|yield|from)\\b",
             "name": "keyword"
         },
-        "number": {
-            "rule": "\\b\\d+?\\b",
-            "name": "number"
-        },
-        "variable": {
-            "rule": "\\b[a-z]([\\w]+)?",
-            "name": "variable"
-        },
         "object": {
-            "rule": "\\b[A-Z]([\\w]+)?",
+            "rule": "\\b[A-Z][a-zA-Z_0-9]?",
             "name": "object"
         },
         "operator": {
@@ -68,28 +76,6 @@
         "line_comment": {
             "rule": "\/\/.+",
             "name": "line-comment"
-        },
-        "multiline_comment": {
-            "rule": "\/\\*.+",
-            "name": "multiline-comment",
-            "multi": {
-                "start": {
-                    "rule": "\/\\*",
-                    "name": "multiline-comment-start"
-                },
-                "end": {
-                    "rule": "\\*\/",
-                    "name": "multiline-comment-end"
-                }
-            }
-        },
-        "multiline_comment_end": {
-            "rule": "(.+?)?\\*\/",
-            "name": "multiline-comment-end"
-        },
-        "multiline_comment_line": {
-            "rule": "\/\\*.+?\\*\/",
-            "name": "multiline-comment-line"
         }
     }
 }

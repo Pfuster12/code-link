@@ -34,6 +34,8 @@ export function tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {
 
      // sort tokens by their natural index order,
      tokens.sort((a, b) => a.index - b.index)
+
+     console.log('Tokenised result: ', tokens);
      
      return tokens
 }
