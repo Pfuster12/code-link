@@ -5,7 +5,7 @@ import { any } from "prop-types"
  * @param text Text to tokenise.
  * @param plugin Plugin language to apply grammars from.
  * 
- * @returns {Token[]} Token array.
+ * @returns Token array.
  */
 export function tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {
      // create an array from the grammars object,
@@ -41,7 +41,7 @@ export function tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {
 
        // init a previous token to hold the last indexed token,
        var previousToken: Lexer.Token = {
-        index: -1,
+        index: 0,
         name: "",
         value: "",
     }
@@ -54,14 +54,24 @@ export function tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {
             const prevEndIndex = previousToken.index + previousToken.value.length
             const endIndex = token.index + token.value.length
 
-             // if the last index is greater than the previous tokens last index,
-             if (endIndex > prevEndIndex) {
-                // push this token,
+            // if the start index is the same,
+            if (token.index === previousToken.index) {
+                // the new token might consume the old one, so pop the previous token for now...
+                acc.pop()
+
+                // chain the token names,
+                token.name = token.name + ' ' + previousToken.name
+            }
+
+            // if this new token's index consumes the previous one,
+            if (endIndex >= prevEndIndex) {
+                // push this new token instead,
                 acc.push(token)
 
-                // assign the token to the previous token,
+                // assign the previous token to this one,
                 previousToken = token
             }
+
             // return the accumulator,
             return acc
      }, 
@@ -76,7 +86,7 @@ export function tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {
  * Split a given text by new line character into an array of strings.
  * @param text to separate by new line.
  * 
- * @returns {string[]} Line array.
+ * @returns Line array.
  */
 export function split(text: string): string[] {
     // A new-line separator RegEx for any platform (respecting an optional Windows and
