@@ -1,3 +1,5 @@
+import { any } from "prop-types"
+
 /**
  * Tokenises the given text into a {@link Token} array.using a given {@link Plugin}.
  * @param text Text to tokenise.
@@ -36,8 +38,38 @@ export function tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {
      tokens.sort((a, b) => a.index - b.index)
 
      console.log('Tokenised result: ', tokens);
+
+       // init a previous token to hold the last indexed token,
+       var previousToken: Lexer.Token = {
+        index: -1,
+        name: "",
+        value: "",
+    }
+
+     // reduce repeated tokens by index,
+     const reducer = tokens.reduce(
+        (acc: Lexer.Token[],
+        token: Lexer.Token) => {
+            // end index,
+            const prevEndIndex = previousToken.index + previousToken.value.length
+            const endIndex = token.index + token.value.length
+
+             // if the last index is greater than the previous tokens last index,
+             if (endIndex > prevEndIndex) {
+                // push this token,
+                acc.push(token)
+
+                // assign the token to the previous token,
+                previousToken = token
+            }
+            // return the accumulator,
+            return acc
+     }, 
+     [])
+
+     console.log('Reduced Tokens result: ', reducer);
      
-     return tokens
+     return reducer
 }
 
 /**
