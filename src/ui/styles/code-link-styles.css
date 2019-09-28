@@ -81,6 +81,14 @@ h1 {
  
 .editor {
     display: flex;
+    flex-direction: row;
+    flex: 1;
+    min-width: 100px;
+    cursor: text;
+}
+
+.text-editor {
+    display: flex;
     flex-direction: column;
     flex: 1;
     min-width: 100px;

@@ -1,8 +1,14 @@
 import * as React from 'react'
-import { useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import * as lexer from '../../lexer/Lexer'
 
 interface LineProps {
+
+    /**
+     * The lexer library with which to parse this line.
+     */
+    lexer: lexer.Lexer
+
     /**
      * String value of this line.
      */
@@ -27,7 +33,7 @@ export default function Line(props: LineProps) {
     const tokens = useMemo(() => {
         // skip if plugin is null,
         if (props.plugin !== null) {
-            return lexer.tokenise(props.value, props.plugin)
+            return props.lexer.tokenise(props.value, props.plugin)
         } else {
             return []
         }

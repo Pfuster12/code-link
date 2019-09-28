@@ -1,6 +1,13 @@
 {
     "id": "javascript",
+    "patterns": {
+        "function_declaration": [ "function", "function-identifier", "paren.open", "paren.close", "bracket.open", "bracket.close" ]
+    },
     "grammars": {
+        "function-identifier": {
+            "rule": "\\b[a-z_]([a-zA-Z_]+)?(?=\\()",
+            "name": "function-identifier"
+        },
         "whitespace": {
             "rule": "\\s",
             "name": ""
@@ -10,8 +17,12 @@
             "name": "number"
         },
         "identifier": {
-            "rule": "[a-zA-Z_]+",
+            "rule": "\\b[a-zA-Z_]([a-zA-Z_]+)?",
             "name": "identifier"
+        },
+        "class-identifier": {
+            "rule": "\\b[A-Z_]([a-zA-Z_]+)?",
+            "name": "class-identifier"
         },
         "semicolon": {
             "rule": "\\;",
@@ -49,6 +60,10 @@
             "rule": "\\b(abstract|break|char|debugger|double|export|finally|goto|in|let|null|public|super|throw|try|volatile|arguments|byte|class|default|else|extends|float|if|instanceof|long|package|return|switch|throws|typeof|while|await|case|const|delete|enum|false|for|implements|int|native|private|short|synchronized|transient|var|with|boolean|catch|continue|do|eval|final|function|import|interface|new|protected|static|this|true|voname|yield|from)\\b",
             "name": "keyword"
         },
+        "function": {
+            "rule": "function",
+            "name": "function"
+        },
         "operator": {
             "rule": "\\=|\\+|\\-|\\*|\\/|\\%|\\+\\+|\\-\\\\\\\\-|\\+\\=|\\-\\=|\\*\\=|\\/\\=|\\%\\=|\\=\\=|\\=\\=\\=|\\!\\=|\\!\\=\\=|\\>|\\<|\\>\\=|\\<\\=|\\?|\\:|\\&\\&|\\|\\||\\!|\\&|\\||\\~|\\^|\\<\\<|\\>\\>",
             "name": "operator"
@@ -58,20 +73,24 @@
             "name": "newline"
         },
         "string_template": {
-            "rule": "\"",
+            "rule": "\".+\"",
             "name": "string-template"
         },
         "string_literal": {
-            "rule": "\\'",
+            "rule": "\\'.+\\'",
             "name": "string-literal"
         },
         "template_literal": {
-            "rule": "\\`",
+            "rule": "\\`.+\\`",
             "name": "template-literal"
         },
         "line_comment": {
             "rule": "\/\/.+",
             "name": "line-comment"
+        },
+        "multiline-comment": {
+            "rule": "\/\\*\\*",
+            "name": "multiline-comment"
         }
     }
 }

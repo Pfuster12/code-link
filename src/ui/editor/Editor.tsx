@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Line from './Line'
 import FileReader from '../../io/FileReader'
-import * as lexer from '../../lexer/Lexer'
+import * as Lexer from '../../lexer/Lexer'
 import PluginReader from '../../lexer/PluginReader'
+import Gutter from './gutter/Gutter'
 
 interface EditorProps {
     file: string
@@ -18,14 +19,20 @@ interface EditorProps {
 export default function Editor(props: EditorProps) {
 
     /**
-     * Store the current plugin for this editor to provide down the component tree.
+     * Store the current {@link Lexer.Plugin} for this editor to provide down the component tree.
      */
-    const [plugin, setPlugin] = useState(null)
+    const [plugin, setPlugin] = useState<Lexer.Lexer.Plugin | null>(null)
 
     /**
      * Stores the line array this editor displays.
      */
     const [lines, setLines] = useState([['0', 'function test() {'], ['1', 'const x = 1']])
+
+    /**
+     * Memoizes the {@link Lexer} class use to parse the editor text.
+     * Depends on the plugin to change.
+     */
+    const lexer = useMemo(() => new Lexer.Lexer(plugin ? plugin.id : ''), [plugin])
 
     /**
      * Read editor file effect.
@@ -48,7 +55,7 @@ export default function Editor(props: EditorProps) {
                 console.log(`Error reading file ${props.file} in editor`);
             })
     },
-    [])
+    [props.file])
 
     /**
      * Load the default language plugin into this editor.
@@ -64,18 +71,22 @@ export default function Editor(props: EditorProps) {
                 setPlugin(res)
             })
             .catch(err => {
-                console.log(`Error reading plugin in editor`);
+                console.log(`Error reading plugin in editor`, err);
             })
     },
     [])
 
     return (
         <div className="editor token">
-            {
-                lines.map(line => <Line key={line[0]}
-                     value={line[1]} 
-                     plugin={plugin}/>)
-            }
+            <Gutter/>
+            <div className="text-editor">
+                {
+                    lines.map(line => <Line key={line[0]}
+                        lexer={lexer}
+                        value={line[1]} 
+                        plugin={plugin}/>)
+                }
+            </div>
         </div>
     )
 }

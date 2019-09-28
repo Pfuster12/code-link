@@ -99,14 +99,14 @@ Editor Theme
 /*
     Object/Class token theme.
 */
-.object {
+.class-identifier {
     color: darkcyan
 }
 
 /*
     Function identifier token theme.
 */
-.function {
+.function-identifier {
     color: palevioletred;
 }
 
