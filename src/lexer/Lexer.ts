@@ -8,17 +8,29 @@ export class Lexer {
     /**
      * Stores a readable language id this Lexer is configured to parse.
      */
-    language: string
+    private _language: string
+    get language(): string {
+        return this._language
+    }
+    set language(language: string) {
+        this._language = language
+    }
 
     /**
-     * Stores this lexer's line state.
+     * Stores this lexer's line state. Can be one of {@link LineState} enums.
      */
-    lineState: LineState = LineState.NORMAL
+    private _lineState: LineState = LineState.NORMAL
+    get lineState(): LineState {
+        return this._lineState
+    }
+    set lineState(state: LineState) {
+        this._lineState = state
+    }
 
     constructor(language: string) {
         console.log('Lexer initialised for language id: ', language);
         
-        this.language = language
+        this._language = language
     }
 
     /**
@@ -39,90 +51,103 @@ export class Lexer {
         // create a new array to store the tokens,
         const tokens: Lexer.Token[] = []
 
-        if (this.lineState === LineState.MULTILINECOMMENT) {
-            tokens.push({
-                name: 'multiline-comment',
-                value: text,
-                index: 0
-            })
+        // for each lang grammar,
+        grammars.forEach((grammar: Lexer.Grammar) => {
+            // init a lexical grammar rule,
+            var rule: string = ""
 
-            return tokens
-        } 
-        else {
-            // for each lang grammar,
-            grammars.forEach((grammar: Lexer.Grammar) => {
-                // init a lexical grammar rule,
-                var rule: string = ""
-
-                // if the pattern field is exists,
-                if (grammar.pattern) {
-                    grammar.pattern.forEach(token => {
-                        rule += plugin.grammars[token].rule
-                    })
-                    console.log('Rule from pattern is: ', rule);
-                    
-                } else {
-                    rule = grammar.rule
-                }
-                // create the regex from the feature match regex,
-                const regex = new RegExp(rule, 'gms')
-        
-                // nullable array to store match results,
-                var matchResults: RegExpExecArray
-
-                // loop until null the match expression to get every regex match result,
-                while ((matchResults = regex.exec(text)) !== null) {
-                    tokens.push({
-                        name: grammar.name,
-                        value: matchResults[0],
-                        index: regex.lastIndex - matchResults[0].length
-                    })
-                }
-            })
-
-            // sort tokens by their natural index order,
-            tokens.sort((a, b) => a.index - b.index)
-
-            // init a previous token to hold the last indexed token,
-            var previousToken: Lexer.Token = {
-                index: 0,
-                name: "",
-                value: "",
+            // if the pattern field is exists,
+            if (grammar.pattern) {
+                grammar.pattern.forEach(token => {
+                    rule += plugin.grammars[token].rule
+                })
+                console.log('Rule from pattern is: ', rule);
+                
+            } else {
+                rule = grammar.rule
             }
+            // create the regex from the feature match regex,
+            const regex = new RegExp(rule, 'gms')
+    
+            // nullable array to store match results,
+            var matchResults: RegExpExecArray
 
-            // reduce repeated tokens by index,
-            const reducer = tokens.reduce(
-                (acc: Lexer.Token[],
-                token: Lexer.Token) => {
-                    // end index,
-                    const prevEndIndex = previousToken.index + previousToken.value.length
-                    const endIndex = token.index + token.value.length
+            // loop until null the match expression to get every regex match result,
+            while ((matchResults = regex.exec(text)) !== null) {
 
-                    // if the start index is the same...
-                    if (token.index === previousToken.index) {
-                        // the new token might consume the old one, so pop the previous token,
-                        acc.pop()
+                // set the line state according to the multiline token type,
+                if (grammar.name === 'multiline-comment-end') {
+                    this._lineState = LineState.NORMAL
+                } else if (grammar.name === 'multiline-comment') {
+                    this._lineState = LineState.MULTILINECOMMENT
+                }
 
+                tokens.push({
+                    name: grammar.name,
+                    value: matchResults[0],
+                    index: regex.lastIndex - matchResults[0].length
+                })
+            }
+        })
+
+        // sort tokens by their natural index order,
+        tokens.sort((a, b) => a.index - b.index)
+
+        // init a previous token to hold the last indexed token,
+        var previousToken: Lexer.Token = {
+            index: 0,
+            name: "",
+            value: "",
+        }
+
+        // reduce repeated tokens by index,
+        const reducer = tokens.reduce(
+            (acc: Lexer.Token[],
+            token: Lexer.Token) => {
+                // end index,
+                const prevEndIndex = previousToken.index + previousToken.value.length
+                const endIndex = token.index + token.value.length
+
+                // if the start index is the same...
+                if (token.index === previousToken.index) {
+                    // the new token might consume the old one, so pop the previous token,
+                    acc.pop()
+
+                    // if this new token's end is the same as the previous one...
+                    if (endIndex === prevEndIndex) {
                         // chain the token names since they start at the same index,
                         token.name = token.name + ' ' + previousToken.name
-                    }
 
-                    // if this new token's index consumes the previous one...
-                    if (endIndex >= prevEndIndex) {
                         // push this new token instead,
                         acc.push(token)
 
                         // assign the previous token to this one,
                         previousToken = token
                     }
+                }
 
-                    // return the accumulator,
-                    return acc
-            }, 
-            [])
+                // if this new token's index consumes the previous one...
+                if (endIndex > prevEndIndex) {
+                    // push this new token instead,
+                    acc.push(token)
 
-            return reducer
-        }
+                    // assign the previous token to this one,
+                    previousToken = token
+                }
+
+                // match the line state,
+                if (this._lineState == LineState.MULTILINECOMMENT) {
+                    token.name = token.name + ' ' + 'multiline-comment'
+                }
+
+                // return the accumulator,
+                return acc
+        }, 
+        [])
+
+        console.log(reducer);
+
+        return reducer
     }
 
     /**

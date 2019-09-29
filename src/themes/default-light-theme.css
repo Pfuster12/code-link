@@ -129,7 +129,7 @@ Editor Theme
     Line comment token theme.
 */
 .line-comment {
-    color: grey;
+    color: darkgrey;
     font-weight: normal 
 }
 
@@ -137,7 +137,7 @@ Editor Theme
     Multi Line comment token theme.
 */
 .multiline-comment {
-    color: teal;
+    color: grey;
     font-weight: normal 
 }
 
@@ -145,7 +145,7 @@ Editor Theme
     Multi Line comment token theme.
 */
 .multiline-comment-line {
-    color: teal;
+    color: grey;
     font-weight: normal 
 }
 
@@ -153,7 +153,7 @@ Editor Theme
     Multi Line comment token theme.
 */
 .multiline-comment-end {
-    color: teal;
+    color: grey;
     font-weight: normal 
 }
 

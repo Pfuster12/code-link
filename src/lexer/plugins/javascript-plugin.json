@@ -1,7 +1,7 @@
 {
     "id": "javascript",
     "patterns": {
-        "function_declaration": [ "function", "function-identifier", "paren.open", "paren.close", "bracket.open", "bracket.close" ]
+        "function_declaration": [ "function", "identifier", "paren.open", "paren.close", "bracket.open", "bracket.close" ]
     },
     "grammars": {
         "function-identifier": {
@@ -91,6 +91,10 @@
         "multiline-comment": {
             "rule": "\/\\*\\*",
             "name": "multiline-comment"
+        },
+        "multiline-comment-end": {
+            "rule": "\\*\/",
+            "name": "multiline-comment-end"
         }
     }
 }
