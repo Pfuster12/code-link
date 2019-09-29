@@ -78,7 +78,7 @@ export class Lexer {
                 // set the line state according to the multiline token type,
                 if (grammar.name === 'multiline-comment-end') {
                     this._lineState = LineState.NORMAL
-                } else if (grammar.name === 'multiline-comment') {
+                } else if (grammar.name === 'multiline-comment-start') {
                     this._lineState = LineState.MULTILINECOMMENT
                 }
 
@@ -111,7 +111,9 @@ export class Lexer {
                 // if the start index is the same...
                 if (token.index === previousToken.index) {
                     // the new token might consume the old one, so pop the previous token,
-                    acc.pop()
+                    if (endIndex >= prevEndIndex) {
+                        acc.pop()
+                    }
 
                     // if this new token's end is the same as the previous one...
                     if (endIndex === prevEndIndex) {
@@ -144,9 +146,7 @@ export class Lexer {
                 return acc
         }, 
         [])
-
-        console.log(reducer);
-
+        
         return reducer
     }
 

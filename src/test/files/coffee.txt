@@ -2,11 +2,11 @@ import Coffee from './coffee/Coffee.js'
 import Espresso from './coffee/Espresso.js'
 import Mug from './coffee/Mug.js'
 
-/**
+/** prefix
  * Brews a cup of coffee.
  */
  function brew(): Coffee {
-    // create a two shot espresso with arabica grounds,
+    typo // create a two shot espresso with arabica grounds,
     const espresso = Espresso(shots = 2, grounds = "arabica")
     
     // get yourself a mug...
@@ -14,4 +14,10 @@ import Mug from './coffee/Mug.js'
 
     // create the cup of coffee!
     return Coffee(espresso, cuppa)
+}
+
+
+/** Create a blend */
+ function blend(grounds1: string, grounds2) {
+    return grounds1 + grounds2
 }

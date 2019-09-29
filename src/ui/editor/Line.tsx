@@ -44,7 +44,7 @@ export default function Line(props: LineProps) {
     return (
         <div className="line">
             { 
-                tokens.map(token => <span className={token.name}>{token.value}</span>) 
+                tokens.map((token, index) => <span key={index} className={token.name}>{token.value}</span>) 
             }
         </div>
     )
