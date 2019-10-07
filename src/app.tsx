@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import SplitPane from './ui/SplitPane'
+import SplitPane from './ui/panes/SplitPane'
 
 // Load the Code Link private styles file. These are not user-facing customisable styles,
 // but essential, under-the-hood styles for the app to work properly.

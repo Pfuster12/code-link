@@ -2,7 +2,7 @@ import Coffee from './coffee/Coffee.js'
 import Espresso from './coffee/Espresso.js'
 import Mug from './coffee/Mug.js'
 
-/** prefix
+/**
  * Brews a cup of coffee.
  */
  function brew(): Coffee {
