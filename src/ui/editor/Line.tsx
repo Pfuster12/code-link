@@ -21,7 +21,7 @@ interface LineProps {
 }
 
 /**
- * The code editor component handling syntax highlighting and text editing.
+ * The code editor component handling line syntax highlighting and text editing.
  * @property props
  */
 export default function Line(props: LineProps) {

@@ -95,6 +95,10 @@ h1 {
     cursor: text;
 }
 
+.text-edit {
+    position: absolute;
+}
+
 .line {
     display: flex;
     flex: 0 0 auto;
@@ -112,21 +116,18 @@ h1 {
     width: 60px;
     flex-direction: column;
     user-select: none;
-}
-
-.line-number-parent {
-    width: 100%;
+    align-items: stretch
 }
 
 .line-number {
     display: flex;
-    flex: 1;
+    flex: 0 0 auto;
     justify-content: center;
     cursor: pointer;
-    opacity: 0.6;
     -webkit-user-select: none;
+    color: grey
 }
 
 .line-number:hover {
-    opacity: 1;
+    color: black
 }

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 interface GutterProps {
-    
+    lines: string[][]
 }
 
 /**
@@ -13,7 +13,7 @@ export default function Gutter(props: GutterProps) {
     return (
         <div className="gutter">
             { 
-                <span>1</span>
+                props.lines.map((line, index) => <span className="line-number">{index + 1}</span>)
             }
         </div>
     )

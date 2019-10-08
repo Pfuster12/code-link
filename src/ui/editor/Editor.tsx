@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import Line from './Line'
 import FileReader from '../../io/FileReader'
 import * as Lexer from '../../lexer/Lexer'
@@ -26,13 +26,24 @@ export default function Editor(props: EditorProps) {
     /**
      * Stores the line array this editor displays.
      */
-    const [lines, setLines] = useState([['0', 'function test() {'], ['1', 'const x = 1']])
+    const [lines, setLines] = useState<string[][]>([])
 
     /**
      * Memoizes the {@link Lexer} class use to parse the editor text.
      * Depends on the plugin to change.
      */
     const lexer = useMemo(() => new Lexer.Lexer(plugin ? plugin.id : ''), [plugin])
+
+    /**
+     * Reference for the text area consuming the text editing.
+     * @see 
+     */
+    const textarea = useRef(null)
+
+    /**
+     * Holds the text consuming the text editor temporarily.
+     */
+    const [text, setText] = useState('')
 
     /**
      * Read editor file effect.
@@ -76,10 +87,27 @@ export default function Editor(props: EditorProps) {
     },
     [])
 
+    /**
+     * Handles the editor click.
+     * @param event 
+     */
+    function onEditorClick(event: React.SyntheticEvent) {
+        textarea.current.focus()
+    }
+
+    /**
+     * Handles the text area on change event.
+     * @param event 
+     */
+    function onTextChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+        setText(event.currentTarget.value)
+    }
+
     return (
         <div className="editor token">
-            <Gutter/>
-            <div className="text-editor">
+            <Gutter lines={lines}/>
+            <div className="text-editor"
+                onClick={onEditorClick}>
                 {
                     lines.map(line => <Line key={line[0]}
                         lexer={lexer}
@@ -87,6 +115,10 @@ export default function Editor(props: EditorProps) {
                         plugin={plugin}/>)
                 }
             </div>
+            <textarea className="text-edit"
+                ref={textarea}
+                value={text}
+                onChange={onTextChange}/>
         </div>
     )
 }
