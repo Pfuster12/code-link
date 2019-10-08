@@ -97,6 +97,8 @@ h1 {
 
 .text-edit {
     position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .line {

@@ -5,6 +5,7 @@ import FileReader from '../../io/FileReader'
 import * as Lexer from '../../lexer/Lexer'
 import PluginReader from '../../lexer/PluginReader'
 import Gutter from './gutter/Gutter'
+import { SelectionManager } from './SelectionManager'
 
 interface EditorProps {
     file: string
@@ -33,6 +34,11 @@ export default function Editor(props: EditorProps) {
      * Depends on the plugin to change.
      */
     const lexer = useMemo(() => new Lexer.Lexer(plugin ? plugin.id : ''), [plugin])
+
+    /**
+     * Memoizes the {@link SelectionManager}.
+     */
+    const selector = useMemo(() => new SelectionManager(), [])
 
     /**
      * Reference for the text area consuming the text editing.
@@ -92,6 +98,11 @@ export default function Editor(props: EditorProps) {
      * @param event 
      */
     function onEditorClick(event: React.SyntheticEvent) {
+        // get selection of the editor,
+        const sel = selector.getSelection(document.getElementsByClassName('text-editor')[0] as HTMLElement)
+
+        console.log('Selection is: ', sel);
+
         textarea.current.focus()
     }
 

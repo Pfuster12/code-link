@@ -8,14 +8,14 @@ interface SelectionOffset {
  * The DOM editor consists of a series of CSS styled spans which can be selected
  * by the user and manipulated with special key controls.
  */
-class SelectionManager {
+export class SelectionManager {
 
     /**
      * Get the selection indices of the current document selection in using the document selection API.
      * @param editor The editor HTML element.
      * @returns A Selection indices object.
      */
-    getSelection(editor: HTMLElement) {
+    getSelection(editor: HTMLElement): SelectionOffset {
         // grab the document selection object, we know it will only be contained
         const sel = document.getSelection()
 
@@ -30,13 +30,50 @@ class SelectionManager {
              // get the selection range line numbers,
              const lineNumbers = this.getSelectionLineNumber(range)
 
+             return offset
         } catch (e) {
             console.log('Error getting selection: ', e);
             
         }
     }
 
-    
+    /**
+     * Get the offset from the beginning of the given node, plus any 
+     * extra offset given by the parameter 'offset'.
+     * @param editor Document node to get the offset from the beginning of the container.
+     * @param range Range selection.
+     */
+    private getSelectionTextOffset(editor: HTMLElement, range: Range): SelectionOffset {
+        // init a start range
+        const startrange = new Range()
+
+        // set the start to the beginning,
+        startrange.setStart(editor, 0)
+
+        // set the end to the start container to find the start index from the text,
+        startrange.setEnd(range.startContainer, range.startOffset)
+
+        // get the index by finding the length of the string,
+        const startIndex = startrange.toString().length
+
+        // init an end range,
+        const endrange = new Range()
+
+        // set the start to the beginning,
+        endrange.setStart(editor, 0)
+
+        // set the end to the end container to find the end index fom the text,
+        endrange.setEnd(range.endContainer, range.endOffset)
+
+        // get the index by finding the length of the string,
+        const endIndex = endrange.toString().length
+
+        return { 
+            start: startIndex,
+            end: endIndex 
+        }
+    }
+
     /**
      * Gets the line numbers of the current text selection range. A range can span
      * multiple lines, and can start in both directions, i.e. start high to low.
@@ -44,7 +81,7 @@ class SelectionManager {
      * 
      * @returns Selecction offset for start and end selection range.
      */
-    getSelectionLineNumber(range: Range): SelectionOffset {
+    private getSelectionLineNumber(range: Range): SelectionOffset {
         // find a token text editor element,
         const editor = document.getElementsByClassName('editor')[0]
 
@@ -74,7 +111,7 @@ class SelectionManager {
      * @param startIndex Start index of the text.
      * @param endIndex End index of the text.
      */
-    getLineOffsets(text: string, startIndex: number, endIndex: number): SelectionOffset {
+    private getLineOffsets(text: string, startIndex: number, endIndex: number): SelectionOffset {
         // extract the first chunk of the text,
         const firstChunk = text.slice(0, startIndex)
 
@@ -91,43 +128,6 @@ class SelectionManager {
         return {
             start: startOffset - 1,
             end: endOffset
-        }
-    }
-
-    /**
-     * Get the offset from the beginning of the given node, plus any 
-     * extra offset given by the parameter 'offset'.
-     * @param editor Document node to get the offset from the beginning of the container.
-     * @param range Range selection.
-     */
-    getSelectionTextOffset(editor: HTMLElement, range: Range): SelectionOffset {
-        // init a start range
-        const startrange = new Range()
-
-        // set the start to the beginning,
-        startrange.setStart(editor, 0)
-
-        // set the end to the start container to find the start index from the text,
-        startrange.setEnd(range.startContainer, range.startOffset)
-
-        // get the index by finding the length of the string,
-        const startIndex = startrange.toString().length
-
-        // init an end range,
-        const endrange = new Range()
-
-        // set the start to the beginning,
-        endrange.setStart(editor, 0)
-
-        // set the end to the end container to find the end index fom the text,
-        endrange.setEnd(range.endContainer, range.endOffset)
-
-        // get the index by finding the length of the string,
-        const endIndex = endrange.toString().length
-
-        return { 
-            start: startIndex,
-            end: endIndex 
         }
     }
 }
