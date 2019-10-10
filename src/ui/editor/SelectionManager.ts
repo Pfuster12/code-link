@@ -3,6 +3,11 @@ interface SelectionOffset {
     end: number
 }
 
+interface SelectionLineOffset {
+    start: number,
+    end: number
+}
+
 /**
  * This is a class to manage DOM selection in the {@link Editor} component.
  * The DOM editor consists of a series of CSS styled spans which can be selected
@@ -26,9 +31,6 @@ export class SelectionManager {
 
             // get the text selection indices,
             const offset = this.getSelectionTextOffset(editor, range)
-
-             // get the selection range line numbers,
-             const lineNumbers = this.getSelectionLineNumber(range)
 
              return offset
         } catch (e) {
@@ -81,9 +83,9 @@ export class SelectionManager {
      * 
      * @returns Selecction offset for start and end selection range.
      */
-    private getSelectionLineNumber(range: Range): SelectionOffset {
+    getSelectionLineNumber(range: Range): SelectionLineOffset {
         // find a token text editor element,
-        const editor = document.getElementsByClassName('editor')[0]
+        const editor = document.getElementsByClassName('text-editor')[0]
 
         // get the computed style,
         const style = window.getComputedStyle(editor)
@@ -102,32 +104,6 @@ export class SelectionManager {
         return { 
             start: startLine,
             end: endLine 
-        }
-    }
-
-    /**
-     * Gets the offsets from the start of the line.
-     * @param text Text content to get the line offset.
-     * @param startIndex Start index of the text.
-     * @param endIndex End index of the text.
-     */
-    private getLineOffsets(text: string, startIndex: number, endIndex: number): SelectionOffset {
-        // extract the first chunk of the text,
-        const firstChunk = text.slice(0, startIndex)
-
-        // extract the second chunk of the text,
-        const secondChunk = text.slice(endIndex, text.length)
-
-        // find the offset of the first line selection by getting the index
-        // of the new line character starting from the end of the offset,
-        const startOffset = startIndex - firstChunk.lastIndexOf('\n')
-
-        // repeat for the end offset of the line,
-        const endOffset = secondChunk.indexOf('\n')
-
-        return {
-            start: startOffset - 1,
-            end: endOffset
         }
     }
 }

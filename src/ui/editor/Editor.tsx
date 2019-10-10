@@ -6,6 +6,7 @@ import * as Lexer from '../../lexer/Lexer'
 import PluginReader from '../../lexer/PluginReader'
 import Gutter from './gutter/Gutter'
 import { SelectionManager } from './SelectionManager'
+import KeyHandler from './KeyHandler'
 
 interface EditorProps {
     file: string
@@ -45,11 +46,6 @@ export default function Editor(props: EditorProps) {
      * @see 
      */
     const textarea = useRef(null)
-
-    /**
-     * Holds the text consuming the text editor temporarily.
-     */
-    const [text, setText] = useState('')
 
     /**
      * Read editor file effect.
@@ -101,7 +97,14 @@ export default function Editor(props: EditorProps) {
         // get selection of the editor,
         const sel = selector.getSelection(document.getElementsByClassName('text-editor')[0] as HTMLElement)
 
+        // get the range object of the selection,
+        const range = document.getSelection().getRangeAt(0)
+        
+        // get the selection range line numbers,
+        const lineNumbers = selector.getSelectionLineNumber(range)
+
         console.log('Selection is: ', sel);
+        console.log('Line number is: ', lineNumbers);
 
         textarea.current.focus()
     }
@@ -110,8 +113,9 @@ export default function Editor(props: EditorProps) {
      * Handles the text area on change event.
      * @param event 
      */
-    function onTextChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        setText(event.currentTarget.value)
+    function onKeyDown(event: React.KeyboardEvent) {
+        KeyHandler(event, setLines)
+        textarea.current.clear()
     }
 
     return (
@@ -128,8 +132,7 @@ export default function Editor(props: EditorProps) {
             </div>
             <textarea className="text-edit"
                 ref={textarea}
-                value={text}
-                onChange={onTextChange}/>
+                onKeyDown={onKeyDown}/>
         </div>
     )
 }

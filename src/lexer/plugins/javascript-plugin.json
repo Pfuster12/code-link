@@ -12,6 +12,10 @@
             "rule": "\\s",
             "name": ""
         },
+        "punctuation": {
+            "rule": "\\W",
+            "name": "punctuation"
+        },
         "number": {
             "rule": "[0-9]+",
             "name": "number"
@@ -77,7 +81,7 @@
             "name": "string-template"
         },
         "string_literal": {
-            "rule": "\\'.+\\'",
+            "rule": "\\'.+?\\'",
             "name": "string-literal"
         },
         "template_literal": {
