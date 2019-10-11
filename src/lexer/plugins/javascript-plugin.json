@@ -97,11 +97,11 @@
             "name": "multiline-comment"
         },
         "multiline-comment-start": {
-            "rule": "\/\\*\\*",
+            "rule": "\/\\*\\*(.+)?",
             "name": "multiline-comment-start"
         },
         "multiline-comment-end": {
-            "rule": "\\*\/",
+            "rule": "(.+)?\\*\/",
             "name": "multiline-comment-end"
         }
     }

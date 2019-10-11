@@ -3,7 +3,7 @@ interface SelectionOffset {
     end: number
 }
 
-interface SelectionLineOffset {
+export interface SelectionLineOffset {
     start: number,
     end: number
 }

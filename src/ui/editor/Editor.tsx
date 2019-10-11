@@ -5,7 +5,7 @@ import FileReader from '../../io/FileReader'
 import * as Lexer from '../../lexer/Lexer'
 import PluginReader from '../../lexer/PluginReader'
 import Gutter from './gutter/Gutter'
-import { SelectionManager } from './SelectionManager'
+import { SelectionManager, SelectionLineOffset } from './SelectionManager'
 import KeyHandler from './KeyHandler'
 
 interface EditorProps {
@@ -29,6 +29,14 @@ export default function Editor(props: EditorProps) {
      * Stores the line array this editor displays.
      */
     const [lines, setLines] = useState<string[][]>([])
+
+    /**
+     * Stores the selection offset of this editor.
+     */
+    const [selection, setSelection] = useState<SelectionLineOffset>({
+        start: 0,
+        end: 0
+    })
 
     /**
      * Memoizes the {@link Lexer} class use to parse the editor text.
@@ -103,10 +111,18 @@ export default function Editor(props: EditorProps) {
         // get the selection range line numbers,
         const lineNumbers = selector.getSelectionLineNumber(range)
 
-        console.log('Selection is: ', sel);
         console.log('Line number is: ', lineNumbers);
 
+        // set selection,
+        setSelection(lineNumbers)
+
         textarea.current.focus()
+
+        const selection = document.getSelection()
+
+        selection.removeAllRanges()
+        
+        selection.addRange(range)
     }
 
     /**
@@ -114,8 +130,8 @@ export default function Editor(props: EditorProps) {
      * @param event 
      */
     function onKeyDown(event: React.KeyboardEvent) {
-        KeyHandler(event, setLines)
-        textarea.current.clear()
+        KeyHandler(event, setLines, selection)
+        textarea.current.value = ""
     }
 
     return (
