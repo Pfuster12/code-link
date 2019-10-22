@@ -9,13 +9,17 @@ var win
 function createWindow () {
 	// Create the browser window.
 	win = new BrowserWindow({ 
-	width: 1600,
-	height: 1000,
-	webPreferences: {
-		nodeIntegration: true,
-		nodeIntegrationInWorker: true
-	}
+		width: 1600,
+		height: 1000,
+		webPreferences: {
+			nodeIntegration: true,
+			nodeIntegrationInWorker: true
+		}
 	})
+
+	// set menu bar visibility
+	// ONLY Win & Linux
+	win.setMenuBarVisibility(false)
 
 	// Keep a reference for dev mode
 	var dev = false

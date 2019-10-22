@@ -48,7 +48,8 @@ Editor Theme
     Theme for the text editor input selection background color.
 */
 ::selection {
-    background-color: blue;
+    color: white;
+    background-color: rgba(0, 0, 255, 0.99);
 }
 
 /*
@@ -85,7 +86,7 @@ Editor Theme
     color: black;
     line-height: 19px;
     font-size: 14px;
-    font-family: 'consolas';
+    font-family: 'Ubuntu Mono','Consolas',monospace;
 }
 
 /*

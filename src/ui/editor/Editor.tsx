@@ -9,6 +9,10 @@ import { SelectionManager, SelectionLineOffset } from './SelectionManager'
 import KeyHandler from './KeyHandler'
 
 interface EditorProps {
+
+    /**
+     * File path name the editor opens.
+     */
     file: string
 }
 
@@ -16,6 +20,10 @@ interface EditorProps {
  * The code editor component handling syntax highlighting and text editing.
  * The editor is responsible for its file, handling io operations and 
  * language plugin selection.
+ * @description
+ * The editor works by mapping an array of strings aka 'lines', vertically to visualize the
+ * text content of the given file.
+ * 
  * @property props
  */
 export default function Editor(props: EditorProps) {
@@ -47,7 +55,7 @@ export default function Editor(props: EditorProps) {
     /**
      * Memoizes the {@link SelectionManager}.
      */
-    const selector = useMemo(() => new SelectionManager(), [])
+    const selector = useMemo(() => new SelectionManager(), /* no deps */ [])
 
     /**
      * Reference for the text area consuming the text editing.
@@ -64,7 +72,7 @@ export default function Editor(props: EditorProps) {
             .readFile(props.file)
             .then(res => {
                 // split lines,
-                const splitLines = lexer.split(res)
+                const splitLines = lexer.splitNewLine(res)
 
                 // map to unique keys,
                 const map = splitLines.map(line => [Math.random().toString(), line])
@@ -98,34 +106,6 @@ export default function Editor(props: EditorProps) {
     [])
 
     /**
-     * Handles the editor click.
-     * @param event 
-     */
-    function onEditorClick(event: React.SyntheticEvent) {
-        // get selection of the editor,
-        const sel = selector.getSelection(document.getElementsByClassName('text-editor')[0] as HTMLElement)
-
-        // get the range object of the selection,
-        const range = document.getSelection().getRangeAt(0)
-        
-        // get the selection range line numbers,
-        const lineNumbers = selector.getSelectionLineNumber(range)
-
-        console.log('Line number is: ', lineNumbers);
-
-        // set selection,
-        setSelection(lineNumbers)
-
-        textarea.current.focus()
-
-        const selection = document.getSelection()
-
-        selection.removeAllRanges()
-        
-        selection.addRange(range)
-    }
-
-    /**
      * Handles the text area on change event.
      * @param event 
      */
@@ -134,17 +114,51 @@ export default function Editor(props: EditorProps) {
         textarea.current.value = ""
     }
 
+    /**
+     * Handle the editor mouse down event.
+     * @param event 
+     */
+    function onEditorMouseDown(event: React.SyntheticEvent) {
+        const overlay = document.querySelector('.text-editor-overlay') as HTMLDivElement
+        overlay.innerHTML = ''
+
+        const divsel = document.createElement('div')
+        divsel.className = 'selection-overlay'
+        divsel.style.position = 'absolute'
+        divsel.style.height = '19px'
+        divsel.style.width = '200px'
+        divsel.style.top = '0px'
+        divsel.style.backgroundColor = 'hotpink'
+
+        overlay.appendChild(divsel)
+    }
+
+    /**
+     * Handle the editor mouse down event.
+     * @param event 
+     */
+    function onEditorMouseUp(event: React.SyntheticEvent) {
+        const overlay = document.querySelector('.text-editor-overlay') as HTMLDivElement
+
+    }
+
     return (
         <div className="editor token">
             <Gutter lines={lines}/>
             <div className="text-editor"
-                onClick={onEditorClick}>
-                {
-                    lines.map(line => <Line key={line[0]}
-                        lexer={lexer}
-                        value={line[1]} 
-                        plugin={plugin}/>)
-                }
+                onMouseDown={onEditorMouseDown}
+                onMouseUp={onEditorMouseUp}>
+                <div className="text-editor-lines">
+                    {
+                        lines.map(line => <Line key={line[0]}
+                            lexer={lexer}
+                            value={line[1]} 
+                            plugin={plugin}/>)
+                    }
+                </div>
+                <div className="text-editor-overlay">
+
+                </div>
             </div>
             <textarea className="text-edit"
                 ref={textarea}

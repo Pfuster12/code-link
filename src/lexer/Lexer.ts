@@ -74,14 +74,6 @@ export class Lexer {
 
             // loop until null the match expression to get every regex match result,
             while ((matchResults = regex.exec(text)) !== null) {
-
-                // set the line state according to the multiline token type,
-                if (grammar.name === 'multiline-comment-end') {
-                    this._lineState = LineState.NORMAL
-                } else if (grammar.name === 'multiline-comment-start') {
-                    this._lineState = LineState.MULTILINECOMMENT
-                }
-
                 tokens.push({
                     name: grammar.name,
                     value: matchResults[0],
@@ -137,11 +129,6 @@ export class Lexer {
                     previousToken = token
                 }
 
-                // match the line state,
-                if (this._lineState == LineState.MULTILINECOMMENT) {
-                    token.name = token.name + ' ' + 'multiline-comment'
-                }
-
                 // return the accumulator,
                 return acc
         }, 
@@ -156,11 +143,9 @@ export class Lexer {
      * 
      * @returns Line array.
      */
-    split(text: string): string[] {
-        // A new-line separator RegEx for any platform (respecting an optional Windows and
-        // Mac CRLF) with positive lookbehind to split a line by newline while keeping
-        // the delimiters.
-        const lineRegex = /(?<=\r?\n)/gm
+    splitNewLine(text: string): string[] {
+        // A new-line separator RegEx for any platform (respecting an optional Windows and Mac CRLF) to split a line by newline,
+        const lineRegex = /\r?\n/gm
 
         // split the text by the new line regex,
         const lines = text.split(lineRegex)
@@ -176,6 +161,8 @@ export class Lexer {
             lines.push('')
         }
 
+        console.log('Line split: ', lines);
+        
         // return the line array
         return lines
     }

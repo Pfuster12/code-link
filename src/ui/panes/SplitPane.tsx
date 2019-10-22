@@ -101,10 +101,10 @@ export default function SplitPane(props: SplitPaneProps) {
         // grab the splitpane,
         const splitPane: HTMLElement = document.getElementsByClassName("row-split-pane")[0] as HTMLElement
         // set cursor to default,
-        splitPane.style.cursor = 'default'
+        splitPane.style.cursor = 'auto'
 
         // set user select to none,
-        splitPane.style.userSelect = 'default'
+        splitPane.style.userSelect = 'auto'
         
         // set dragging to true and the startX,
         setSplitPaneState({

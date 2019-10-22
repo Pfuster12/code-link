@@ -13,6 +13,8 @@ const KeyCode = {
     KEY_ARROW_RIGHT: 39,
     KEY_ARROW_UP: 38,
     KEY_ARROW_DOWN: 40,
+    KEY_BRACKET_OPEN: 219,
+    KEY_BRACKET_CLOSE: 221
 }
 
 export default KeyCode

@@ -95,14 +95,6 @@
         "multiline-comment-line": {
             "rule": "\/\\*\\*.+\\*\/",
             "name": "multiline-comment"
-        },
-        "multiline-comment-start": {
-            "rule": "\/\\*\\*(.+)?",
-            "name": "multiline-comment-start"
-        },
-        "multiline-comment-end": {
-            "rule": "(.+)?\\*\/",
-            "name": "multiline-comment-end"
         }
     }
 }

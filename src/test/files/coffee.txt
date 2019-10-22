@@ -16,7 +16,6 @@ import Mug from './coffee/Mug.js'
     return Coffee(espresso, cuppa)
 }
 
-
 /** Create a blend */
  function blend(grounds1: string, grounds2) {
     return grounds1 + grounds2

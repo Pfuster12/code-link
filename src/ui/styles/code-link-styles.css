@@ -85,6 +85,7 @@ h1 {
     flex: 1;
     min-width: 100px;
     cursor: text;
+    user-select: none;
 }
 
 .text-editor {
@@ -92,10 +93,28 @@ h1 {
     flex-direction: column;
     flex: 1;
     min-width: 100px;
+
+}
+
+.text-editor-lines {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     cursor: text;
 }
 
+.text-editor-overlay {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.selection-overlay {
+    z-index: -1;
+}
+
 .text-edit {
+    opacity: 0;
     position: absolute;
     top: 0;
     left: 0;
@@ -106,6 +125,7 @@ h1 {
     flex: 0 0 auto;
     flex-direction: row;
     white-space: pre;
+    height: 19px;
 }
 
 /*
