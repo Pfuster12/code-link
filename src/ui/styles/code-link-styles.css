@@ -125,10 +125,11 @@ h1 {
 }
 
 .line {
-    display: flex;
-    flex: 0 0 auto;
-    flex-direction: row;
     white-space: pre;
+}
+
+.token {
+   
 }
 
 /*
