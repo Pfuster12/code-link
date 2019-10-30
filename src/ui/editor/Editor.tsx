@@ -115,38 +115,31 @@ export default function Editor(props: EditorProps) {
     }
 
     /**
-     * Handle the editor mouse down event.
-     * @param event 
-     */
-    function onEditorMouseDown(event: React.SyntheticEvent) {
-        const overlay = document.querySelector('.text-editor-overlay') as HTMLDivElement
-        overlay.innerHTML = ''
-
-        const divsel = document.createElement('div')
-        divsel.className = 'selection-overlay'
-        divsel.style.position = 'absolute'
-        divsel.style.height = '19px'
-        divsel.style.width = '200px'
-        divsel.style.top = '0px'
-        divsel.style.backgroundColor = 'hotpink'
-
-        overlay.appendChild(divsel)
-    }
-
-    /**
-     * Handle the editor mouse down event.
+     * Handle the editor mouse up event.
      * @param event 
      */
     function onEditorMouseUp(event: React.SyntheticEvent) {
-        const overlay = document.querySelector('.text-editor-overlay') as HTMLDivElement
+        const overlay = document.querySelector('.text-editor') as HTMLDivElement
+        const caret = document.querySelector('.caret') as HTMLDivElement
 
+        if (document.getSelection) {
+            const range = document.getSelection().getRangeAt(0)
+            const rect = range.getBoundingClientRect()
+            const firstRect = range.getClientRects()[0]
+    
+            console.log(overlay.getBoundingClientRect());
+    
+            caret.style.top = rect.top - 2 + 'px'
+            caret.style.left = (firstRect.left - overlay.getBoundingClientRect().left) + 'px'
+    
+            console.log('Range: ',range, 'Rect: ', rect);
+        }
     }
 
     return (
         <div className="editor token">
             <Gutter lines={lines}/>
             <div className="text-editor"
-                onMouseDown={onEditorMouseDown}
                 onMouseUp={onEditorMouseUp}>
                 <div className="text-editor-lines">
                     {
@@ -156,8 +149,8 @@ export default function Editor(props: EditorProps) {
                             plugin={plugin}/>)
                     }
                 </div>
-                <div className="text-editor-overlay">
-
+                <div className="text-editor-overlays">
+                    <div className="caret caret-theme"/>
                 </div>
             </div>
             <textarea className="text-edit"

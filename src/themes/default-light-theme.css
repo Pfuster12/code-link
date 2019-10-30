@@ -1,6 +1,18 @@
 
 /*
 
+$$\       $$\           $$\        $$\           $$$$$$$$\ $$\                                         
+$$ |      \__|          $$ |       $$ |          \__$$  __|$$ |                                        
+$$ |      $$\  $$$$$$\  $$$$$$$\ $$$$$$\            $$ |   $$$$$$$\   $$$$$$\  $$$$$$\$$$$\   $$$$$$\  
+$$ |      $$ |$$  __$$\ $$  __$$\\_$$  _|           $$ |   $$  __$$\ $$  __$$\ $$  _$$  _$$\ $$  __$$\ 
+$$ |      $$ |$$ /  $$ |$$ |  $$ | $$ |             $$ |   $$ |  $$ |$$$$$$$$ |$$ / $$ / $$ |$$$$$$$$ |
+$$ |      $$ |$$ |  $$ |$$ |  $$ | $$ |$$\          $$ |   $$ |  $$ |$$   ____|$$ | $$ | $$ |$$   ____|
+$$$$$$$$\ $$ |\$$$$$$$ |$$ |  $$ | \$$$$  |         $$ |   $$ |  $$ |\$$$$$$$\ $$ | $$ | $$ |\$$$$$$$\ 
+\________|\__| \____$$ |\__|  \__|  \____/          \__|   \__|  \__| \_______|\__| \__| \__| \_______|
+              $$\   $$ |                                                                               
+              \$$$$$$  |                                                                               
+               \______/      
+
 code-link default-light-theme
 ------------------------------------------
 This is a code-link theme .css file. Every class and id selector is available to customise by the user
@@ -19,7 +31,8 @@ Editor Theme
      Theme for the scrollbar
 */
 ::-webkit-scrollbar {
-    background-color: #F8F8F8
+    background-color: #F8F8F8;
+    width: 14px;
 }
 
 /*
@@ -34,14 +47,6 @@ Editor Theme
 */
 .text-editor-theme {
     background-color: #F8F8F8;
-}
-
-
-/*
-    Theme for the text editor input controlling caret.
-*/
-.text-input-theme {
-    caret-color: blue;
 }
 
 /*
@@ -59,18 +64,19 @@ Editor Theme
     background-color: #F8F8F8;
 }
 
-/*
-    Line height theme.
-*/
-.lineheight-theme {
-    height: 19px;
+@keyframes blink {
+    50% {
+      opacity: 0;
+    }
 }
 
 /*
  Caret theme.
 */
 .caret-theme {
-    background-color: blue
+    background-color: teal;
+    height: 1.4em;
+    animation: blink 1s step-start 0s infinite;
 }
 
 /*
@@ -84,7 +90,7 @@ Editor Theme
 */
 .token {
     color: black;
-    line-height: 19px;
+    line-height: 1.4em;
     font-size: 14px;
     font-family: 'Ubuntu Mono','Consolas',monospace;
 }

@@ -85,15 +85,15 @@ h1 {
     flex: 1;
     min-width: 100px;
     cursor: text;
-    user-select: none;
+    overflow: auto
 }
 
 .text-editor {
+    position: relative;
     display: flex;
     flex-direction: column;
     flex: 1;
     min-width: 100px;
-
 }
 
 .text-editor-lines {
@@ -103,10 +103,14 @@ h1 {
     cursor: text;
 }
 
-.text-editor-overlay {
-    position: relative;
-    width: 100%;
-    height: 100%;
+.text-editor-overlays {
+    position: absolute;
+    pointer-events: none;
+}
+
+.caret {
+    position: absolute;
+    width: 2px;
 }
 
 .selection-overlay {
@@ -125,7 +129,6 @@ h1 {
     flex: 0 0 auto;
     flex-direction: row;
     white-space: pre;
-    height: 19px;
 }
 
 /*
