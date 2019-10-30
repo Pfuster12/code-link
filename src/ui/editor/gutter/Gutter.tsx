@@ -13,7 +13,7 @@ export default function Gutter(props: GutterProps) {
     return (
         <div className="gutter">
             { 
-                props.lines.map((line, index) => <span key={index} className="line-number">{index + 1}</span>)
+                props.lines.map((line, index) => <span key={index} className="token line-number">{index + 1}</span>)
             }
         </div>
     )

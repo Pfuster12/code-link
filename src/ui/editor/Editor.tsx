@@ -84,6 +84,7 @@ export default function Editor(props: EditorProps) {
                 console.log(`Error reading file ${props.file} in editor`);
             })
     },
+    // dep on the file path,
     [props.file])
 
     /**
@@ -103,6 +104,7 @@ export default function Editor(props: EditorProps) {
                 console.log(`Error reading plugin in editor`, err);
             })
     },
+    // dep on the plugin,
     [])
 
     /**
@@ -120,6 +122,7 @@ export default function Editor(props: EditorProps) {
      */
     function onEditorMouseUp(event: React.SyntheticEvent) {
         const overlay = document.querySelector('.text-editor') as HTMLDivElement
+        const editor = document.querySelector('.editor') as HTMLDivElement
         const caret = document.querySelector('.caret') as HTMLDivElement
 
         if (document.getSelection) {
@@ -129,7 +132,7 @@ export default function Editor(props: EditorProps) {
     
             console.log(overlay.getBoundingClientRect());
     
-            caret.style.top = rect.top - 2 + 'px'
+            caret.style.top = rect.top + editor.scrollTop - 3 + 'px'
             caret.style.left = (firstRect.left - overlay.getBoundingClientRect().left) + 'px'
     
             console.log('Range: ',range, 'Rect: ', rect);
@@ -137,7 +140,7 @@ export default function Editor(props: EditorProps) {
     }
 
     return (
-        <div className="editor token">
+        <div className="editor">
             <Gutter lines={lines}/>
             <div className="text-editor"
                 onMouseUp={onEditorMouseUp}>

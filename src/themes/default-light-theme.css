@@ -39,14 +39,14 @@ Editor Theme
      Theme for the scrollbar thumb
 */
 ::-webkit-scrollbar-thumb {
-    background-color: steelblue;
+    background-color: lightgray;
 }
 
 /*
     Theme for the text editor pane.
 */
 .text-editor-theme {
-    background-color: #F8F8F8;
+    background-color: white;
 }
 
 /*
@@ -74,8 +74,8 @@ Editor Theme
  Caret theme.
 */
 .caret-theme {
-    background-color: teal;
-    height: 1.4em;
+    background-color: purple;
+    height: 1.2em;
     animation: blink 1s step-start 0s infinite;
 }
 
