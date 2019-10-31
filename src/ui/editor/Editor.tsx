@@ -5,7 +5,7 @@ import FileReader from '../../io/FileReader'
 import * as Lexer from '../../lexer/Lexer'
 import PluginReader from '../../lexer/PluginReader'
 import Gutter from './gutter/Gutter'
-import { SelectionManager, SelectionLineOffset } from './SelectionManager'
+import { SelectionManager, SelectionOffset } from './SelectionManager'
 import KeyHandler from './KeyHandler'
 
 interface EditorProps {
@@ -41,24 +41,24 @@ export default function Editor(props: EditorProps) {
     /**
      * Stores the selection offset of this editor.
      */
-    const [selection, setSelection] = useState<SelectionLineOffset>({
+    const [selection, setSelection] = useState<SelectionOffset>({
         start: 0,
         end: 0
     })
 
     /**
-     * Memoizes the {@link Lexer} class use to parse the editor text.
+     * Memoize the {@link Lexer} class use to parse the editor text.
      * Depends on the plugin to change.
      */
     const lexer = useMemo(() => new Lexer.Lexer(plugin ? plugin.id : ''), [plugin])
 
     /**
-     * Memoizes the {@link SelectionManager}.
+     * Memoize the {@link SelectionManager}.
      */
-    const selector = useMemo(() => new SelectionManager(), /* no deps */ [])
+    const selManager = useMemo(() => new SelectionManager(), /* no deps */ [])
 
     /**
-     * Reference for the text area consuming the text editing.
+     * Reference for the text area consuming the keyboard input.
      * @see 
      */
     const textarea = useRef(null)
@@ -121,34 +121,34 @@ export default function Editor(props: EditorProps) {
      * @param event 
      */
     function onEditorMouseUp(event: React.SyntheticEvent) {
-        const overlay = document.querySelector('.text-editor') as HTMLDivElement
+        // query for the editor elements,
+        const textEditor = document.querySelector('.text-editor') as HTMLDivElement
         const editor = document.querySelector('.editor') as HTMLDivElement
         const caret = document.querySelector('.caret') as HTMLDivElement
 
+        // assign the selection,
         if (document.getSelection) {
             const range = document.getSelection().getRangeAt(0)
             const rect = range.getBoundingClientRect()
             const firstRect = range.getClientRects()[0]
-    
-            console.log(overlay.getBoundingClientRect());
 
-            console.log(range.getBoundingClientRect().top);
-            
+            const lineNumbers = selManager.getSelectionLineNumber(range, editor)
+            console.log(lineNumbers);
     
             // set the top pos including scrollY,
             caret.style.top = rect.top + editor.scrollTop - 3 + 'px'
 
             // set left pos minus the editor left pos,
-            caret.style.left = (firstRect.left - overlay.getBoundingClientRect().left) + 'px'
+            caret.style.left = (firstRect.left - textEditor.getBoundingClientRect().left) + 'px'
     
             console.log('Range: ',range, 'Rect: ', rect);
         }
     }
 
     return (
-        <div className="editor">
+        <div className="editor editor-theme">
             <Gutter lines={lines}/>
-            <div className="text-editor"
+            <div className="text-editor text-editor-theme"
                 onMouseUp={onEditorMouseUp}>
                 <div className="text-editor-lines">
                     {

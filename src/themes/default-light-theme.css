@@ -43,13 +43,6 @@ Editor Theme
 }
 
 /*
-    Theme for the text editor pane.
-*/
-.text-editor-theme {
-    background-color: white;
-}
-
-/*
     Theme for the text editor input selection background color.
 */
 ::selection {
@@ -57,12 +50,28 @@ Editor Theme
     background-color: rgba(0, 0, 255, 0.99);
 }
 
+.editor-theme {
+    line-height: 1.4;
+    font-size: 14px;
+}
+
+/*
+    Theme for the text editor pane.
+*/
+.text-editor-theme {
+    background-color: white;
+}
+
 /*
     Theme for the gutter.
 */
 .gutter-theme {
-    background-color: #F8F8F8;
+
 }
+
+/*
+ Caret theme.
+*/
 
 @keyframes blink {
     50% {
@@ -70,9 +79,6 @@ Editor Theme
     }
 }
 
-/*
- Caret theme.
-*/
 .caret-theme {
     background-color: purple;
     height: 1.2em;
@@ -90,8 +96,6 @@ Editor Theme
 */
 .token {
     color: black;
-    line-height: 1.4em;
-    font-size: 14px;
     font-family: 'Ubuntu Mono','Consolas',monospace;
 }
 

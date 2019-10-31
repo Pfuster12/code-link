@@ -11,7 +11,7 @@ interface GutterProps {
 export default function Gutter(props: GutterProps) {
 
     return (
-        <div className="gutter">
+        <div className="gutter gutter-theme">
             { 
                 props.lines.map((line, index) => <span key={index} className="token line-number">{index + 1}</span>)
             }

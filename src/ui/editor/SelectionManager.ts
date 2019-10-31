@@ -1,9 +1,4 @@
-interface SelectionOffset {
-    start: number,
-    end: number
-}
-
-export interface SelectionLineOffset {
+export interface SelectionOffset {
     start: number,
     end: number
 }
@@ -78,32 +73,31 @@ export class SelectionManager {
 
     /**
      * Gets the line numbers of the current text selection range. A range can span
-     * multiple lines, and can start in both directions, i.e. start high to low.
+     * multiple lines, and be bi-directional, i.e. start high to low.
      * @param range The range object of the current selection.
      * 
      * @returns Selecction offset for start and end selection range.
      */
-    getSelectionLineNumber(range: Range): SelectionLineOffset {
-        // find a token text editor element,
-        const editor = document.getElementsByClassName('text-editor')[0]
-
+    getSelectionLineNumber(range: Range, container: HTMLDivElement): SelectionOffset {
         // get the computed style,
-        const style = window.getComputedStyle(editor)
+        const style = window.getComputedStyle(container)
 
-        // get the height number by replacing the px suffix from the string,
-        const height = parseInt(style.lineHeight.replace('px', ''))
+        console.log(style.lineHeight, style.fontSize);
+        
+        // get the true line height,
+        const lineHeight = Math.floor(Number.parseFloat(style.lineHeight))
         
         // find the line number of the current start selection by dividing by the
         // lineheight and round the division to find the whole number, the line
         // is added 1 to find the 1 based line,
-        const startLine = Math.round((range.getBoundingClientRect().top / height))
+        const startLine = Math.floor(((range.getBoundingClientRect().top + container.scrollTop) / lineHeight))
 
         // find the line number of the current start selection,
-        const endLine = Math.round((range.getBoundingClientRect().bottom / height)) - 1
+        const endLine = Math.floor(((range.getBoundingClientRect().bottom + container.scrollTop) / lineHeight)) - 1
 
         return { 
             start: startLine,
-            end: endLine 
+            end: range.collapsed ? startLine : endLine 
         }
     }
 }

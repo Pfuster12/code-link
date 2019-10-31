@@ -49,7 +49,7 @@ h1 {
 .pane {
     display: flex;
     flex-direction: column;
-    min-width: 100px;
+    min-width: 200px;
     width: calc(50%);
     overflow: hidden;
 }
@@ -85,7 +85,7 @@ h1 {
     flex: 1;
     min-width: 100px;
     cursor: text;
-    overflow: auto
+    overflow-y: auto
 }
 
 .text-editor {
@@ -93,7 +93,6 @@ h1 {
     display: flex;
     flex-direction: column;
     flex: 1;
-    min-width: 100px;
 }
 
 .text-editor-lines {
@@ -125,6 +124,8 @@ h1 {
 }
 
 .line {
+    display: flex;
+    flex: 0 0 auto;
     white-space: pre;
 }
 
@@ -139,7 +140,7 @@ h1 {
 .gutter {
     display: flex;
     flex: 0 0 auto;
-    width: 60px;
+    min-width: 60px;
     flex-direction: column;
     user-select: none;
     align-items: stretch
@@ -150,7 +151,7 @@ h1 {
     flex: 0 0 auto;
     justify-content: center;
     cursor: pointer;
-    -webkit-user-select: none;
+    user-select: none;
     color: grey
 }
 

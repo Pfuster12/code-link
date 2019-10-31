@@ -1,12 +1,12 @@
 import KeyCode from "./utils/KeyCodes";
-import { SelectionLineOffset } from "./SelectionManager";
+import { SelectionOffset } from "./SelectionManager";
 
 /**
  * Handles React Key events in the Editor to set the line state.
  * @param event 
  * @param setLines 
  */
-export default function KeyHandler(event: React.KeyboardEvent, setLines: (value: React.SetStateAction<string[][]>) => void, selection: SelectionLineOffset) {
+export default function KeyHandler(event: React.KeyboardEvent, setLines: (value: React.SetStateAction<string[][]>) => void, selection: SelectionOffset) {
     console.log('Keycode is: ', event.keyCode);
     const key = event.key
 
