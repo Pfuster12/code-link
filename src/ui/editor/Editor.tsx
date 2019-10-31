@@ -131,8 +131,14 @@ export default function Editor(props: EditorProps) {
             const firstRect = range.getClientRects()[0]
     
             console.log(overlay.getBoundingClientRect());
+
+            console.log(range.getBoundingClientRect().top);
+            
     
+            // set the top pos including scrollY,
             caret.style.top = rect.top + editor.scrollTop - 3 + 'px'
+
+            // set left pos minus the editor left pos,
             caret.style.left = (firstRect.left - overlay.getBoundingClientRect().left) + 'px'
     
             console.log('Range: ',range, 'Rect: ', rect);
