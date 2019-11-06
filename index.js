@@ -42,9 +42,9 @@ function createWindow () {
 
 		// Add the React dev tools manually to the chromium window,
 		// Make sure you have the FULL path here or it won't work
-		// BrowserWindow.addDevToolsExtension(
-		// "C:/Users/pfust/AppData/Local/Google/Chrome/User Data/Profile 2/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.0.6_0"
-		// );
+		BrowserWindow.addDevToolsExtension(
+			"C:/Users/Pablo/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.0_0"
+		);
 
 		// Open the DevTools.
 		win.webContents.openDevTools()

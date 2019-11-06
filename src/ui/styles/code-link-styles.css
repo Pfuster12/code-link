@@ -32,8 +32,8 @@ textarea {
 h1 {
     display: flex;
     margin: 16px;
-    font-family: 'Consolas';
-    font-weight: 500;
+    font-family: monospace;
+    font-weight: bold;
 }
 
 ::-webkit-scrollbar {
@@ -124,8 +124,6 @@ h1 {
 }
 
 .line {
-    display: flex;
-    flex: 0 0 auto;
     white-space: pre;
 }
 

@@ -22,9 +22,10 @@ interface LineProps {
 
 /**
  * The code editor component handling line syntax highlighting and text editing.
+ * This component is MEMOIZED for performance reducing re-renders.
  * @property props
  */
-export default function Line(props: LineProps) {
+function Line(props: LineProps) {
 
     /**
      * Memoize the tokenisation operation on this Line.
@@ -53,3 +54,5 @@ export default function Line(props: LineProps) {
         </div>
     )
 }
+
+export default React.memo(Line)

@@ -16,22 +16,7 @@ export class SelectionManager {
      * @returns A Selection indices object.
      */
     getSelection(editor: HTMLElement): SelectionOffset {
-        // grab the document selection object, we know it will only be contained
-        const sel = document.getSelection()
-
-        // wrap the range selection in a DOMException if there is no ranges,
-        try {
-              // get the range object of the selection,
-            const range = sel.getRangeAt(0)
-
-            // get the text selection indices,
-            const offset = this.getSelectionTextOffset(editor, range)
-
-             return offset
-        } catch (e) {
-            console.log('Error getting selection: ', e);
-            
-        }
+        return null
     }
 
     /**
@@ -40,60 +25,45 @@ export class SelectionManager {
      * @param editor Document node to get the offset from the beginning of the container.
      * @param range Range selection.
      */
-    private getSelectionTextOffset(editor: HTMLElement, range: Range): SelectionOffset {
+    getRangeCharOffset(range: Range): SelectionOffset {
+        const node = range.startContainer.parentNode.parentNode
+
         // init a start range
         const startrange = new Range()
 
         // set the start to the beginning,
-        startrange.setStart(editor, 0)
+        startrange.setStart(node, 0)
 
-        // set the end to the start container to find the start index from the text,
-        startrange.setEnd(range.startContainer, range.startOffset)
+         // set the end to the start container to find the start index from the text,
+         startrange.setEnd(range.startContainer, range.startOffset)
 
         // get the index by finding the length of the string,
         const startIndex = startrange.toString().length
-
-        // init an end range,
-        const endrange = new Range()
-
-        // set the start to the beginning,
-        endrange.setStart(editor, 0)
-
-        // set the end to the end container to find the end index fom the text,
-        endrange.setEnd(range.endContainer, range.endOffset)
-
-        // get the index by finding the length of the string,
-        const endIndex = endrange.toString().length
-
-        return { 
-            start: startIndex,
-            end: endIndex 
-        }
+        
+        console.log(startIndex);
+          
+        return null
     }
 
     /**
      * Gets the line numbers of the current text selection range. A range can span
-     * multiple lines, and be bi-directional, i.e. start high to low.
+     * multiple lines, and bi-directional.
      * @param range The range object of the current selection.
      * 
-     * @returns Selecction offset for start and end selection range.
+     * @returns SelectionOffset for start and end selection range.
      */
-    getSelectionLineNumber(range: Range, container: HTMLDivElement): SelectionOffset {
-        // get the computed style,
+    getRangeLineOffset(range: Range, container: HTMLDivElement): SelectionOffset {
+        // with the computed style,
         const style = window.getComputedStyle(container)
 
-        console.log(style.lineHeight, style.fontSize);
-        
-        // get the true line height,
+        // get the line height,
         const lineHeight = Math.floor(Number.parseFloat(style.lineHeight))
         
-        // find the line number of the current start selection by dividing by the
-        // lineheight and round the division to find the whole number, the line
-        // is added 1 to find the 1 based line,
-        const startLine = Math.floor(((range.getBoundingClientRect().top + container.scrollTop) / lineHeight))
+        // find the line number of the current selection,
+        // round to the nearest integer,
+        const startLine = Math.round(((range.getBoundingClientRect().top + container.scrollTop) / lineHeight))
 
-        // find the line number of the current start selection,
-        const endLine = Math.floor(((range.getBoundingClientRect().bottom + container.scrollTop) / lineHeight)) - 1
+        const endLine = Math.round(((range.getBoundingClientRect().bottom + container.scrollTop) / lineHeight)) - 1
 
         return { 
             start: startLine,

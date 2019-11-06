@@ -61,7 +61,7 @@ export default function Editor(props: EditorProps) {
      * Reference for the text area consuming the keyboard input.
      * @see 
      */
-    const textarea = useRef(null)
+    const textarea = useRef<HTMLTextAreaElement>(null)
 
     /**
      * Read editor file effect.
@@ -112,8 +112,37 @@ export default function Editor(props: EditorProps) {
      * @param event 
      */
     function onKeyDown(event: React.KeyboardEvent) {
+        document.getSelection().removeAllRanges()
+
         KeyHandler(event, setLines, selection)
+
         textarea.current.value = ""
+    }
+
+    /**
+     * Handle the editor click event.
+     * @param event
+     */
+    function onEditorClick(event: React.SyntheticEvent) {
+        const sel = document.getSelection()
+        const range = sel.getRangeAt(0)
+
+        const clone = range.cloneRange()
+        
+        textarea.current.focus()
+
+        sel.removeAllRanges()
+        sel.addRange(clone)
+    }
+
+    /**
+     * Handle the editor mouse down event.
+     * @param event 
+     */
+    function onEditorMouseDown(event: React.SyntheticEvent) {
+        const sel = document.getSelection()
+
+        sel.removeAllRanges()
     }
 
     /**
@@ -132,16 +161,15 @@ export default function Editor(props: EditorProps) {
             const rect = range.getBoundingClientRect()
             const firstRect = range.getClientRects()[0]
 
-            const lineNumbers = selManager.getSelectionLineNumber(range, editor)
-            console.log(lineNumbers);
-    
+            const lineNumbers = selManager.getRangeLineOffset(range, editor)
+
+            selManager.getRangeCharOffset(range)
+
             // set the top pos including scrollY,
             caret.style.top = rect.top + editor.scrollTop - 3 + 'px'
 
             // set left pos minus the editor left pos,
             caret.style.left = (firstRect.left - textEditor.getBoundingClientRect().left) + 'px'
-    
-            console.log('Range: ',range, 'Rect: ', rect);
         }
     }
 
@@ -149,7 +177,9 @@ export default function Editor(props: EditorProps) {
         <div className="editor editor-theme">
             <Gutter lines={lines}/>
             <div className="text-editor text-editor-theme"
-                onMouseUp={onEditorMouseUp}>
+                onMouseDown={onEditorMouseDown}
+                onMouseUp={onEditorMouseUp}
+                onClick={onEditorClick}>
                 <div className="text-editor-lines">
                     {
                         lines.map(line => <Line key={line[0]}
