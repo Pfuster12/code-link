@@ -3,6 +3,17 @@ export interface SelectionOffset {
     end: number
 }
 
+export interface Selection {
+    start: {
+        line: number,
+        offset: number
+    },
+    end: {
+        line: number,
+        offset: number
+    }
+}
+
 /**
  * This is a class to manage DOM selection in the {@link Editor} component.
  * The DOM editor consists of a series of CSS styled spans which can be selected
@@ -11,46 +22,69 @@ export interface SelectionOffset {
 export class SelectionManager {
 
     /**
-     * Get the selection indices of the current document selection in using the document selection API.
-     * @param editor The editor HTML element.
-     * @returns A Selection indices object.
+     * Get the offset of the current document selection.
+     * @param range The {@link Range} of the current selection.
+     * @param container
+     * @returns SelectionOffset
      */
-    getSelection(editor: HTMLElement): SelectionOffset {
-        return null
+    getSelection(range: Range, container: HTMLDivElement): Selection {
+        const charOffset = this.getRangeCharOffset(range)
+        const lineOffset = this.getRangeLineOffset(range, container)
+
+        return {
+            start: {
+                line: lineOffset.start,
+                offset: charOffset.start
+            },
+            end: {
+                line: lineOffset.end,
+                offset: charOffset.end
+            }
+        }
     }
 
     /**
      * Get the offset from the beginning of the given node, plus any 
      * extra offset given by the parameter 'offset'.
-     * @param editor Document node to get the offset from the beginning of the container.
-     * @param range Range selection.
+     * @param editor to get the offset from the beginning of the container.
+     * @param SelectionOffset
      */
     getRangeCharOffset(range: Range): SelectionOffset {
-        const node = range.startContainer.parentNode.parentNode
-
-        // init a start range
-        const startrange = new Range()
+        // grab the line element,
+        const startNode = range.startContainer.parentNode.parentNode
+        const startRange = new Range()
 
         // set the start to the beginning,
-        startrange.setStart(node, 0)
-
-         // set the end to the start container to find the start index from the text,
-         startrange.setEnd(range.startContainer, range.startOffset)
+        startRange.setStart(startNode, 0)
+        // set the end to the start container to find the start index,
+         startRange.setEnd(range.startContainer, range.startOffset)
 
         // get the index by finding the length of the string,
-        const startIndex = startrange.toString().length
-        
+        const startIndex = startRange.toString().length
         console.log(startIndex);
-          
-        return null
+
+        // repeat for the end container,
+        const endNode = range.endContainer.parentNode.parentNode
+        const endRange = new Range()
+
+        endRange.setStart(endNode, 0)
+         endRange.setEnd(range.endContainer, range.endOffset)
+
+        const endIndex = endRange.toString().length
+        console.log(endIndex);
+
+        return {
+            start: startIndex,
+            end: endIndex
+        }
     }
 
     /**
-     * Gets the line numbers of the current text selection range. A range can span
-     * multiple lines, and bi-directional.
-     * @param range The range object of the current selection.
-     * 
-     * @returns SelectionOffset for start and end selection range.
+     * Gets the line numbers of the current text selection range. 
+     * A range can span multiple lines, and bi-directional.
+     * @param range The {@link Range} of the current selection.
+     * @param container
+     * @returns SelectionOffset
      */
     getRangeLineOffset(range: Range, container: HTMLDivElement): SelectionOffset {
         // with the computed style,
@@ -61,9 +95,12 @@ export class SelectionManager {
         
         // find the line number of the current selection,
         // round to the nearest integer,
-        const startLine = Math.round(((range.getBoundingClientRect().top + container.scrollTop) / lineHeight))
+        const startLine = Math.round((
+            (range.getBoundingClientRect().top+container.scrollTop)/lineHeight))
 
-        const endLine = Math.round(((range.getBoundingClientRect().bottom + container.scrollTop) / lineHeight)) - 1
+        const endLine = Math.round((
+            (range.getBoundingClientRect().bottom+container.scrollTop)
+            /lineHeight)) - 1
 
         return { 
             start: startLine,

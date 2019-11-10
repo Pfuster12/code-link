@@ -5,14 +5,11 @@ import FileReader from '../../io/FileReader'
 import * as Lexer from '../../lexer/Lexer'
 import PluginReader from '../../lexer/PluginReader'
 import Gutter from './gutter/Gutter'
-import { SelectionManager, SelectionOffset } from './SelectionManager'
+import { SelectionManager, SelectionOffset, Selection } from './SelectionManager'
 import KeyHandler from './KeyHandler'
 
 interface EditorProps {
-
-    /**
-     * File path name the editor opens.
-     */
+    //File path name the editor opens.
     file: string
 }
 
@@ -20,16 +17,15 @@ interface EditorProps {
  * The code editor component handling syntax highlighting and text editing.
  * The editor is responsible for its file, handling io operations and 
  * language plugin selection.
- * @description
- * The editor works by mapping an array of strings aka 'lines', vertically to visualize the
- * text content of the given file.
- * 
- * @property props
+ * The editor works by mapping an array of strings aka 'lines', vertically 
+ * to visualize the text content of the given file.
+ * @param props
  */
 export default function Editor(props: EditorProps) {
 
     /**
-     * Store the current {@link Lexer.Plugin} for this editor to provide down the component tree.
+     * Store the current {@link Lexer.Plugin} for this editor 
+     * to provide down the component tree.
      */
     const [plugin, setPlugin] = useState<Lexer.Lexer.Plugin | null>(null)
 
@@ -41,9 +37,15 @@ export default function Editor(props: EditorProps) {
     /**
      * Stores the selection offset of this editor.
      */
-    const [selection, setSelection] = useState<SelectionOffset>({
-        start: 0,
-        end: 0
+    const [selection, setSelection] = useState<Selection>({
+        start: {
+            line:0,
+            offset:0
+        },
+        end: {
+            line:0,
+            offset:0
+        }
     })
 
     /**
@@ -67,7 +69,7 @@ export default function Editor(props: EditorProps) {
      * Read editor file effect.
      */
     useEffect(() => {
-        // read the given file using the FileReader library,
+        // read the given file using FileReader,
         FileReader()
             .readFile(props.file)
             .then(res => {
@@ -75,7 +77,7 @@ export default function Editor(props: EditorProps) {
                 const splitLines = lexer.splitNewLine(res)
 
                 // map to unique keys,
-                const map = splitLines.map(line => [Math.random().toString(), line])
+                const map = splitLines.map(line=>[Math.random().toString(), line])
 
                 // set state,
                 setLines(map)
@@ -91,7 +93,7 @@ export default function Editor(props: EditorProps) {
      * Load the default language plugin into this editor.
      */
     useEffect(() => {
-        // read the plugin using the reader library,
+        // read the plugin,
         PluginReader()
             .readPlugin('./src/lexer/plugins/javascript-plugin.json')
             .then(res => {
@@ -114,7 +116,7 @@ export default function Editor(props: EditorProps) {
     function onKeyDown(event: React.KeyboardEvent) {
         document.getSelection().removeAllRanges()
 
-        KeyHandler(event, setLines, selection)
+        KeyHandler(event, setLines, selection, setSelection)
 
         textarea.current.value = ""
     }
@@ -140,9 +142,7 @@ export default function Editor(props: EditorProps) {
      * @param event 
      */
     function onEditorMouseDown(event: React.SyntheticEvent) {
-        const sel = document.getSelection()
-
-        sel.removeAllRanges()
+        document.getSelection().removeAllRanges()
     }
 
     /**
@@ -161,15 +161,14 @@ export default function Editor(props: EditorProps) {
             const rect = range.getBoundingClientRect()
             const firstRect = range.getClientRects()[0]
 
-            const lineNumbers = selManager.getRangeLineOffset(range, editor)
+            const textSelection = selManager.getSelection(range, editor)
 
-            selManager.getRangeCharOffset(range)
-
-            // set the top pos including scrollY,
+            // set the top+left pos including scrollY,
             caret.style.top = rect.top + editor.scrollTop - 3 + 'px'
+            caret.style.left = (firstRect.left - 
+                textEditor.getBoundingClientRect().left) + 'px'
 
-            // set left pos minus the editor left pos,
-            caret.style.left = (firstRect.left - textEditor.getBoundingClientRect().left) + 'px'
+            setSelection(textSelection)
         }
     }
 
