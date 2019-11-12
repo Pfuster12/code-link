@@ -6,6 +6,7 @@ const KeyCode = {
     KEY_BACKSPACE: 8,
     KEY_SPACE: 32,
     KEY_ESCAPE: 27,
+    KEY_CONTROL: 17,
     KEY_Z: 90,
     KEY_SHIFT: 16,
     KEY_CAPS_LOCK: 20,

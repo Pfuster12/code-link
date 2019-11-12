@@ -13,6 +13,11 @@ interface EditorProps {
     file: string
 }
 
+export interface EditorState {
+    lines: string[][],
+    selection: Selection
+}
+
 /**
  * The code editor component handling syntax highlighting and text editing.
  * The editor is responsible for its file, handling io operations and 
@@ -29,22 +34,17 @@ export default function Editor(props: EditorProps) {
      */
     const [plugin, setPlugin] = useState<Lexer.Lexer.Plugin | null>(null)
 
-    /**
-     * Stores the line array this editor displays.
-     */
-    const [lines, setLines] = useState<string[][]>([])
-
-    /**
-     * Stores the selection offset of this editor.
-     */
-    const [selection, setSelection] = useState<Selection>({
-        start: {
-            line:0,
-            offset:0
-        },
-        end: {
-            line:0,
-            offset:0
+    const [editorState, setEditorState] = useState<EditorState>({
+        lines: [],
+        selection: {
+            start: {
+                line:0,
+                offset:0
+            },
+            end: {
+                line:0,
+                offset:0
+            }
         }
     })
 
@@ -80,7 +80,12 @@ export default function Editor(props: EditorProps) {
                 const map = splitLines.map(line=>[Math.random().toString(), line])
 
                 // set state,
-                setLines(map)
+                setEditorState(prevState => {
+                    return {
+                        lines: map,
+                        selection: prevState.selection
+                    }
+                })
             })
             .catch(err => {
                 console.log(`Error reading file ${props.file} in editor`);
@@ -116,20 +121,20 @@ export default function Editor(props: EditorProps) {
         const caret = document.querySelector('.caret') as HTMLDivElement
         const textEditor = document.querySelector('.text-editor') as HTMLDivElement
 
-        const line = textEditor.childNodes[0].childNodes[selection.start.line]
+        const line = textEditor.childNodes[0].childNodes[editorState.selection.start.line]
         
         if (line) {
-            const range = selManager.getSelectionByCharOffset(line, 
-                selection.start.offset,
-                selection.start.offset)
+            const range = selManager.getRangeByCharOffset(line, 
+                editorState.selection.start.offset,
+                editorState.selection.start.offset)
 
             // set the top+left pos including scrollY,
-            caret.style.top = selection.start.line*19 + 'px'
+            caret.style.top = editorState.selection.start.line*19 + 'px'
             caret.style.left = (range.getBoundingClientRect().left
                 - textEditor.getBoundingClientRect().left) + 'px'
         }
     },
-    [selection])
+    [editorState.selection])
 
     /**
      * Handles the text area on change event.
@@ -138,7 +143,7 @@ export default function Editor(props: EditorProps) {
     function onKeyDown(event: React.KeyboardEvent) {
         document.getSelection().removeAllRanges()
 
-        KeyHandler(event, setLines, selection, setSelection)
+        KeyHandler(event, setEditorState)
 
         textarea.current.value = ""
     }
@@ -177,20 +182,25 @@ export default function Editor(props: EditorProps) {
             const range = document.getSelection().getRangeAt(0)
             const editor = document.querySelector('.editor') as HTMLDivElement
 
-            setSelection(selManager.getSelection(range, editor))
+            setEditorState(prevState => {
+                return {
+                    lines: prevState.lines,
+                    selection: selManager.getSelection(range, editor)
+                }
+            })
         }
     }
 
     return (
         <div className="editor editor-theme">
-            <Gutter lines={lines}/>
+            <Gutter lines={editorState.lines}/>
             <div className="text-editor text-editor-theme"
                 onMouseDown={onEditorMouseDown}
                 onMouseUp={onEditorMouseUp}
                 onClick={onEditorClick}>
                 <div className="text-editor-lines">
                     {
-                        lines.map(line => <Line key={line[0]}
+                        editorState.lines.map(line => <Line key={line[0]}
                             lexer={lexer}
                             value={line[1]} 
                             plugin={plugin}/>)

@@ -108,56 +108,44 @@ export class SelectionManager {
 
     /**
      * Get the selection {@link Range} from the selection char offset.
+     * @see StackOverflow answer <a href="https://stackoverflow.com/a/16100733/8050896"/>
      * @param lineElement 
-     * @param start 
-     * @param end 
+     * @param start Character offset.
+     * @param end Character offset.
      * @returns Range.
      */
-    getSelectionByCharOffset(lineElement: Node, start: number, end: number): Range {
-        var foundStart = false, stop = false;
-        // start walking the tree of #text nodes in the line,
-        const walker = document.createTreeWalker(lineElement,
+    getRangeByCharOffset(startLineElement: Node, 
+        start: number, 
+        end: number,
+        endLineElement?: Node): Range {
+        // walk the tree of #text nodes in the line node,
+        const walker = document.createTreeWalker(startLineElement,
             NodeFilter.SHOW_TEXT,
             null)
 
         var charIndex = 0
         const range = new Range()
-        range.setStart(lineElement, 0)
+        range.setStart(startLineElement, 0)
         range.collapse()
-        var node
-        while(node=walker.nextNode()) {
-            console.log(node);
+
+        var node, foundStart = false, stop = false;
+        // walk through the tree
+        while(!stop && (node=walker.nextNode())) {
+            // add the node's char length,
             var nextCharIndex = charIndex + (node as Text).length;
+            // if this node consumes the start offset,
             if (!foundStart && start >= charIndex && start <= nextCharIndex) {
                 range.setStart(node, start - charIndex)
                 foundStart = true
             }
 
+             // if this node consumes the end offset,
             if (foundStart && end >= charIndex && end <= nextCharIndex) {
-
+                range.setEnd(node, end - charIndex)
+                stop = true
             }
             charIndex = nextCharIndex
         }
-        
-        // while (!stop && (node = nodeStack.pop())) {
-        //     if (node.nodeType == 3) {
-        //         var nextCharIndex = charIndex + (node as Text).length;
-        //         if (!foundStart && start >= charIndex && start <= nextCharIndex) {
-        //             range.setStart(node, start - charIndex);
-        //             foundStart = true;
-        //         }
-        //         if (foundStart && end >= charIndex && end <= nextCharIndex) {
-        //             range.setEnd(node, end - charIndex);
-        //             stop = true;
-        //         }
-        //         charIndex = nextCharIndex;
-        //     } else {
-        //         var i = node.childNodes.length;
-        //         while (i--) {
-        //             nodeStack.push(node.childNodes[i]);
-        //         }
-        //     }
-        // }
 
         return range
     }
