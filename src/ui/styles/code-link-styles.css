@@ -110,6 +110,7 @@ h1 {
 .caret {
     position: absolute;
     width: 2px;
+    animation: blink 1s step-start 0s infinite;
 }
 
 .selection-overlay {

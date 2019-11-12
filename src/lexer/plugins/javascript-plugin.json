@@ -17,7 +17,7 @@
             "name": "punctuation"
         },
         "number": {
-            "rule": "[0-9]+",
+            "rule": "[0-9]([a-zA-Z0-9_]+)?",
             "name": "number"
         },
         "identifier": {

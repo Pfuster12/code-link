@@ -57,21 +57,19 @@ export class SelectionManager {
         // set the start to the beginning,
         startRange.setStart(startNode, 0)
         // set the end to the start container to find the start index,
-         startRange.setEnd(range.startContainer, range.startOffset)
+        startRange.setEnd(range.startContainer, range.startOffset)
 
         // get the index by finding the length of the string,
         const startIndex = startRange.toString().length
-        console.log(startIndex);
 
         // repeat for the end container,
         const endNode = range.endContainer.parentNode.parentNode
         const endRange = new Range()
 
         endRange.setStart(endNode, 0)
-         endRange.setEnd(range.endContainer, range.endOffset)
+        endRange.setEnd(range.endContainer, range.endOffset)
 
         const endIndex = endRange.toString().length
-        console.log(endIndex);
 
         return {
             start: startIndex,
@@ -106,5 +104,61 @@ export class SelectionManager {
             start: startLine,
             end: range.collapsed ? startLine : endLine 
         }
+    }
+
+    /**
+     * Get the selection {@link Range} from the selection char offset.
+     * @param lineElement 
+     * @param start 
+     * @param end 
+     * @returns Range.
+     */
+    getSelectionByCharOffset(lineElement: Node, start: number, end: number): Range {
+        var foundStart = false, stop = false;
+        // start walking the tree of #text nodes in the line,
+        const walker = document.createTreeWalker(lineElement,
+            NodeFilter.SHOW_TEXT,
+            null)
+
+        var charIndex = 0
+        const range = new Range()
+        range.setStart(lineElement, 0)
+        range.collapse()
+        var node
+        while(node=walker.nextNode()) {
+            console.log(node);
+            var nextCharIndex = charIndex + (node as Text).length;
+            if (!foundStart && start >= charIndex && start <= nextCharIndex) {
+                range.setStart(node, start - charIndex)
+                foundStart = true
+            }
+
+            if (foundStart && end >= charIndex && end <= nextCharIndex) {
+
+            }
+            charIndex = nextCharIndex
+        }
+        
+        // while (!stop && (node = nodeStack.pop())) {
+        //     if (node.nodeType == 3) {
+        //         var nextCharIndex = charIndex + (node as Text).length;
+        //         if (!foundStart && start >= charIndex && start <= nextCharIndex) {
+        //             range.setStart(node, start - charIndex);
+        //             foundStart = true;
+        //         }
+        //         if (foundStart && end >= charIndex && end <= nextCharIndex) {
+        //             range.setEnd(node, end - charIndex);
+        //             stop = true;
+        //         }
+        //         charIndex = nextCharIndex;
+        //     } else {
+        //         var i = node.childNodes.length;
+        //         while (i--) {
+        //             nodeStack.push(node.childNodes[i]);
+        //         }
+        //     }
+        // }
+
+        return range
     }
 }

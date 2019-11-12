@@ -80,9 +80,8 @@ Editor Theme
 }
 
 .caret-theme {
-    background-color: purple;
+    background-color: black;
     height: 1.2em;
-    animation: blink 1s step-start 0s infinite;
 }
 
 /*

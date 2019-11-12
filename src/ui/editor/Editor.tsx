@@ -110,6 +110,28 @@ export default function Editor(props: EditorProps) {
     [])
 
     /**
+     * Caret position effect depending on selection.
+     */
+    useEffect(() => {
+        const caret = document.querySelector('.caret') as HTMLDivElement
+        const textEditor = document.querySelector('.text-editor') as HTMLDivElement
+
+        const line = textEditor.childNodes[0].childNodes[selection.start.line]
+        
+        if (line) {
+            const range = selManager.getSelectionByCharOffset(line, 
+                selection.start.offset,
+                selection.start.offset)
+
+            // set the top+left pos including scrollY,
+            caret.style.top = selection.start.line*19 + 'px'
+            caret.style.left = (range.getBoundingClientRect().left
+                - textEditor.getBoundingClientRect().left) + 'px'
+        }
+    },
+    [selection])
+
+    /**
      * Handles the text area on change event.
      * @param event 
      */
@@ -150,25 +172,12 @@ export default function Editor(props: EditorProps) {
      * @param event 
      */
     function onEditorMouseUp(event: React.SyntheticEvent) {
-        // query for the editor elements,
-        const textEditor = document.querySelector('.text-editor') as HTMLDivElement
-        const editor = document.querySelector('.editor') as HTMLDivElement
-        const caret = document.querySelector('.caret') as HTMLDivElement
-
         // assign the selection,
         if (document.getSelection) {
             const range = document.getSelection().getRangeAt(0)
-            const rect = range.getBoundingClientRect()
-            const firstRect = range.getClientRects()[0]
+            const editor = document.querySelector('.editor') as HTMLDivElement
 
-            const textSelection = selManager.getSelection(range, editor)
-
-            // set the top+left pos including scrollY,
-            caret.style.top = rect.top + editor.scrollTop - 3 + 'px'
-            caret.style.left = (firstRect.left - 
-                textEditor.getBoundingClientRect().left) + 'px'
-
-            setSelection(textSelection)
+            setSelection(selManager.getSelection(range, editor))
         }
     }
 

@@ -43,6 +43,7 @@ export default function KeyHandler(event: React.KeyboardEvent,
         case KeyCode.KEY_ENTER:
         case KeyCode.KEY_ARROW_DOWN:
         case KeyCode.KEY_ARROW_UP:
+            break;
         case KeyCode.KEY_ARROW_LEFT:
             setSelection(prevSelection => {
                 return {
@@ -74,13 +75,39 @@ export default function KeyHandler(event: React.KeyboardEvent,
         case KeyCode.KEY_ESCAPE:
             break;
         case KeyCode.KEY_BRACKET_OPEN:
+            // if shiftKey on use {}
+            if (event.shiftKey) {
+                setLines(prevLines => {
+                    const l = prevLines.slice()
+                    l[selection.start.line][1] = 
+                        l[selection.start.line][1].slice(0, selection.start.offset + 1) 
+                            + key 
+                            + '}'
+                            + l[selection.start.line][1].slice(selection.start.offset + 1) 
+                    return l
+                })
+                setSelection(prevSelection => {
+                    return {
+                        start: {
+                            line: prevSelection.start.line,
+                            offset: prevSelection.start.offset + 1
+                        },
+                        end: {
+                            line: prevSelection.end.line,
+                            offset: prevSelection.end.offset
+                        }
+                    }
+                })
+                break;
+            }
+            // else key is []
             setLines(prevLines => {
                 const l = prevLines.slice()
                 l[selection.start.line][1] = 
-                    l[selection.start.line][1].slice(0, selection.start.offset) 
+                    l[selection.start.line][1].slice(0, selection.start.offset + 1) 
                         + key 
-                        + '}'
-                        + l[selection.start.line][1].slice(selection.start.offset) 
+                        + ']'
+                        + l[selection.start.line][1].slice(selection.start.offset + 1) 
                 return l
             })
             setSelection(prevSelection => {
@@ -96,7 +123,28 @@ export default function KeyHandler(event: React.KeyboardEvent,
                 }
             })
             break;
-        case KeyCode.KEY_BRACKET_CLOSE:
+        case KeyCode.KEY_PAREN_OPEN:
+            setLines(prevLines => {
+                const l = prevLines.slice()
+                l[selection.start.line][1] = 
+                    l[selection.start.line][1].slice(0, selection.start.offset + 1) 
+                        + key 
+                        + ')'
+                        + l[selection.start.line][1].slice(selection.start.offset + 1) 
+                return l
+            })
+            setSelection(prevSelection => {
+                return {
+                    start: {
+                        line: prevSelection.start.line,
+                        offset: prevSelection.start.offset + 2
+                    },
+                    end: {
+                        line: prevSelection.end.line,
+                        offset: prevSelection.end.offset
+                    }
+                }
+            })
             break;
         // add key value to selection...
         default: 
