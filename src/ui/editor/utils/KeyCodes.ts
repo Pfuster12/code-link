@@ -4,6 +4,9 @@
 const KeyCode = {
     KEY_ENTER: 13,
     KEY_BACKSPACE: 8,
+    KEY_TAB: 9,
+    KEY_END: 35,
+    KEY_HOME: 36,
     KEY_SPACE: 32,
     KEY_ESCAPE: 27,
     KEY_CONTROL: 17,

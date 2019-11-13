@@ -14,6 +14,27 @@ export interface Selection {
     }
 }
 
+export namespace Selection {
+
+    /**
+     * Returns a {@link Selection} collapsed, i.e. end==start
+     * @param line 
+     * @param offset 
+     */
+    export function collapseSelection(line: number, offset: number): Selection {
+        return {
+            start: {
+                line: line,
+                offset: offset
+            },
+            end: {
+                line: line,
+                offset: offset
+            }
+        }
+    }
+}
+
 /**
  * This is a class to manage DOM selection in the {@link Editor} component.
  * The DOM editor consists of a series of CSS styled spans which can be selected
