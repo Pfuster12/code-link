@@ -33,6 +33,26 @@ export namespace Selection {
             }
         }
     }
+
+    /**
+     * Finds whether selection offsets are collapsed.
+     * @param start 
+     * @param end 
+     * @returns true if collapsed.
+     */
+    export function isCollapsed(selection: Selection): boolean {
+        return selection.start.line == selection.end.line && selection.start.offset == selection.end.offset
+    }
+
+    /**
+     * Finds whether line selection offsets are multiline.
+     * @param start 
+     * @param end 
+     * @returns true if multiline.
+     */
+    export function isMultiline(selection: Selection): boolean {
+        return selection.start.line != selection.end.line
+    }
 }
 
 /**
