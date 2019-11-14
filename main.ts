@@ -1,26 +1,46 @@
-const { app, BrowserWindow } = require('electron')
+import { app, BrowserWindow, Menu } from 'electron';
+import * as url from 'url'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-var win
+var win: Electron.BrowserWindow = null
 
+/**
+ * Creates a {@link BrowserWindow}.
+ */
 function createWindow () {
     // Create the browser window.
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1000,
+        height: 1000,
         webPreferences: {
-          nodeIntegration: true,
+          nodeIntegration: true
         }
     })
 
-    win.setMenuBarVisibility(false)
+    // since 7.1.1 only way to remove electron menu.
+    // see https://github.com/electron/electron/issues/21088
+    Menu.setApplicationMenu(null)
 
-    // and load the index.html of the app.
-    win.loadURL('http://localhost:8080/index.html')
+    // Add the React dev tools manually to the chromium window, Make sure you have the FULL path here or it won't work
+    // since v.6.0.0 to 7.1.1 there is an issue with dev tools and Windows Dark Mode makes electron hang and not
+    // open a window, see https://github.com/electron/electron/issues/19468
+		BrowserWindow.addDevToolsExtension(
+      "C:/Users/pfust/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.0_0"
+    )
 
     // Open the DevTools.
-    //win.webContents.openDevTools()
+    win.webContents.openDevTools()
+
+    var indexPath = url.format({
+			protocol: 'http:',
+			host: 'localhost:8080',
+			pathname: 'index.html',
+			slashes: true
+    })
+    
+    // and load the index.html of the app.
+    win.loadURL(indexPath)
 
     // Emitted when the window is closed.
     win.on('closed', () => {

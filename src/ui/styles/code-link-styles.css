@@ -12,6 +12,7 @@ Themes live in the ./src/themes directory.
 
 html, body {
     overflow: hidden;
+    margin: 0px;
 }
 
 main {
@@ -37,9 +38,11 @@ h1 {
 }
 
 ::-webkit-scrollbar {
+
 }
 
 ::-webkit-scrollbar-thumb {
+
 }
 
 /*
@@ -85,7 +88,7 @@ h1 {
     flex: 1;
     min-width: 100px;
     cursor: text;
-    overflow-y: auto
+    overflow: hidden;
 }
 
 .text-editor {
@@ -93,8 +96,7 @@ h1 {
     display: flex;
     flex-direction: column;
     flex: 1;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow: auto;
 }
 
 .text-editor-lines {
@@ -144,7 +146,8 @@ h1 {
     min-width: 60px;
     flex-direction: column;
     user-select: none;
-    align-items: stretch
+    align-items: stretch;
+    overflow-y: hidden;
 }
 
 .line-number {
@@ -158,4 +161,23 @@ h1 {
 
 .line-number:hover {
     color: black
+}
+
+/*
+ * SideBar styles
+ */
+
+ /*
+  * Folders styles
+  */
+
+.folders {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.folder {
+    display: flex;
+    padding: 4px;
 }

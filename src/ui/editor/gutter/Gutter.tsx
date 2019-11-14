@@ -1,7 +1,8 @@
 import * as React from 'react'
 
 interface GutterProps {
-    lines: string[][]
+    lines: string[][],
+    scrollTop: number
 }
 
 /**
@@ -9,6 +10,15 @@ interface GutterProps {
  * @property props
  */
 export default function Gutter(props: GutterProps) {
+
+    /**
+     * Layout effect to scroll with text editor scrollTop.
+     */
+    React.useLayoutEffect(() => {
+        const gutterElement = document.querySelector('.gutter')
+        gutterElement.scrollTop = props.scrollTop
+    }, 
+    [props.scrollTop])
 
     return (
         <div className="gutter gutter-theme">

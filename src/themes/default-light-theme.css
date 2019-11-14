@@ -47,7 +47,7 @@ Editor Theme
 */
 ::selection {
     color: white;
-    background-color: rgba(0, 0, 255, 0.99);
+    background-color: blue;
 }
 
 .editor-theme {

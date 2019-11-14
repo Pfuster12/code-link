@@ -180,7 +180,7 @@ export default function Editor(props: EditorProps) {
         // assign the selection,
         if (document.getSelection) {
             const range = document.getSelection().getRangeAt(0)
-            const editor = document.querySelector('.editor') as HTMLDivElement
+            const editor = document.querySelector('.text-editor') as HTMLDivElement
 
             setEditorState(prevState => {
                 return {
@@ -191,10 +191,25 @@ export default function Editor(props: EditorProps) {
         }
     }
 
+    /**
+     * Stores the editor scrollTop to synchronise other UI components.
+     */
+    const [editorScrollTop, setEditorScrollTop] = useState(0)
+
+    /**
+     * Handle the editor scroll.
+     * @param event 
+     */
+    function onTextEditorScroll(event: React.SyntheticEvent) {        
+        setEditorScrollTop(event.currentTarget.scrollTop)
+    }
+
     return (
         <div className="editor editor-theme">
-            <Gutter lines={editorState.lines}/>
+            <Gutter lines={editorState.lines}
+                scrollTop={editorScrollTop}/>
             <div className="text-editor text-editor-theme"
+                onScroll={onTextEditorScroll}
                 onMouseDown={onEditorMouseDown}
                 onMouseUp={onEditorMouseUp}
                 onClick={onEditorClick}>

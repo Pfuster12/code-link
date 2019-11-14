@@ -1,10 +1,11 @@
 {
   "name": "code-link",
   "version": "0.1.0",
-  "description": "A react code editor",
-  "main": "index.js",
+  "description": "A react x electron code editor",
+  "main": "main.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.js"
+    "build": "webpack --config webpack.prod.js",
+    "start": "tsc main.ts && webpack-dev-server --config webpack.dev.js"
   },
   "author": "Pablo Fuster",
   "license": "MIT",
