@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * The Node.js File System module. Provides an API for interacting with
  * the file system.

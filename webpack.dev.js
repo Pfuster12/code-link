@@ -23,11 +23,11 @@ module.exports = merge(common, {
               // The command to run,
               'electron',
               // list of string arguments ,
-              ['.'],
+              ['http://localhost:8080/index.html'],
               // options object,
               // shell runs command inside of a shell. Uses '/bin/sh' on Unix, and process.env.ComSpec on Windows. A different shell can be specified as a string. 
               { 
-                shell: true, 
+                shell: true,
                 //Use env to specify environment variables that will be visible to the new process, the default is process.env.
                 env: process.env, 
                 // Child's stdio configuration

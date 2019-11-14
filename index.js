@@ -1,73 +1,34 @@
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
-const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var win
 
 function createWindow () {
-	// Create the browser window.
-	win = new BrowserWindow({ 
-		width: 1100,
-		height: 900,
-		webPreferences: {
-			nodeIntegration: true,
-			nodeIntegrationInWorker: true
-		}
-	})
+    // Create the browser window.
+    win = new BrowserWindow({
+        width: 800,
+        height: 600,
+        webPreferences: {
+          nodeIntegration: true,
+        }
+    })
 
-	// set menu bar visibility
-	// ONLY Win & Linux
-	win.setMenuBarVisibility(false)
+    win.setMenuBarVisibility(false)
 
-	// Keep a reference for dev mode
-	var dev = false
+    // and load the index.html of the app.
+    win.loadURL('http://localhost:8080/index.html')
 
-	if (process.defaultApp || /[\\/]electron-prebuilt[\\/]/.test(process.execPath) || /[\\/]electron[\\/]/.test(process.execPath)) {
-		dev = true
-	}
+    // Open the DevTools.
+    //win.webContents.openDevTools()
 
-	// and load the index.html of the app.
-	var indexPath
-
-	// Implementing Webpack dev server,
-	if (dev) {
-		indexPath = url.format({
-			protocol: 'http:',
-			host: 'localhost:8080',
-			pathname: 'index.html',
-			slashes: true
-		})
-
-		// Add the React dev tools manually to the chromium window,
-		// Make sure you have the FULL path here or it won't work
-		BrowserWindow.addDevToolsExtension(
-			"C:/Users/pfust/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.0_0"
-		);
-
-		// Open the DevTools.
-		win.webContents.openDevTools()
-
-	// if not dev load from the file index html,
-	} else {
-		indexPath = url.format({
-			protocol: 'file:',
-			pathname: path.join(__dirname, 'dist', 'index.html'),
-			slashes: true
-		})
-	}
-
-	// load url of the index path
-	win.loadURL(indexPath)
-
-	// Emitted when the window is closed.
-	win.on('closed', () => {
-		// Dereference the window object, usually you would store windows
-		// in an array if your app supports multi windows, this is the time
-		// when you should delete the corresponding element.
-		win = null
-	})
+    // Emitted when the window is closed.
+    win.on('closed', () => {
+        // Dereference the window object, usually you would store windows
+        // in an array if your app supports multi windows, this is the time
+        // when you should delete the corresponding element.
+        win = null
+    })
 }
 
 // This method will be called when Electron has finished
