@@ -34,8 +34,9 @@ textarea {
 h1 {
     display: flex;
     margin: 0px;
-    font-family: monospace;
+    font-family: 'Consolas',monospace;
     font-weight: bold;
+    font-size: 16px;
 }
 
 span {
@@ -181,6 +182,11 @@ span {
      flex-direction: column;
  }
 
+ .expandable-list {
+     display: flex;
+     flex-direction: column;
+ }
+
  /*
   * Folders styles
   */
@@ -195,18 +201,57 @@ span {
 
 .folders-title {
     margin: 8px;
+    text-transform: uppercase;
+}
+
+.folders-empty {
+    padding: 16px;
+    text-align: center;
 }
 
 .folder {
+    display: flex;
+    cursor: pointer;
+    flex-direction: column;
+}
+
+.folders-text {
     display: flex;
     padding: 4px 16px;
     cursor: pointer;
 }
 
-.folder:hover {
-    background-color: antiquewhite;
+.folders-text:hover {
+    background-color: whitesmoke;
 }
 
-.folder-name {
-    padding-left: 4px;
+.folders-list {
+    overflow-y: scroll;
+}
+
+.folder-selected {
+    background-color: lightseagreen;
+}
+
+.folder-subdir {
+    margin-left: 16px;
+}
+
+.folders-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.folders-name {
+    padding-left: 8px;
+}
+
+.file {
+    display: flex;
+    padding: 4px 16px;
+    cursor: pointer;
+}
+
+.file:hover {
+    background-color: whitesmoke;
 }

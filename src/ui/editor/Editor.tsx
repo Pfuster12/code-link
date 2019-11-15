@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect, useMemo, useRef } from 'react'
 import Line from './Line'
-import FileReader from '../../io/FileReader'
+import FilesIO from '../../io/FilesIO'
 import * as Lexer from '../../lexer/Lexer'
 import PluginReader from '../../lexer/PluginReader'
 import Gutter from './gutter/Gutter'
@@ -70,7 +70,7 @@ export default function Editor(props: EditorProps) {
      */
     useEffect(() => {
         // read the given file using FileReader,
-        FileReader()
+        FilesIO()
             .readFile(props.file)
             .then(res => {
                 // split lines,

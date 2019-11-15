@@ -194,3 +194,13 @@ Editor Theme
 .incomplete-string-template {
     color: green
 }
+
+/*
+------------------------------------------
+Workspace Theme
+------------------------------------------
+*/
+
+.folders-text-theme:hover {
+    background-color: whitesmoke !important;
+}

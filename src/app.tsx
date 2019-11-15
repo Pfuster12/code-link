@@ -20,7 +20,7 @@ export default function App() {
         <main>
             <SplitPane>
                 <SideBar>
-                    <Folders/>
+                    <Folders dirPath={'C:/Users/Pablo/projects/funky-releases'}/>
                 </SideBar>
                 <Editor file={file}/>
             </SplitPane>

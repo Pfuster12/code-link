@@ -29,10 +29,11 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "@types/node": "^12.12.7",
+    "dotenv": "^8.2.0"
   },
   "dependencies": {
-    "dotenv": "^8.2.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "typescript": "^3.7.2"
