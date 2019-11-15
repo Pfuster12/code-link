@@ -1,11 +1,7 @@
 import { Lexer } from "./Lexer"
 
-// @flow
-
-/**
- * The Node.js File System module. Provides an API for interacting with
- * the file system.
- */
+//The Node.js File System module. Provides an API for interacting with
+//the file system.
 const fs = require('fs').promises
 
 /**

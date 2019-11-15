@@ -2,6 +2,7 @@
 exports.__esModule = true;
 var electron_1 = require("electron");
 var url = require("url");
+require('dotenv').config();
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 var win = null;
@@ -23,7 +24,7 @@ function createWindow() {
     // Add the React dev tools manually to the chromium window, Make sure you have the FULL path here or it won't work
     // since v.6.0.0 to 7.1.1 there is an issue with dev tools and Windows Dark Mode makes electron hang and not
     // open a window, see https://github.com/electron/electron/issues/19468
-    electron_1.BrowserWindow.addDevToolsExtension("C:/Users/pfust/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/4.2.0_0");
+    electron_1.BrowserWindow.addDevToolsExtension(process.env.REACT_TOOLS_PATH);
     // Open the DevTools.
     win.webContents.openDevTools();
     var indexPath = url.format({

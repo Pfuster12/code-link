@@ -13,6 +13,7 @@ Themes live in the ./src/themes directory.
 html, body {
     overflow: hidden;
     margin: 0px;
+    font-size: 14px;
 }
 
 main {
@@ -32,9 +33,14 @@ textarea {
 
 h1 {
     display: flex;
-    margin: 16px;
+    margin: 0px;
     font-family: monospace;
     font-weight: bold;
+}
+
+span {
+    font-family: 'Ubuntu Mono','Consolas',monospace;
+    font-size: 1em;
 }
 
 ::-webkit-scrollbar {
@@ -123,7 +129,9 @@ h1 {
 
 .text-edit {
     opacity: 0;
-    position: absolute;
+    width: 1px;
+    height: 1px;
+    position: relative;
     top: 0;
     left: 0;
 }
@@ -167,6 +175,12 @@ h1 {
  * SideBar styles
  */
 
+ .sidebar {
+     display: flex;
+     flex: 1;
+     flex-direction: column;
+ }
+
  /*
   * Folders styles
   */
@@ -175,9 +189,24 @@ h1 {
     display: flex;
     flex: 1;
     flex-direction: column;
+    user-select: none;
+    cursor: default;
+}
+
+.folders-title {
+    margin: 8px;
 }
 
 .folder {
     display: flex;
-    padding: 4px;
+    padding: 4px 16px;
+    cursor: pointer;
+}
+
+.folder:hover {
+    background-color: antiquewhite;
+}
+
+.folder-name {
+    padding-left: 4px;
 }

@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "description": "A react x electron code editor",
   "main": "main.js",
+  "homepage": "https://github.com/Pfuster12/code-link",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pfuster12/code-link"
+  },
+  "bugs": "https://github.com/Pfuster12/code-link/issues",
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "start": "tsc main.ts && webpack-dev-server --config webpack.dev.js"
@@ -26,6 +32,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "typescript": "^3.7.2"

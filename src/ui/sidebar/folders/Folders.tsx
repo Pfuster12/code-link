@@ -9,10 +9,11 @@ export function Folders() {
     const test = [0, 1, 2, 3, ,4]
 
     return (
-        <section className="folders">
+        <div className="folders">
+            <h1 className="folders-title">Folders</h1>
             {
-                test.map(item => <Folder/>)
+                test.map(item => <Folder key={item}/>)
             }
-        </section>
+        </div>
     )
 }

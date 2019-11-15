@@ -160,8 +160,6 @@ export class Lexer {
         if (newLineRegex.test(lastLine.substring(lastLine.length - 1, lastLine.length))) {
             lines.push('')
         }
-
-        console.log('Line split: ', lines);
         
         // return the line array
         return lines

@@ -6,6 +6,7 @@ import SplitPane from './ui/panes/SplitPane'
 import './ui/styles/code-link-styles.css'
 import Editor from './ui/editor/Editor';
 import { Folders } from './ui/sidebar/folders/Folders';
+import { SideBar } from './ui/sidebar/folders/SideBar';
 
 /**
  * The entry point component of this application's renderer window.
@@ -18,7 +19,9 @@ export default function App() {
     return (
         <main>
             <SplitPane>
-                <Folders/>
+                <SideBar>
+                    <Folders/>
+                </SideBar>
                 <Editor file={file}/>
             </SplitPane>
         </main>
