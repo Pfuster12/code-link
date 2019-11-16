@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
 import { Folder } from './Folder'
-import FilesIO from '../../../io/FilesIO'
+import FilesIO from '../../../../io/FilesIO'
 import { Dirent } from 'fs'
 import { File } from './File'
-import { ResourceBoundUI } from '../../ResourceBoundUI'
+import { ResourceBoundUI } from '../../../components/ResourceBoundUI'
 
 interface FoldersProps {
     dirPath: string
@@ -27,20 +27,36 @@ export function Folders(props: FoldersProps) {
     const [dir, setDir] = useState<Dirent[]>(null)
 
     /**
+     * Store the dir watcher's last fired event timestamp.
+     */
+    const [watchEventTimestamp, setWatchEventTimestamp] = useState<number>(-1)
+
+    /**
      * Read the directories contents to display.
      */
     useEffect(() => {
         FilesIO().readDir(props.dirPath)
             .then(res => {
                 console.log('Dir contents are: ', res);
-                console.log(res[2].isDirectory());
-                
                 setDir(res)
             })
             .catch(err =>{
                 console.log('Error reading directory in Folders plugin.', err);
                 setDir(null)
             })
+    },
+    // dep on the dir path changing or the watcher event timestamp,
+    [props.dirPath, watchEventTimestamp])
+
+    /**
+     * Watch the dir contents change events and reset the change timestamp.
+     */
+    useEffect(() => {
+        FilesIO().watchDir(props.dirPath, (event, filename) => {
+            const d = new Date()
+            console.log('Event ' + event + ' fired in ' + props.dirPath);
+            setWatchEventTimestamp(d.getMilliseconds())
+        })
     },
     // dep on the dir path changing,
     [props.dirPath])

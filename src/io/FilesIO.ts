@@ -2,8 +2,9 @@
  * The Node.js File System module. Provides an API for interacting with
  * the file system.
  */
+import * as fs from 'fs'
 import {promises, Dirent} from 'fs'
-const fs = promises
+const fspromises = promises
 
 /**
  * This is a library to read and write files using the fs module.
@@ -21,7 +22,7 @@ const FilesIO = () => {
      */
     function readFile(path: string): Promise<string> {
         console.info('%c Reading file from ' + path, 'color: royalblue;')
-        return fs.readFile(path, 'utf8')
+        return fspromises.readFile(path, 'utf8')
     }
 
     /**
@@ -30,7 +31,7 @@ const FilesIO = () => {
      * @param content
      */
     function writeFile(path: string, name: string, content: string): Promise<void>  {
-        return fs.writeFile(name, content)
+        return fspromises.writeFile(name, content)
     }
 
     /**
@@ -38,14 +39,24 @@ const FilesIO = () => {
      * @param path 
      */
     function readDir(path: string): Promise<Dirent[]> {
-        return fs.readdir(path, { encoding: 'utf-8', withFileTypes: true})
+        return fspromises.readdir(path, { encoding: 'utf-8', withFileTypes: true})
+    }
+
+    /**
+     * Watch directory event changes.
+     * @param path 
+     * @param watcher Callback listening to watcher.
+     */
+    function watchDir(path: string, watcher: (event: string, filename: string) =>  void) {
+        fs.watch(path, 'utf-8', (event, filename) => watcher(event, filename))
     }
 
     /// return object,
     return Object.freeze({
         readFile,
         writeFile,
-        readDir
+        readDir, 
+        watchDir
     })
 }
 

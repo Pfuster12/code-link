@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import * as folder_closed from '../../assets/folder_closed.svg'
+import * as folder_closed from '../../../assets/folder_closed.svg'
 import { Dirent } from 'fs'
-import ExpandableList from '../../ExpandableList'
-import FilesIO from '../../../io/FilesIO'
+import ExpandableList from '../../../components/ExpandableList'
+import FilesIO from '../../../../io/FilesIO'
 import { File } from './File'
 
 interface FolderProps {
@@ -27,26 +27,23 @@ export function Folder(props: FolderProps) {
     const [dir, setDir] = useState<Dirent[]>(null)
 
     /**
-     * Effect to read directory.
-     */
-    useEffect(() => {
-        FilesIO().readDir(props.dirPath)
-            .then(res => {
-                setDir(res)
-            })
-            .catch(err => {
-                console.log('Error reading folder: ', props.dir.name, err);
-            })
-    },
-    // depend on the folder path,
-    [props.dir.name])
-
-    /**
      * Handle the folder onClick.
      * @param event 
      */
     function onFolderClick(event: React.SyntheticEvent) {
-        setExpanded(!expanded)
+        if (expanded) {
+            setExpanded(!expanded)
+        } else {
+            // read contents on click expansion
+            FilesIO().readDir(props.dirPath)
+            .then(res => {
+                setDir(res)
+                setExpanded(!expanded)
+            })
+            .catch(err => {
+                console.log('Error reading folder: ', props.dir.name, err);
+            })
+        }
     }
 
     return (
@@ -57,7 +54,7 @@ export function Folder(props: FolderProps) {
                 <span className="folders-name folder-name">{props.dir.name}</span>
             </div>
             <ExpandableList expanded={expanded}>
-                <div className="folder-subdir">
+                <ul className="folder-subdir">
                     {
                         dir && 
                         dir.map(item => {
@@ -68,7 +65,7 @@ export function Folder(props: FolderProps) {
                             <File key={item.name} file={item}/>
                         })
                     }
-                </div>
+                </ul>
             </ExpandableList>
         </div>
     )

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Folder } from './Folder'
+import { Folder } from './plugins/folders/Folder'
 
 interface SideBarProps {
     children: React.ReactNode

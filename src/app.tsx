@@ -5,8 +5,8 @@ import SplitPane from './ui/panes/SplitPane'
 // but essential, under-the-hood styles for the app to work properly.
 import './ui/styles/code-link-styles.css'
 import Editor from './ui/editor/Editor';
-import { Folders } from './ui/sidebar/folders/Folders';
-import { SideBar } from './ui/sidebar/folders/SideBar';
+import { Folders } from './ui/sidebar/plugins/folders/Folders';
+import { SideBar } from './ui/sidebar/SideBar';
 
 /**
  * The entry point component of this application's renderer window.
