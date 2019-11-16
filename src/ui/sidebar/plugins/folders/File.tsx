@@ -13,7 +13,7 @@ export function File(props: FileProps) {
 
     return (
         <div className="file">
-            <FileIcon extension={props.file.name}/>
+            <FileIcon filename={props.file.name}/>
             <span className="folders-name file-name">{props.file.name}</span>
         </div>
     )

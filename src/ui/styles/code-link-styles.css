@@ -216,6 +216,16 @@ span {
     text-align: center;
 }
 
+.folders-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.folders-name {
+    padding-left: 8px;
+    white-space: nowrap;
+}
+
 .folder {
     display: flex;
     cursor: pointer;
@@ -235,6 +245,7 @@ span {
 .folders-list {
     height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .folder-selected {
@@ -243,15 +254,6 @@ span {
 
 .folder-subdir {
     margin-left: 16px;
-}
-
-.folders-icon {
-    width: 16px;
-    height: 16px;
-}
-
-.folders-name {
-    padding-left: 8px;
 }
 
 .file {
