@@ -19,11 +19,16 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(png|svg|jpg|gif)$/,
+                test: /\.(woff2|png|svg|jpg|gif)$/,
                 exclude: /node_modules/,
                 use: [
-                    'file-loader'
-                ]
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[path][name].[ext]',
+                        },
+                    }
+                ],
             },
             {
                 test: /\.css$/,

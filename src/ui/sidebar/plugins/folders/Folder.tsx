@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import * as folder_closed from '../../../assets/folder_closed.svg'
+import * as folder_closed from '../../../assets/file_icons/folder_closed.svg'
 import { Dirent } from 'fs'
 import ExpandableList from '../../../components/ExpandableList'
 import FilesIO from '../../../../io/FilesIO'

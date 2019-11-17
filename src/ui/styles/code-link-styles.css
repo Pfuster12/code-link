@@ -6,6 +6,11 @@ Themes live in the ./src/themes directory.
 ------------------------------------------
 */
 
+@font-face {
+    font-family: geomanist;
+    src: url('../assets//fonts/geomanist-regular-webfont.woff2');
+}
+
 /*
  * HTML elements styles.
  */
@@ -209,6 +214,7 @@ span {
 .folders-title {
     margin: 8px;
     text-transform: uppercase;
+    font-family: 'geomanist';
 }
 
 .folders-empty {
@@ -217,13 +223,16 @@ span {
 }
 
 .folders-icon {
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
 }
 
 .folders-name {
     padding-left: 8px;
     white-space: nowrap;
+    font-size: 0.95em;
+    font-family: 'geomanist';
 }
 
 .folder {
@@ -258,7 +267,7 @@ span {
 
 .file {
     display: flex;
-    padding: 4px 16px;
+    padding: 4px 0px 4px 16px;
     cursor: pointer;
 }
 
