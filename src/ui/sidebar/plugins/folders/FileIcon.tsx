@@ -9,7 +9,7 @@ import * as webpack from '../../../assets/file_icons/webpack_icon.svg'
 import * as ts from '../../../assets/file_icons/ts_icon.svg'
 import * as svg from '../../../assets/file_icons/svg_icon.svg'
 import * as html from '../../../assets/file_icons/html_icon.svg'
-import * as css from '../../../assets/file_icons/html_icon.svg'
+import * as css from '../../../assets/file_icons/css_icon.svg'
 import * as react from '../../../assets/file_icons/react_icon.svg'
 import * as markdown from '../../../assets/file_icons/markdown_icon.svg'
 import * as readme from '../../../assets/file_icons/readme_icon.svg'
@@ -75,6 +75,6 @@ export function FileIcon(props: FileIconProps) {
     [props.filename])
 
     return (
-        <img className="folders-icon" src={icon}/>
+        <object type="image/svg+xml" data={icon} className="folders-icon" />
     )
 }

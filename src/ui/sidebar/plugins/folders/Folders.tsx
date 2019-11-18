@@ -29,7 +29,7 @@ export function Folders(props: FoldersProps) {
     /**
      * Store the dir watcher's last fired event timestamp.
      */
-    const [watchEventTimestamp, setWatchEventTimestamp] = useState<number>(-1)
+    const [watchEventTimestamp, setWatchEventTimestamp] = useState<number>(0)
 
     /**
      * Read the directories contents to display.
@@ -45,7 +45,7 @@ export function Folders(props: FoldersProps) {
                 setDir(null)
             })
     },
-    // dep on the dir path changing or the watcher event timestamp,
+    // dep on the dir path changing or a watcher event timestamp,
     [props.dirPath, watchEventTimestamp])
 
     /**
@@ -66,7 +66,7 @@ export function Folders(props: FoldersProps) {
             <h1 className="folders-title">Folders</h1>
             <ResourceBoundUI resource={dir}>
                 <span className="folders-empty">Open a folder to view its contents here.</span>
-                <Folder dir={dir} dirPath={props.dirPath}/>
+                <Folder dir={{name: props.dirPath}} dirPath={props.dirPath} defaultExpanded={true} isRoot={true}/>
             </ResourceBoundUI>
         </div>
     )

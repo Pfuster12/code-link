@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import * as folder_closed from '../../../assets/file_icons/folder_closed.svg'
+import * as folder_closed from '../../../assets/file_icons/folder_closed_icon.svg'
+import * as folder_open from '../../../assets/file_icons/folder_open_icon.svg'
 import { Dirent } from 'fs'
 import ExpandableList from '../../../components/ExpandableList'
 import FilesIO from '../../../../io/FilesIO'
@@ -8,18 +9,20 @@ import { File } from './File'
 
 interface FolderProps {
     dirPath: string,
-    dir: Dirent
+    dir: Dirent | { name: string },
+    defaultExpanded?: boolean,
+    isRoot?: boolean
 }
 
 /**
- * Displays a folder item in the Folders SideBar plugin.
+ * Displays an expandable directory in the Folders SideBar plugin.
  */
-export function Folder(props: FolderProps) {
+export function Folder(props: FolderProps = { dirPath: '', dir: {name: ''}, defaultExpanded: false, isRoot: false}) {
 
     /**
      * Toggle for the folder content to expand below.
      */
-    const [expanded, setExpanded] = useState(false)
+    const [expanded, setExpanded] = useState(props.defaultExpanded)
 
     /**
      * Store the dir content to display in this plugin.
@@ -27,30 +30,45 @@ export function Folder(props: FolderProps) {
     const [dir, setDir] = useState<Dirent[]>(null)
 
     /**
-     * Handle the folder onClick.
-     * @param event 
+     * Read directory contents on folder expanded.
      */
-    function onFolderClick(event: React.SyntheticEvent) {
+    useEffect(() => {
         if (expanded) {
-            setExpanded(!expanded)
-        } else {
             // read contents on click expansion
             FilesIO().readDir(props.dirPath)
             .then(res => {
+                // sort out content by dirs first,
+                res.sort((a, b) =>  {
+                    if (a.isDirectory() && b.isDirectory()) {
+                        return 0
+                    } else if (a.isDirectory() && !b.isDirectory()) {
+                        return -1
+                    } else {
+                        return 1
+                    }
+                })
                 setDir(res)
-                setExpanded(!expanded)
             })
             .catch(err => {
                 console.log('Error reading folder: ', props.dir.name, err);
             })
         }
+    },
+    [expanded])
+
+    /**
+     * Handle the folder onClick.
+     * @param event 
+     */
+    function onFolderClick(event: React.SyntheticEvent) {
+        setExpanded(!expanded)
     }
 
     return (
-        <div className="folder">
-            <div className="folders-text folders-text-theme"
+        <div className={props.isRoot ? "folder-root" : "folder"}>
+            <div className="folders-item folders-item-theme"
                 onClick={onFolderClick}>
-                <img className="folders-icon" src={folder_closed}/>
+                <img className="folders-icon" src={expanded ? folder_open : folder_closed}/>
                 <span className="folders-name folder-name">{props.dir.name}</span>
             </div>
             <ExpandableList expanded={expanded}>
