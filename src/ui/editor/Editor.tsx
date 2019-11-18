@@ -34,6 +34,9 @@ export default function Editor(props: EditorProps) {
      */
     const [plugin, setPlugin] = useState<Lexer.Lexer.Plugin | null>(null)
 
+    /**
+     * Stores the {@link EditorState}.
+     */
     const [editorState, setEditorState] = useState<EditorState>({
         lines: [],
         selection: {

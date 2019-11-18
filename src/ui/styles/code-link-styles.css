@@ -98,6 +98,42 @@ span {
 /*
  * Editor styles.
  */
+
+.editor-pane {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    overflow: auto;
+}
+
+.editor-tablayout {
+    display: flex;
+    flex-direction: row;
+    height: 32px;
+}
+
+.editor-tab {
+    display: flex;
+    flex-direction: row;
+    padding: 4px 8px;
+    min-width: 56px;
+    cursor: pointer;
+    font-size: 0.95em;
+    align-items: center;
+    justify-content: center;
+}
+
+.editor-tab-name {
+    padding-left: 8px;
+}
+
+.editor-tab-close {
+    padding: 4px;
+}
+
+.editor-tab:hover {
+    background-color: whitesmoke;
+}
  
 .editor {
     display: flex;
@@ -142,7 +178,7 @@ span {
     opacity: 0;
     width: 1px;
     height: 1px;
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
 }
@@ -241,6 +277,7 @@ span {
     flex-direction: column;
     height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-bottom: 16px;
 }
 
@@ -258,12 +295,6 @@ span {
 
 .folders-item:hover {
     background-color: whitesmoke;
-}
-
-.folders-list {
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
 .folder-selected {

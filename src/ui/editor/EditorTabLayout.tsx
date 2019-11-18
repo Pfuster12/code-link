@@ -11,9 +11,9 @@ interface EditorTabLayoutProps {
 export default function EditorTabLayout(props: EditorTabLayoutProps) {
 
     return (
-        <nav>
+        <nav className="editor-tablayout">
             {
-                props.tabs.map(tab => <EditorTab/>)
+                props.tabs.map(tab => <EditorTab tab={tab}/>)
             }
         </nav>
     )

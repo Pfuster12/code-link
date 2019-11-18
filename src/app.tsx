@@ -7,14 +7,12 @@ import './ui/styles/code-link-styles.css'
 import Editor from './ui/editor/Editor';
 import { Folders } from './ui/sidebar/plugins/folders/Folders';
 import { SideBar } from './ui/sidebar/SideBar';
+import EditorPane from './ui/editor/EditorPane';
 
 /**
  * The entry point component of this application's renderer window.
  */
 export default function App() {
-
-    // temp file path...
-    const file = './src/test/files/coffee.txt'
 
     return (
         <main>
@@ -22,7 +20,7 @@ export default function App() {
                 <SideBar>
                     <Folders dirPath={'C:/Users/pfust/projects/funky-releases'}/>
                 </SideBar>
-                <Editor file={file}/>
+                <EditorPane/>
             </SplitPane>
         </main>
     )
