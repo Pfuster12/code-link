@@ -59,14 +59,14 @@ Editor Theme
     Theme for the text editor pane.
 */
 .text-editor-theme {
-    background-color: white;
+    background-color: #FCFCFC;
 }
 
 /*
     Theme for the gutter.
 */
 .gutter-theme {
-
+    background-color: #FCFCFC;
 }
 
 /*

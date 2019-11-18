@@ -66,20 +66,7 @@ export function Folders(props: FoldersProps) {
             <h1 className="folders-title">Folders</h1>
             <ResourceBoundUI resource={dir}>
                 <span className="folders-empty">Open a folder to view its contents here.</span>
-                    <div className="folders-list">
-                        {
-                            dir && 
-                            dir.map(item => {
-                                return item.isDirectory() 
-                                ?
-                                <Folder key={item.name}
-                                    dirPath={props.dirPath + '/' + item.name}
-                                    dir={item}/>
-                                :
-                                <File key={item.name} file={item}/>
-                            })
-                        }
-                    </div>
+                <Folder dir={dir} dirPath={props.dirPath}/>
             </ResourceBoundUI>
         </div>
     )

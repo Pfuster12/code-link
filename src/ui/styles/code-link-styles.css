@@ -44,13 +44,13 @@ ul {
 h1 {
     display: flex;
     margin: 0px;
-    font-family: 'Consolas',monospace;
     font-weight: bold;
     font-size: 16px;
+    font-family: 'geomanist',sans-serif;
 }
 
 span {
-    font-family: 'Ubuntu Mono','Consolas',monospace;
+    font-family: 'geomanist',sans-serif;
     font-size: 1em;
 }
 
@@ -212,9 +212,8 @@ span {
 }
 
 .folders-title {
-    margin: 8px;
+    margin: 12px;
     text-transform: uppercase;
-    font-family: 'geomanist';
 }
 
 .folders-empty {
@@ -232,7 +231,6 @@ span {
     padding-left: 8px;
     white-space: nowrap;
     font-size: 0.95em;
-    font-family: 'geomanist';
 }
 
 .folder {
