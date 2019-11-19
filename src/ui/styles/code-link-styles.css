@@ -95,6 +95,16 @@ span {
     width: calc(80%)
 }
 
+.close-icon {
+    fill: lightgray;
+    width: 16px;
+    height: 16px;
+}
+
+.close-icon:hover {
+    fill: grey;
+}
+
 /*
  * Editor styles.
  */
@@ -110,6 +120,7 @@ span {
     display: flex;
     flex-direction: row;
     height: 32px;
+    user-select: none;
 }
 
 .editor-tab {
@@ -121,18 +132,38 @@ span {
     font-size: 0.95em;
     align-items: center;
     justify-content: center;
+    transition: background-color .2s ease;
 }
 
 .editor-tab-name {
-    padding-left: 8px;
+    padding: 8px;
 }
 
 .editor-tab-close {
+    opacity: 0;
     padding: 4px;
+    transition: all .2s ease;
 }
 
 .editor-tab:hover {
     background-color: whitesmoke;
+}
+
+.editor-tab:hover .editor-tab-close {
+    fill: grey;
+    opacity: 1;
+}
+
+.editor-tab-close:hover {
+    transform: scale(1.2) rotate(180deg);
+}
+
+.editor-tab-selected {
+    background-color: oldlace;
+}
+
+.editor-tab-selected:hover {
+    background-color: oldlace;
 }
  
 .editor {
@@ -142,6 +173,7 @@ span {
     min-width: 100px;
     cursor: text;
     overflow: hidden;
+    position: relative;
 }
 
 .text-editor {
@@ -165,7 +197,7 @@ span {
 }
 
 .caret {
-    position: absolute;
+    position: relative;
     width: 2px;
     animation: blink 1s step-start 0s infinite;
 }
