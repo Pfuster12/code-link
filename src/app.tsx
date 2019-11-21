@@ -18,7 +18,7 @@ export default function App() {
         <main>
             <SplitPane>
                 <SideBar>
-                    <Folders dirPath={'C:/Users/Pablo/projects/funky-releases'}/>
+                    <Folders dirPath={'C:/Users/pfust/projects/funky-releases'}/>
                 </SideBar>
                 <EditorPane/>
             </SplitPane>

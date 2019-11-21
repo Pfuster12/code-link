@@ -131,6 +131,8 @@ export default function Editor(props: EditorProps) {
                 editorState.selection.start.offset,
                 editorState.selection.start.offset)
 
+                console.log(editorState);
+                
             // set the top+left pos including scrollY,
             caret.style.top = editorState.selection.start.line*19 + 'px'
             caret.style.left = (range.getBoundingClientRect().left

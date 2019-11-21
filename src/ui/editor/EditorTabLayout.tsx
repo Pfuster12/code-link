@@ -28,6 +28,8 @@ export default function EditorTabLayout(props: EditorTabLayoutProps) {
      * @param event
      */
     function onTabClick(tab: string) {
+        console.log(tab);
+        
         setCurrentTab(tab)
     }
 

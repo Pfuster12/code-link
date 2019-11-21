@@ -155,7 +155,7 @@ span {
 }
 
 .editor-tab-close:hover {
-    transform: scale(1.2) rotate(180deg);
+    transform: scale(1.2);
 }
 
 .editor-tab-selected {
@@ -173,7 +173,6 @@ span {
     min-width: 100px;
     cursor: text;
     overflow: hidden;
-    position: relative;
 }
 
 .text-editor {

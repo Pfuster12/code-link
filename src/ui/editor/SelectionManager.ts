@@ -126,6 +126,8 @@ export class SelectionManager {
      * @returns SelectionOffset
      */
     getRangeLineOffset(range: Range, container: HTMLDivElement): SelectionOffset {
+        console.log(container.offsetTop);
+        
         // with the computed style,
         const style = window.getComputedStyle(container)
 
@@ -135,12 +137,11 @@ export class SelectionManager {
         // find the line number of the current selection,
         // round to the nearest integer,
         const startLine = Math.round((
-            (range.getBoundingClientRect().top+container.scrollTop)/lineHeight))
+            (range.getBoundingClientRect().top+container.scrollTop-container.offsetTop)/lineHeight))
 
         const endLine = Math.round((
-            (range.getBoundingClientRect().bottom+container.scrollTop)
-            /lineHeight)) - 1
-
+            (range.getBoundingClientRect().bottom+container.scrollTop-container.offsetTop)/lineHeight)) - 1
+            
         return { 
             start: startLine,
             end: range.collapsed ? startLine : endLine 
