@@ -7,7 +7,8 @@ import { File } from './File'
 import { ResourceBoundUI } from '../../../components/ResourceBoundUI'
 
 interface FoldersProps {
-    dirPath: string
+    dirPath: string,
+    onFileClick: (filepath: string) => void
 }
 
 /**
@@ -66,7 +67,11 @@ export function Folders(props: FoldersProps) {
             <h1 className="folders-title">Folders</h1>
             <ResourceBoundUI resource={dir}>
                 <span className="folders-empty">Open a folder to view its contents here.</span>
-                <Folder dir={{name: props.dirPath}} dirPath={props.dirPath} defaultExpanded={true} isRoot={true}/>
+                <Folder dir={{name: props.dirPath}}
+                    dirPath={props.dirPath}
+                    onFileClick={props.onFileClick}
+                    defaultExpanded={true}
+                    isRoot={true}/>
             </ResourceBoundUI>
         </div>
     )

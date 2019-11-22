@@ -4,25 +4,20 @@ import Editor from './Editor'
 import EditorTabLayout from './EditorTabLayout'
 
 interface EditorPaneProps {
-    
+    dirPath: string
+    files: string[]
 }
 
 /**
  * Displays an Editor Tab of an open file.
  */
 export default function EditorPane(props: EditorPaneProps) {
-    // temp file path...
     const file = './src/test/files/coffee.txt'
-
-    /**
-     * Store the files this editor pane handles.
-     */
-    const [files, setFiles] = useState<string[]>([file])
 
     return (
         <div className="editor-pane">
-            <EditorTabLayout tabs={files}/>
-            <Editor file={file}/>
+            <EditorTabLayout tabs={props.files}/>
+            <Editor file={props.files[0]}/>
         </div>
     )
 }

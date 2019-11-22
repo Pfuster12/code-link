@@ -10,6 +10,7 @@ import { File } from './File'
 interface FolderProps {
     dirPath: string,
     dir: Dirent | { name: string },
+    onFileClick?: (filepath: string) => void,
     defaultExpanded?: boolean,
     isRoot?: boolean
 }
@@ -17,7 +18,11 @@ interface FolderProps {
 /**
  * Displays an expandable directory in the Folders SideBar plugin.
  */
-export function Folder(props: FolderProps = { dirPath: '', dir: {name: ''}, defaultExpanded: false, isRoot: false}) {
+export function Folder(props: FolderProps = { dirPath: '',
+    dir: {name: ''},
+    onFileClick: null, 
+    defaultExpanded: false, 
+    isRoot: false}) {
 
     /**
      * Toggle for the folder content to expand below.
@@ -78,9 +83,15 @@ export function Folder(props: FolderProps = { dirPath: '', dir: {name: ''}, defa
                         dir.map(item => {
                             return item.isDirectory() 
                             ?
-                            <Folder key={item.name} dirPath={props.dirPath + '/' + item.name} dir={item}/>
+                            <Folder key={item.name} 
+                                dirPath={props.dirPath + '/' + item.name}
+                                dir={item}
+                                onFileClick={props.onFileClick}/>
                             :
-                            <File key={item.name} file={item}/>
+                            <File key={item.name} 
+                                dirPath={props.dirPath + '/' + item.name}
+                                file={item}
+                                onFileClick={props.onFileClick}/>
                         })
                     }
                 </ul>
