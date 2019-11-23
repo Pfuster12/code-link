@@ -12,8 +12,6 @@ interface EditorPaneProps {
  * Displays an Editor Tab of an open file.
  */
 export default function EditorPane(props: EditorPaneProps) {
-    const file = './src/test/files/coffee.txt'
-
     return (
         <div className="editor-pane">
             <EditorTabLayout tabs={props.files}/>

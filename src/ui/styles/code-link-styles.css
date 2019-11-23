@@ -54,14 +54,6 @@ span {
     font-size: 1em;
 }
 
-::-webkit-scrollbar {
-
-}
-
-::-webkit-scrollbar-thumb {
-
-}
-
 /*
  * Split pane and resizer styles.
  */
@@ -70,15 +62,11 @@ span {
     display: flex;
     flex-direction: column;
     min-width: 200px;
-    width: calc(50%);
-    overflow: hidden;
 }
 
 .row-split-pane {
     display: flex;
     flex: 1;
-    width: 100%;
-    overflow-x: hidden;
 }
 
 .resizer {
@@ -88,11 +76,9 @@ span {
 }
 
 #first-pane {
-    width: calc(20%)
 }
 
 #second-pane {
-    width: calc(80%)
 }
 
 .close-icon {
@@ -119,12 +105,23 @@ span {
 .editor-tablayout {
     display: flex;
     flex-direction: row;
-    height: 32px;
+    flex: 0 0 auto;
     user-select: none;
+    overflow-x: scroll;
+}
+
+.editor-tablayout::-webkit-scrollbar {
+    height: 4px;
+}
+
+
+.editor-tablayout:hover {
+     background: rgba(255,255,255,.2);
 }
 
 .editor-tab {
     display: flex;
+    flex: 0 0 auto;
     flex-direction: row;
     padding: 4px 8px;
     min-width: 56px;

@@ -80,7 +80,7 @@ export default function SplitPane(props: SplitPaneProps) {
             secondWidth -= deltaX
 
             // grab the window width,
-            const windowWidth = document.documentElement.clientWidth
+            const windowWidth = document.body.clientWidth
 
             // resize according to percentage of the window,
             first.style.width = ((firstWidth / windowWidth) * 100) + '%';

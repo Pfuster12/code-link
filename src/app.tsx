@@ -25,7 +25,11 @@ export default function App() {
      */
     function onFileClick(filepath: string) {
         console.log('File clicked: ', filepath);   
-        setFiles([filepath])
+        setFiles(prevState => {
+            const a = prevState.slice()
+            a.push(filepath)
+            return a
+        })
     }
 
     return (
