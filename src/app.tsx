@@ -14,22 +14,29 @@ import EditorPane from './ui/editor/EditorPane';
  */
 export default function App() {
 
+    const defaultFileStart = 'untitled'
+
     // The root dir of this window.
     const [rootDir, setRootDir] = useState('C:/Users/Pablo/projects/funky-releases')
 
     // Store the files this editor pane handles.
-    const [files, setFiles] = useState<string[]>([])
+    const [files, setFiles] = useState<string[]>([defaultFileStart])
 
     /**
      * Handle the folder click.
      */
     function onFileClick(filepath: string) {
         console.log('File clicked: ', filepath);   
-        setFiles(prevState => {
-            const a = prevState.slice()
-            a.push(filepath)
-            return a
-        })
+        setFiles(prevState =>  prevState.concat(filepath))
+    }
+
+    /**
+     * Handle a file close click.
+     */
+    function onFileClose(file: string) {
+        const index = files.indexOf(file)
+        console.log("Tab at " + index + "closed");
+        setFiles(prevState => prevState.filter(it => it !== file))
     }
 
     return (
@@ -40,7 +47,8 @@ export default function App() {
                         onFileClick={onFileClick}/>
                 </SideBar>
                 <EditorPane dirPath={rootDir}
-                    files={files}/>
+                    files={files}
+                    onFileClose={onFileClose}/>
             </SplitPane>
         </main>
     )

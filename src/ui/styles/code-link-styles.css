@@ -16,15 +16,18 @@ Themes live in the ./src/themes directory.
  */
 
 html, body {
-    overflow: hidden;
     margin: 0px;
     font-size: 14px;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
 }
 
 main {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
+    overflow: auto;
+    height: 100%;
 }
 
 textarea {
@@ -64,9 +67,14 @@ span {
     min-width: 200px;
 }
 
+.pane::-webkit-scrollbar {
+    width: 8px;
+}
+
 .row-split-pane {
     display: flex;
     flex: 1;
+    height: 100%;
 }
 
 .resizer {
@@ -79,6 +87,7 @@ span {
 }
 
 #second-pane {
+    flex: 1;
 }
 
 .close-icon {

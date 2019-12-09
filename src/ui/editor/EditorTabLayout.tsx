@@ -1,9 +1,11 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import EditorTab from './EditorTab'
 
 interface EditorTabLayoutProps {
-    tabs: string[]
+    tabs: string[],
+    onTabSelected: (tab: string) => void
+    onTabClose: (file: string) => void
 }
 
 /**
@@ -16,12 +18,10 @@ export default function EditorTabLayout(props: EditorTabLayoutProps) {
      */
     const [currentTab, setCurrentTab] = useState(props.tabs[0])
 
-    /**
-     * Handle a tab onClick.
-     * @param event
-     */
-    function onTabCloseClick(tab: string) {
-    }
+    useEffect(() => {
+        props.onTabSelected(currentTab)
+    },
+    [currentTab])
 
     /**
      * Handle a tab onClick.
@@ -37,7 +37,7 @@ export default function EditorTabLayout(props: EditorTabLayoutProps) {
         <nav className="editor-tablayout">
             {
                 props.tabs.map(tab => <EditorTab onClick={onTabClick}
-                    onCloseClick={onTabCloseClick} 
+                    onCloseClick={props.onTabClose} 
                     key={tab}
                     selected={currentTab}
                     tab={tab}/>)

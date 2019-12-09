@@ -114,9 +114,7 @@ export default function SplitPane(props: SplitPaneProps) {
     }
 
     return (
-        <div className="row-split-pane" 
-            onMouseMove={onMouseMove}
-            onMouseUp={onMouseUp}>
+        <div className="row-split-pane">
             {/* The first Pane */}
             <Pane id={'first-pane'} 
                 children={children[0]}/>
