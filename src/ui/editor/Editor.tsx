@@ -86,7 +86,16 @@ export default function Editor(props: EditorProps) {
                 setEditorState(prevState => {
                     return {
                         lines: map,
-                        selection: prevState.selection
+                        selection: {
+                            start: {
+                                line:0,
+                                offset:0
+                            },
+                            end: {
+                                line:0,
+                                offset:0
+                            }
+                        }
                     }
                 })
             })
