@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Editor from './Editor'
 import EditorTabLayout from './EditorTabLayout'
 
 interface EditorPaneProps {
     dirPath: string
     files: string[],
-    onFileClose: (file: string) => void
+    onFileClose: (index: number) => void
 }
 
 /**
@@ -14,14 +14,24 @@ interface EditorPaneProps {
  */
 export default function EditorPane(props: EditorPaneProps) {
 
+    // Store the selected tab index.
+    const [currentTab, setCurrentTab] = useState(0)
+
     /**
-     * Store the selected tab index.
+     * Handles Tab click.
+     * @param event 
      */
-    const [currentFile, setCurrentFile] = useState('')
+    function onTabClick(index: number) {
+        setCurrentTab(index)
+    }
 
-
-    function onTabSelected(file: string) {
-        setCurrentFile(file)
+    /**
+     * Handles Tab close.
+     * @param event 
+     */
+    function onTabClose(index: number) {
+        props.onFileClose(index)
+        setCurrentTab(index)
     }
 
     return (
@@ -31,9 +41,10 @@ export default function EditorPane(props: EditorPaneProps) {
                 &&
                 <>
                     <EditorTabLayout tabs={props.files}
-                        onTabClose={props.onFileClose}
-                        onTabSelected={onTabSelected}/>
-                    <Editor file={currentFile}/>
+                        currentTab={currentTab}
+                        onTabClick={onTabClick}
+                        onTabClose={onTabClose}/>
+                    <Editor file={props.files[currentTab]}/>
                 </>
             }
         </div>

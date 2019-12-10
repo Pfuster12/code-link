@@ -141,6 +141,12 @@ span {
     transition: background-color .2s ease;
 }
 
+.editor-tab-name-wrap {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
 .editor-tab-name {
     padding: 8px;
 }
@@ -177,7 +183,7 @@ span {
     flex-direction: row;
     flex: 1;
     min-width: 100px;
-    cursor: text;
+    cursor: auto;
     overflow: hidden;
 }
 

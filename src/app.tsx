@@ -17,7 +17,7 @@ export default function App() {
     const defaultFileStart = 'untitled'
 
     // The root dir of this window.
-    const [rootDir, setRootDir] = useState('C:/Users/pfust/projects/funky-releases')
+    const [rootDir, setRootDir] = useState('C:/Users/Pablo/projects/funky-releases')
 
     // Store the files this editor pane handles.
     const [files, setFiles] = useState<string[]>([defaultFileStart])
@@ -26,17 +26,19 @@ export default function App() {
      * Handle the folder click.
      */
     function onFileClick(filepath: string) {
-        console.log('File clicked: ', filepath);   
-        setFiles(prevState =>  prevState.concat(filepath))
+        console.log('File clicked: ', filepath);
+        // check if file is already opened,
+        const isOpened = files.find(file => file === filepath) 
+        if (!isOpened) {
+            setFiles(prevState => prevState.concat(filepath))
+        }
     }
 
     /**
-     * Handle a file close click.
+     * Handle the folder click.
      */
-    function onFileClose(file: string) {
-        const index = files.indexOf(file)
-        console.log("Tab at " + index + "closed");
-        setFiles(prevState => prevState.filter(it => it !== file))
+    function onFileClose(index: number) {
+        setFiles(prevState => prevState.filter((it, i) => index != i))
     }
 
     return (

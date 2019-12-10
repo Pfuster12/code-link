@@ -4,8 +4,9 @@ import EditorTab from './EditorTab'
 
 interface EditorTabLayoutProps {
     tabs: string[],
-    onTabSelected: (tab: string) => void
-    onTabClose: (file: string) => void
+    currentTab: number,
+    onTabClick: (index: number) => void
+    onTabClose: (index: number) => void
 }
 
 /**
@@ -14,33 +15,32 @@ interface EditorTabLayoutProps {
 export default function EditorTabLayout(props: EditorTabLayoutProps) {
 
     /**
-     * Store the selected tab index.
+     * Handles Tab click.
+     * @param event 
      */
-    const [currentTab, setCurrentTab] = useState(props.tabs[0])
-
-    useEffect(() => {
-        props.onTabSelected(currentTab)
-    },
-    [currentTab])
+    function onTabClick(index: number) {
+        props.onTabClick(index)
+    }
 
     /**
-     * Handle a tab onClick.
-     * @param event
+     * Handles Tab close.
+     * @param event 
      */
-    function onTabClick(tab: string) {
-        console.log(tab);
-        
-        setCurrentTab(tab)
+    function onTabClose(index: number) {
+        props.onTabClose(index)
     }
 
     return (
         <nav className="editor-tablayout">
             {
-                props.tabs.map(tab => <EditorTab onClick={onTabClick}
-                    onCloseClick={props.onTabClose} 
-                    key={tab}
-                    selected={currentTab}
-                    tab={tab}/>)
+                props.tabs.map((tab, index) => {
+                return <EditorTab key={tab}
+                            tab={tab}
+                            index={index} 
+                            selected={props.currentTab}
+                            onClick={onTabClick}
+                            onClose={onTabClose}/>
+                })
             }
         </nav>
     )

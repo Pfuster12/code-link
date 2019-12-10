@@ -83,9 +83,24 @@ export default function Editor(props: EditorProps) {
                 const map = splitLines.map(line=>[Math.random().toString(), line])
 
                 // set state,
+                setEditorState({
+                    lines: map,
+                    selection: {
+                        start: {
+                            line:0,
+                            offset:0
+                        },
+                        end: {
+                            line:0,
+                            offset:0
+                        }
+                    }
+                })
+            })
+            .catch(err => {
                 setEditorState(prevState => {
                     return {
-                        lines: map,
+                        lines: [['0', '']],
                         selection: {
                             start: {
                                 line:0,
@@ -98,8 +113,6 @@ export default function Editor(props: EditorProps) {
                         }
                     }
                 })
-            })
-            .catch(err => {
                 console.log(`Error reading file ${props.file} in editor`);
             })
     },
