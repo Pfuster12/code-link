@@ -9,7 +9,7 @@ import { SelectionManager, SelectionOffset, Selection } from './SelectionManager
 import KeyHandler from './KeyHandler'
 
 interface EditorProps {
-    //File path name the editor opens.
+    // File path name the editor opens.
     file: string
 }
 

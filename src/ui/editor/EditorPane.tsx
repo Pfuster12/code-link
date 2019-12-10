@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useState, useEffect } from 'react'
 import Editor from './Editor'
 import EditorTabLayout from './EditorTabLayout'
+import StatusBar from './StatusBar'
 
 interface EditorPaneProps {
     dirPath: string
@@ -45,6 +46,7 @@ export default function EditorPane(props: EditorPaneProps) {
                         onTabClick={onTabClick}
                         onTabClose={onTabClose}/>
                     <Editor file={props.files[currentTab]}/>
+                    <StatusBar/>
                 </>
             }
         </div>

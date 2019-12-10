@@ -16,11 +16,14 @@
   "author": "Pablo Fuster",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^12.12.7",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "clean-webpack-plugin": "^1.0.1",
     "copy-webpack-plugin": "^5.0.5",
     "css-loader": "^2.1.1",
+    "cz-conventional-changelog": "^3.0.2",
+    "dotenv": "^8.2.0",
     "electron": "^7.1.1",
     "file-loader": "^3.0.1",
     "html-webpack-plugin": "^3.2.0",
@@ -29,13 +32,16 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0",
-    "webpack-merge": "^4.2.2",
-    "@types/node": "^12.12.7",
-    "dotenv": "^8.2.0"
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "typescript": "^3.7.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

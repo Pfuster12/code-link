@@ -240,15 +240,22 @@ export default function KeyHandler(event: React.KeyboardEvent,
             }
         })
         break;
-    case KeyCode.KEY_SHIFT:
-    case KeyCode.KEY_CAPS_LOCK:
-    case KeyCode.KEY_SHIFT:
-    case KeyCode.KEY_CAPS_LOCK:
     case KeyCode.KEY_CONTROL:
+    case KeyCode.KEY_SHIFT:
+    case KeyCode.KEY_CAPS_LOCK:
+    case KeyCode.KEY_SHIFT:
+    case KeyCode.KEY_CAPS_LOCK:
     case KeyCode.KEY_ESCAPE:
         break;
     case KeyCode.KEY_BRACKET_OPEN:
     case KeyCode.KEY_PAREN_OPEN:
+    case KeyCode.KEY_C:
+        if (event.ctrlKey) {
+            // copy out
+            console.log("Text copied to clipboard");
+            break;
+        }
+        // else let the case cascade to default,
     default: 
         setEditorState(prevState => {
             const l = prevState.lines.slice()

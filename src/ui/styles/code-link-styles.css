@@ -278,7 +278,16 @@ span {
  }
 
  /*
-  * Folders styles
+  * Status Bar
+  */
+
+.status-bar {
+    background-color: grey;
+    height: 20px;
+}
+
+ /*
+  * Folders
   */
 
 .folders {

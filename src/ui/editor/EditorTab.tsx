@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { FileIcon } from '../sidebar/plugins/folders/FileIcon'
 import CloseIcon from '../components/CloseIcon'
+import { useMemo } from 'react'
 
 interface EditorTabProps {
     tab: string,
@@ -14,6 +15,12 @@ interface EditorTabProps {
  * Displays an Editor Tab of an open file.
  */
 export default function EditorTab(props: EditorTabProps) {
+
+    const endpointName = useMemo(() => {
+        const routes = props.tab.split('/')
+        return routes[routes.length - 1]
+    },
+    [props.tab])
 
     /**
      * Handles Tab close icon click.
@@ -35,8 +42,8 @@ export default function EditorTab(props: EditorTabProps) {
         <div className={props.selected == props.index ? "editor-tab editor-tab-selected" : "editor-tab"}>
             <div className="editor-tab-name-wrap"
                 onClick={onClick}>
-                <FileIcon filename={props.tab}/>
-                <span className="editor-tab-name">{props.tab}</span>
+                <FileIcon filename={endpointName}/>
+                <span className="editor-tab-name">{endpointName}</span>
             </div>
             <CloseIcon onClick={onClose} class="editor-tab-close"/>
         </div>

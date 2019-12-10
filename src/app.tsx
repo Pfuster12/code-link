@@ -17,7 +17,7 @@ export default function App() {
     const defaultFileStart = 'untitled'
 
     // The root dir of this window.
-    const [rootDir, setRootDir] = useState('C:/Users/Pablo/projects/funky-releases')
+    const [rootDir, setRootDir] = useState('C:/Users/pfust/projects/funky-releases')
 
     // Store the files this editor pane handles.
     const [files, setFiles] = useState<string[]>([defaultFileStart])
