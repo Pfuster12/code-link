@@ -1,4 +1,6 @@
 # Welcome to code-link
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 `code-link` is a react x electron code editor.
 
 ## Get started
@@ -13,8 +15,8 @@ Simple steps to boot it up:
 - (Optional) Install React Developer Tools in Chrome and populate the `.env` file local path name.
 - Run `npm start`
 
-## Motivation
-Mostly to learn electron and react. But also to develop language-pluggable syntax highlighting and lexical analysis libraries, experiment with code-editing functionalities and visuals and build a browser compat editor with performant syntax highlighting.
-
 ## Documentation
 Check the [wiki](https://github.com/Pfuster12/code-link/wiki) for documented electron issues affecting the app and workarounds if necessary.
+
+## Git Commits
+This repo uses [Commitizen](https://github.com/commitizen/cz-cli) for its AngularJS format commit messages. Run `git cz` to start a commit.
