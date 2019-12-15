@@ -10,6 +10,11 @@ interface EditorPaneProps {
     onFileClose: (index: number) => void
 }
 
+export interface EditorStatus {
+    lineCount: number,
+    extension: string
+}
+
 /**
  * Displays an Editor Tab of an open file.
  */
@@ -17,6 +22,11 @@ export default function EditorPane(props: EditorPaneProps) {
 
     // Store the selected tab index.
     const [currentTab, setCurrentTab] = useState(0)
+
+    const [editorStatus, setEditorStatus] = useState<EditorStatus>({
+        lineCount: 0,
+        extension: '.js'
+    })
 
     /**
      * Handles Tab click.
@@ -35,6 +45,10 @@ export default function EditorPane(props: EditorPaneProps) {
         setCurrentTab(index)
     }
 
+    function onStatusChange(status: EditorStatus) {
+        setEditorStatus(status)
+    }
+
     return (
         <div className="editor-pane">
             {
@@ -45,8 +59,9 @@ export default function EditorPane(props: EditorPaneProps) {
                         currentTab={currentTab}
                         onTabClick={onTabClick}
                         onTabClose={onTabClose}/>
-                    <Editor file={props.files[currentTab]}/>
-                    <StatusBar/>
+                    <Editor file={props.files[currentTab]}
+                        onStatusChange={onStatusChange}/>
+                    <StatusBar status={editorStatus}/>
                 </>
             }
         </div>

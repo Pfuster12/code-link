@@ -7,10 +7,12 @@ import PluginReader from '../../lexer/PluginReader'
 import Gutter from './gutter/Gutter'
 import { SelectionManager, SelectionOffset, Selection } from './SelectionManager'
 import KeyHandler from './KeyHandler'
+import { EditorStatus } from './EditorPane'
 
 interface EditorProps {
     // File path name the editor opens.
-    file: string
+    file: string,
+    onStatusChange: (status: EditorStatus) => void
 }
 
 export interface EditorState {
@@ -67,6 +69,14 @@ export default function Editor(props: EditorProps) {
      * @see 
      */
     const textarea = useRef<HTMLTextAreaElement>(null)
+
+    useEffect(() => {
+        props.onStatusChange({
+            lineCount: editorState.lines.length,
+            extension: props.file
+        })
+    },
+    [editorState.lines, props.file])
 
     /**
      * Read editor file effect.
