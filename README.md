@@ -18,5 +18,5 @@ Simple steps to boot it up:
 ## Documentation
 Check the [wiki](https://github.com/Pfuster12/code-link/wiki) for documented electron issues affecting the app and workarounds if necessary.
 
-## Git Commits
-This repo uses [Commitizen](https://github.com/commitizen/cz-cli) for its AngularJS format commit messages. Run `git cz` to start a commit.
+## Version Control
+This repo uses [Commitizen](https://github.com/commitizen/cz-cli) for AngularJS format commit messages. Run `git cz` to start a commit.
