@@ -8,6 +8,8 @@ import Gutter from './gutter/Gutter'
 import { SelectionManager, SelectionOffset, Selection } from './SelectionManager'
 import KeyHandler from './KeyHandler'
 import { EditorStatus } from './EditorPane'
+import VirtualList from 'react-tiny-virtual-list';
+import VirtualizedList from '../components/VirtualizedList'
 
 interface EditorProps {
     // File path name the editor opens.
@@ -72,11 +74,11 @@ export default function Editor(props: EditorProps) {
 
     useEffect(() => {
         props.onStatusChange({
-            lineCount: editorState.lines.length,
-            extension: props.file
+            selection: editorState.selection,
+            file: props.file
         })
     },
-    [editorState.lines, props.file])
+    [editorState, props.file])
 
     /**
      * Read editor file effect.
@@ -249,12 +251,21 @@ export default function Editor(props: EditorProps) {
                 onMouseUp={onEditorMouseUp}
                 onClick={onEditorClick}>
                 <div className="text-editor-lines">
-                    {
-                        editorState.lines.map(line => <Line key={line[0]}
-                            lexer={lexer}
-                            value={line[1]} 
-                            plugin={plugin}/>)
-                    }
+                    <VirtualizedList 
+                        width={400}
+                        height={200}
+                        rowHeight={19}
+                        count={editorState.lines.length}
+                        overflowCount={8}
+                        renderItem={(index, style) =>
+                        {
+                            return <Line key={editorState.lines[index][0]}
+                                style={style}
+                                lexer={lexer}
+                                value={editorState.lines[index][1]} 
+                                plugin={plugin}/>
+                        }}
+                    />
                 </div>
                 <div className="text-editor-overlays">
                     <div className="caret caret-theme"/>

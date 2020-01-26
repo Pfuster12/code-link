@@ -70,6 +70,13 @@ Editor Theme
 }
 
 /*
+ Status Bar
+*/
+.status-bar-theme {
+    background-color: ghostwhite;
+}
+
+/*
  Caret theme.
 */
 

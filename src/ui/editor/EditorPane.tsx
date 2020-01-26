@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Editor from './Editor'
 import EditorTabLayout from './EditorTabLayout'
 import StatusBar from './StatusBar'
+import { Selection } from './SelectionManager'
 
 interface EditorPaneProps {
     dirPath: string
@@ -11,8 +12,8 @@ interface EditorPaneProps {
 }
 
 export interface EditorStatus {
-    lineCount: number,
-    extension: string
+    selection: Selection,
+    file: string
 }
 
 /**
@@ -24,9 +25,26 @@ export default function EditorPane(props: EditorPaneProps) {
     const [currentTab, setCurrentTab] = useState(0)
 
     const [editorStatus, setEditorStatus] = useState<EditorStatus>({
-        lineCount: 0,
-        extension: '.js'
+        selection: {
+            start: {
+                line: 1,
+                offset: 0
+            },
+            end: {
+                line: 1,
+                offset: 0
+            }
+        },
+        file: '.js'
     })
+
+    /**
+     * Run effect on files changed to set the latest tab.
+     */
+    useEffect(() => {
+        setCurrentTab(props.files.length - 1)
+    },
+    [props.files])
 
     /**
      * Handles Tab click.

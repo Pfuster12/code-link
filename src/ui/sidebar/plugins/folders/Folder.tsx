@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import * as folder_closed from '../../../assets/file_icons/folder_closed_icon.svg'
+import * as folder_closed from '../../../assets/file_icons/directory_icon.svg'
 import * as folder_open from '../../../assets/file_icons/folder_open_icon.svg'
 import { Dirent } from 'fs'
 import ExpandableList from '../../../components/ExpandableList'
@@ -73,7 +73,7 @@ export function Folder(props: FolderProps = { dirPath: '',
         <div className={props.isRoot ? "folder-root" : "folder"}>
             <div className="folders-item folders-item-theme"
                 onClick={onFolderClick}>
-                <img className="folders-icon" src={expanded ? folder_open : folder_closed}/>
+                <img className="folders-icon" src={folder_closed}/>
                 <span className="folders-name folder-name">{props.dir.name}</span>
             </div>
             <ExpandableList expanded={expanded}>

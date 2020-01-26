@@ -69,6 +69,7 @@ span {
 
 .pane::-webkit-scrollbar {
     width: 8px;
+    height: 0px;
 }
 
 .row-split-pane {
@@ -235,6 +236,15 @@ span {
 }
 
 /*
+ Virtualized list
+*/
+
+.virtualized-list {
+    position: relative;
+    overflow: auto;
+}
+
+/*
  * Gutter and line number.
  */
  
@@ -282,8 +292,13 @@ span {
   */
 
 .status-bar {
-    background-color: lightgrey;
+    background-color: ghostwhite;
     height: 20px;
+    user-select: none;
+}
+
+.status-bar-item {
+    padding: 0px 6px;
 }
 
  /*
