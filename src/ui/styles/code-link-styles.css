@@ -84,9 +84,6 @@ span {
     cursor: e-resize
 }
 
-#first-pane {
-}
-
 #second-pane {
     flex: 1;
 }
@@ -196,13 +193,6 @@ span {
     overflow: auto;
 }
 
-.text-editor-lines {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    cursor: text;
-}
-
 .text-editor-overlays {
     position: absolute;
     pointer-events: none;
@@ -229,11 +219,9 @@ span {
 
 .line {
     white-space: pre;
+    cursor: text;
 }
 
-.token {
-    
-}
 
 /*
  Virtualized list

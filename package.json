@@ -38,7 +38,6 @@
     "@types/react-window": "^1.8.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-tiny-virtual-list": "^2.2.0",
     "typescript": "^3.7.2"
   },
   "config": {

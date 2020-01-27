@@ -75,6 +75,6 @@ export function FileIcon(props: FileIconProps) {
     [props.filename])
 
     return (
-        <object type="image/svg+xml" data={icon} className="folders-icon" />
+        <img src={icon} className="folders-icon" />
     )
 }

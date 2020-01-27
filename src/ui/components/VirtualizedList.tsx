@@ -24,15 +24,38 @@ export default function VirtualizedList(props: VirtualizedListProps) {
     const [scrollTop, setScrollTop] = useState(0)
 
     const itemCount = useMemo(() => {
-        var i;
+        const itemCount = Math.floor((props.height + (props.overflowCount*props.rowHeight))/props.rowHeight)
+        const items = Math.min(props.count, itemCount)
+
         const a = []
-        for (i = 0; i < props.count; i++) {
+        var i;
+        for (i = 0; i < items; i++) {
             a.push(i)
         }
         return a
     },
     [props.count])
+
+    const [visibleItems, setVisibleItems] = useState([])
     
+    function getVisibleItems(scrollTop: number) {
+        if (props.count > 0) {
+            const position = Math.floor(scrollTop / props.rowHeight)
+            const visible = Math.min(props.count, position + itemCount.length)        
+            const a = []
+            var i;
+            for (i = position; i < visible; i++) {
+                a.push(i)
+            }
+    
+            setVisibleItems(a)
+        }
+    }
+
+    useLayoutEffect(() => {
+        getVisibleItems(scrollTop)
+    },
+    [props.count, scrollTop])
 
     /**
      * Handles the scroll event of the virtualised list window.
@@ -42,14 +65,10 @@ export default function VirtualizedList(props: VirtualizedListProps) {
         setScrollTop(event.currentTarget.scrollTop)
     }
 
-    function checkIfVisible(index: number): boolean {        
-        const pos = index * props.rowHeight
-
-        return pos > ((scrollTop - props.rowHeight) - (props.overflowCount*props.rowHeight))
-            && 
-            (pos + props.rowHeight) < ((scrollTop + props.height) + (props.overflowCount*props.rowHeight))
-    }
-
+    /**
+     * Creates absolute position style according to item index.
+     * @param index 
+     */
     function itemStyle(index: number): Object {
         return {
             height: props.rowHeight,
@@ -68,15 +87,19 @@ export default function VirtualizedList(props: VirtualizedListProps) {
             }}
             onScroll={onScroll}>
                 {/* Contained div with full list height to overflow the fixed width div */}
-                <div style={{ 
-                    position: 'absolute', 
-                    whiteSpace: 'nowrap',
-                    height: props.count * props.rowHeight}}>
+                <div className="virtualized-list-wrap" 
+                    style={{ 
+                        position: 'absolute', 
+                        whiteSpace: 'nowrap',
+                        width: props.width,
+                        height: props.count * props.rowHeight
+                    }}>
                     {
-                        itemCount.map(item => 
-                            checkIfVisible(item) && props.renderItem(item, itemStyle(item))
-                        )
+                        visibleItems.map(item => props.renderItem(item, itemStyle(item)))
                     }
+                </div>
+                <div className="text-editor-overlays">
+                    <div className="caret caret-theme"/>
                 </div>
         </div>
     )

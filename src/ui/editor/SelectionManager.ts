@@ -125,8 +125,7 @@ export class SelectionManager {
      * @param container
      * @returns SelectionOffset
      */
-    getRangeLineOffset(range: Range, container: HTMLDivElement): SelectionOffset {
-        console.log(container.offsetTop);
+    getRangeLineOffset(range: Range, container: HTMLDivElement): SelectionOffset { 
         
         // with the computed style,
         const style = window.getComputedStyle(container)
@@ -137,10 +136,9 @@ export class SelectionManager {
         // find the line number of the current selection,
         // round to the nearest integer,
         const startLine = Math.round((
-            (range.getBoundingClientRect().top+container.scrollTop-container.offsetTop)/lineHeight))
-
+            (range.getBoundingClientRect().top+container.scrollTop-container.getBoundingClientRect().top)/lineHeight))
         const endLine = Math.round((
-            (range.getBoundingClientRect().bottom+container.scrollTop-container.offsetTop)/lineHeight)) - 1
+            (range.getBoundingClientRect().bottom+container.scrollTop-container.getBoundingClientRect().top)/lineHeight)) - 1
             
         return { 
             start: startLine,
@@ -150,7 +148,7 @@ export class SelectionManager {
 
     /**
      * Get the selection {@link Range} from the selection char offset.
-     * @see StackOverflow answer <a href="https://stackoverflow.com/a/16100733/8050896"/>
+     * See StackOverflow answer <a href="https://stackoverflow.com/a/16100733/8050896"/>
      * @param lineElement 
      * @param start Character offset.
      * @param end Character offset.

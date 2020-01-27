@@ -8,6 +8,7 @@ import './ui/styles/code-link-styles.css'
 import { Folders } from './ui/sidebar/plugins/folders/Folders';
 import { SideBar } from './ui/sidebar/SideBar';
 import EditorPane from './ui/editor/EditorPane';
+require('dotenv').config()
 
 /**
  * The entry point component of this application's renderer window.
@@ -17,7 +18,7 @@ export default function App() {
     const defaultFileStart = 'untitled'
 
     // The root dir of this window.
-    const [rootDir, setRootDir] = useState('C:/Users/Pablo/projects/funky-releases')
+    const [rootDir, setRootDir] = useState(process.env.TEST_FOLDER_PATH)
 
     // Store the files this editor pane handles.
     const [files, setFiles] = useState<string[]>([defaultFileStart])

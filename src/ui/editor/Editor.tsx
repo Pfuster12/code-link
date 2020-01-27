@@ -5,10 +5,9 @@ import FilesIO from '../../io/FilesIO'
 import * as Lexer from '../../lexer/Lexer'
 import PluginReader from '../../lexer/PluginReader'
 import Gutter from './gutter/Gutter'
-import { SelectionManager, SelectionOffset, Selection } from './SelectionManager'
+import { SelectionManager, Selection } from './SelectionManager'
 import KeyHandler from './KeyHandler'
 import { EditorStatus } from './EditorPane'
-import VirtualList from 'react-tiny-virtual-list';
 import VirtualizedList from '../components/VirtualizedList'
 
 interface EditorProps {
@@ -154,16 +153,18 @@ export default function Editor(props: EditorProps) {
      */
     useEffect(() => {
         const caret = document.querySelector('.caret') as HTMLDivElement
-        const textEditor = document.querySelector('.text-editor') as HTMLDivElement
+        const textEditor = document.querySelector('.virtualized-list') as HTMLDivElement
 
-        const line = textEditor.childNodes[0].childNodes[editorState.selection.start.line]
-        
+        var line;
+        if (textEditor) {
+            line = textEditor.childNodes[0].childNodes[editorState.selection.start.line]
+        }
+
         if (line) {
             const range = selManager.getRangeByCharOffset(line, 
                 editorState.selection.start.offset,
                 editorState.selection.start.offset)
-
-            // set the top+left pos including scrollY,
+            
             caret.style.top = editorState.selection.start.line*19 + 'px'
             caret.style.left = (range.getBoundingClientRect().left
                 - textEditor.getBoundingClientRect().left) + 'px'
@@ -215,7 +216,7 @@ export default function Editor(props: EditorProps) {
         // assign the selection,
         if (document.getSelection) {
             const range = document.getSelection().getRangeAt(0)
-            const editor = document.querySelector('.text-editor') as HTMLDivElement
+            const editor = document.querySelector('.virtualized-list') as HTMLDivElement
 
             setEditorState(prevState => {
                 return {
@@ -248,26 +249,20 @@ export default function Editor(props: EditorProps) {
                 onMouseDown={onEditorMouseDown}
                 onMouseUp={onEditorMouseUp}
                 onClick={onEditorClick}>
-                <div className="text-editor-lines">
-                    <VirtualizedList 
-                        width={600}
-                        height={600}
-                        rowHeight={19}
-                        count={editorState.lines.length}
-                        overflowCount={8}
-                        renderItem={(index, style) =>
-                        {
-                            return <Line key={editorState.lines[index][0]}
-                                style={style}
-                                lexer={lexer}
-                                value={editorState.lines[index][1]} 
-                                plugin={plugin}/>
-                        }}
-                    />
-                </div>
-                <div className="text-editor-overlays">
-                    <div className="caret caret-theme"/>
-                </div>
+                <VirtualizedList 
+                    width={600}
+                    height={400}
+                    rowHeight={19}
+                    count={editorState.lines.length}
+                    overflowCount={8}
+                    renderItem={(index, style) =>
+                    {
+                        return <Line key={editorState.lines[index][0]}
+                            style={style}
+                            lexer={lexer}
+                            value={editorState.lines[index][1]} 
+                            plugin={plugin}/>
+                    }}/>
             </div>
             <textarea className="text-edit"
                 ref={textarea}
