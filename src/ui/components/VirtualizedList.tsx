@@ -45,8 +45,9 @@ export default function VirtualizedList(props: VirtualizedListProps) {
     function checkIfVisible(index: number): boolean {        
         const pos = index * props.rowHeight
 
-        return pos > (scrollTop - props.rowHeight)
-            && (pos + props.rowHeight) < (scrollTop + props.height)
+        return pos > ((scrollTop - props.rowHeight) - (props.overflowCount*props.rowHeight))
+            && 
+            (pos + props.rowHeight) < ((scrollTop + props.height) + (props.overflowCount*props.rowHeight))
     }
 
     function itemStyle(index: number): Object {
@@ -69,7 +70,7 @@ export default function VirtualizedList(props: VirtualizedListProps) {
                 {/* Contained div with full list height to overflow the fixed width div */}
                 <div style={{ 
                     position: 'absolute', 
-                    whiteSpace: 'nowrap', 
+                    whiteSpace: 'nowrap',
                     height: props.count * props.rowHeight}}>
                     {
                         itemCount.map(item => 

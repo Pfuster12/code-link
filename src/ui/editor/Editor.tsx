@@ -38,9 +38,7 @@ export default function Editor(props: EditorProps) {
      */
     const [plugin, setPlugin] = useState<Lexer.Lexer.Plugin | null>(null)
 
-    /**
-     * Stores the {@link EditorState}.
-     */
+    // Stores the EditorState.
     const [editorState, setEditorState] = useState<EditorState>({
         lines: [],
         selection: {
@@ -252,8 +250,8 @@ export default function Editor(props: EditorProps) {
                 onClick={onEditorClick}>
                 <div className="text-editor-lines">
                     <VirtualizedList 
-                        width={400}
-                        height={200}
+                        width={600}
+                        height={600}
                         rowHeight={19}
                         count={editorState.lines.length}
                         overflowCount={8}

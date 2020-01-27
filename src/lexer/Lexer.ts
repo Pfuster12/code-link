@@ -40,9 +40,7 @@ export class Lexer {
      * 
      * @returns Token array.
      */
-    tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {
-        console.log('Lexer tokenising with line state of: ', this.lineState);
-        
+    tokenise(text: string, plugin: Lexer.Plugin): Lexer.Token[] {        
         // create an array from the grammars object,
         // ATT use <any> hack for ES6 ts to discover the values method,
         // @see stackoverflow.com/questions/42166914/there-is-an-object-values-on-typescript
