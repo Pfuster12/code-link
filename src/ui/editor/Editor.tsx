@@ -52,6 +52,9 @@ export default function Editor(props: EditorProps) {
         }
     })
 
+    // Count of items rendered in virtual list.
+    const [visibleCount, setVisibleCount] = useState(0)
+    
     /**
      * Stores the editor scrollTop to synchronise other UI components.
      */
@@ -162,7 +165,7 @@ export default function Editor(props: EditorProps) {
 
         var line;
         if (textEditor) {
-            line = textEditor.childNodes[0].childNodes[editorState.selection.start.line]
+            line = textEditor.childNodes[0].childNodes[editorState.selection.start.line % visibleCount]
         }
 
         if (line) {
@@ -240,6 +243,11 @@ export default function Editor(props: EditorProps) {
         setEditorScrollTop(event.currentTarget.scrollTop)
     }
 
+
+    function onVisibleCountCalculated(count: number) {
+        setVisibleCount(count)
+    }
+
     return (
         <div className="editor editor-theme">
             <Gutter lines={editorState.lines}
@@ -256,6 +264,7 @@ export default function Editor(props: EditorProps) {
                     rowHeight={19}
                     count={editorState.lines.length}
                     overflowCount={8}
+                    onVisibleCountCalculated={onVisibleCountCalculated}
                     onScrollCallback={onEditorScroll}
                     renderItem={(index, style) =>
                     {

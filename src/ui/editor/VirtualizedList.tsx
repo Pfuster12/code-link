@@ -12,6 +12,7 @@ interface VirtualizedListProps {
     overflowCount: number,
     count: number,
     onScrollCallback?: (event: React.SyntheticEvent) => void,
+    onVisibleCountCalculated?: (count: number) => void,
     renderItem: (index: number, style: Object) => React.ReactElement
 }
 
@@ -79,6 +80,7 @@ export default function VirtualizedList(props: VirtualizedListProps) {
         for (i = 0; i < items; i++) {
             a.push(i)
         }
+        props.onScrollCallback && props.onVisibleCountCalculated(items)
         return a
     },
     [props.count,  props.overflowCount, props.rowHeight, measuredDimens.height])

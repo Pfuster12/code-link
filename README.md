@@ -37,6 +37,10 @@ Simple steps to boot it up:
 - main.ts // Electron main process
 ```
 
+## Project Development
+
+Follow loosely the development of the project in the [development blog](https://hashnode.com/@pfuster)
+
 ## Documentation
 Check the [wiki](https://github.com/Pfuster12/code-link/wiki) for documented electron issues affecting the app and workarounds if necessary.
 
