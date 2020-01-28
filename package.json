@@ -35,7 +35,6 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@types/react-window": "^1.8.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "typescript": "^3.7.2"
