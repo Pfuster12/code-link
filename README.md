@@ -16,7 +16,7 @@ Simple steps to boot it up:
 - Run `npm start`
 
 ## Project Structure
-```
+```js
 - public
   - themes // Public code editor themes packaged into project
 - src
