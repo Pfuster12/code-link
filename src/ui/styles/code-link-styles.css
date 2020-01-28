@@ -227,7 +227,7 @@ span {
  Virtualized list
 */
 
-.virtualized-list {
+#virtualized-list {
     position: relative;
     overflow: auto;
 }
@@ -235,7 +235,7 @@ span {
 /*
  Gutter Virtualized list
 */
-.gutter-virtualized-list {
+#gutter-virtualized-list {
     position: relative;
     overflow: hidden;
 }

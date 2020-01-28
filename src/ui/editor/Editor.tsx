@@ -158,7 +158,7 @@ export default function Editor(props: EditorProps) {
      */
     useEffect(() => {
         const caret = document.querySelector('.caret') as HTMLDivElement
-        const textEditor = document.querySelector('.virtualized-list') as HTMLDivElement
+        const textEditor = document.getElementById('virtualized-list') as HTMLDivElement
 
         var line;
         if (textEditor) {
@@ -219,9 +219,9 @@ export default function Editor(props: EditorProps) {
      */
     function onEditorMouseUp(event: React.SyntheticEvent) {
         // assign the selection,
-        if (document.getSelection) {
+        if (document.getSelection && document.getSelection().rangeCount > 0) {
             const range = document.getSelection().getRangeAt(0)
-            const editor = document.querySelector('.virtualized-list') as HTMLDivElement
+            const editor = document.getElementById('virtualized-list') as HTMLDivElement
 
             setEditorState(prevState => {
                 return {
@@ -248,9 +248,11 @@ export default function Editor(props: EditorProps) {
                 onMouseDown={onEditorMouseDown}
                 onMouseUp={onEditorMouseUp}
                 onClick={onEditorClick}>
-                <VirtualizedList 
-                    width={600}
-                    height={400}
+                <VirtualizedList
+                    id="virtualized-list"
+                    width={-1}
+                    innerWidth="1600px"
+                    height={-1}
                     rowHeight={19}
                     count={editorState.lines.length}
                     overflowCount={8}
@@ -262,7 +264,11 @@ export default function Editor(props: EditorProps) {
                             lexer={lexer}
                             value={editorState.lines[index][1]} 
                             plugin={plugin}/>
-                    }}/>
+                    }}>
+                        <div className="text-editor-overlays">
+                            <div className="caret caret-theme"/>
+                        </div>
+                    </VirtualizedList>
             </div>
             <textarea className="text-edit"
                 ref={textarea}

@@ -57,5 +57,4 @@ export default function App() {
     )
 }
 
-// render inside the html,
 ReactDOM.render(<App/>, document.getElementById('root'))

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useLayoutEffect } from 'react'
-import GutterVirtualizedList from './GutterVirtualizedList'
+import VirtualizedList from '../VirtualizedList'
 
 interface GutterProps {
     lines: string[][],
@@ -17,16 +17,18 @@ export default function Gutter(props: GutterProps) {
      * Layout effect to scroll with text editor scrollTop.
      */
     useLayoutEffect(() => {
-        const gutterElement = document.querySelector('.gutter-virtualized-list')
+        const gutterElement = document.getElementById('gutter-virtualized-list')
         gutterElement.scrollTop = props.scrollTop
     }, 
     [props.scrollTop])
 
     return (
         <div className="gutter gutter-theme">
-            <GutterVirtualizedList
+            <VirtualizedList
+                id="gutter-virtualized-list"
                 width={60}
-                height={400}
+                innerWidth={60}
+                height={-1}
                 rowHeight={19}
                 count={props.lines.length}
                 overflowCount={4}
