@@ -1,5 +1,6 @@
 import * as React from 'react'
-import VirtualizedList from '../../components/VirtualizedList'
+import { useLayoutEffect } from 'react'
+import GutterVirtualizedList from './GutterVirtualizedList'
 
 interface GutterProps {
     lines: string[][],
@@ -15,26 +16,24 @@ export default function Gutter(props: GutterProps) {
     /**
      * Layout effect to scroll with text editor scrollTop.
      */
-    React.useLayoutEffect(() => {
-        const gutterElement = document.querySelector('.gutter')
+    useLayoutEffect(() => {
+        const gutterElement = document.querySelector('.gutter-virtualized-list')
         gutterElement.scrollTop = props.scrollTop
     }, 
     [props.scrollTop])
 
     return (
         <div className="gutter gutter-theme">
-            <VirtualizedList 
-                    width={60}
-                    height={400}
-                    rowHeight={19}
-                    count={props.lines.length}
-                    overflowCount={8}
-                    renderItem={(index, style) =>
-                    {
-                        return <span key={index} className="token line-number">{index + 1}</span>
-                    }}/>
-            { 
-            }
+            <GutterVirtualizedList
+                width={60}
+                height={400}
+                rowHeight={19}
+                count={props.lines.length}
+                overflowCount={4}
+                renderItem={(index, style) =>
+                {
+                    return <span style={style} key={index} className="token line-number">{index + 1}</span>
+                }}/>
         </div>
     )
 }

@@ -8,7 +8,7 @@ import Gutter from './gutter/Gutter'
 import { SelectionManager, Selection } from './SelectionManager'
 import KeyHandler from './KeyHandler'
 import { EditorStatus } from './EditorPane'
-import VirtualizedList from '../components/VirtualizedList'
+import VirtualizedList from './VirtualizedList'
 
 interface EditorProps {
     // File path name the editor opens.
@@ -51,6 +51,11 @@ export default function Editor(props: EditorProps) {
             }
         }
     })
+
+    /**
+     * Stores the editor scrollTop to synchronise other UI components.
+     */
+    const [editorScrollTop, setEditorScrollTop] = useState(0)
 
     /**
      * Memoize the {@link Lexer} class use to parse the editor text.
@@ -228,15 +233,10 @@ export default function Editor(props: EditorProps) {
     }
 
     /**
-     * Stores the editor scrollTop to synchronise other UI components.
-     */
-    const [editorScrollTop, setEditorScrollTop] = useState(0)
-
-    /**
      * Handle the editor scroll.
      * @param event 
      */
-    function onTextEditorScroll(event: React.SyntheticEvent) {        
+    function onEditorScroll(event: React.SyntheticEvent) {        
         setEditorScrollTop(event.currentTarget.scrollTop)
     }
 
@@ -245,7 +245,6 @@ export default function Editor(props: EditorProps) {
             <Gutter lines={editorState.lines}
                 scrollTop={editorScrollTop}/>
             <div className="text-editor text-editor-theme"
-                onScroll={onTextEditorScroll}
                 onMouseDown={onEditorMouseDown}
                 onMouseUp={onEditorMouseUp}
                 onClick={onEditorClick}>
@@ -255,9 +254,10 @@ export default function Editor(props: EditorProps) {
                     rowHeight={19}
                     count={editorState.lines.length}
                     overflowCount={8}
+                    onScrollCallback={onEditorScroll}
                     renderItem={(index, style) =>
                     {
-                        return <Line key={editorState.lines[index][0]}
+                        return editorState.lines[index] && <Line key={editorState.lines[index][0]}
                             style={style}
                             lexer={lexer}
                             value={editorState.lines[index][1]} 

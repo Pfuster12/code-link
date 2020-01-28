@@ -39,7 +39,7 @@ export default function App() {
      * Handle the folder click.
      */
     function onFileClose(index: number) {
-        setFiles(prevState => prevState.filter((it, i) => index != i))
+        setFiles(prevState => prevState.filter((_, i) => index != i))
     }
 
     return (

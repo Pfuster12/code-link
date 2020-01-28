@@ -11,20 +11,20 @@ interface VirtualizedListProps {
 }
 
 /**
- * Displays a virtualized list.
+ * Displays a virtualized list for the gutter.
  * @description
  * A virtualized list is used for large dataset arrays to improve rendering performance issues.
  * The list displays enough items to fill the window + some extra for scroll performance. As the
  * list is scrolled out of the window, the items are moved from the outgoing side and placed into the
  * incoming side with CSS positioning, giving the illusion of the infinite scroll.
  */
-export default function VirtualizedList(props: VirtualizedListProps) {
+export default function GutterVirtualizedList(props: VirtualizedListProps) {
 
     // store the scrolltop.
     const [scrollTop, setScrollTop] = useState(0)
 
     const itemCount = useMemo(() => {
-        const itemCount = Math.floor((props.height + (props.overflowCount*props.rowHeight))/props.rowHeight)
+        const itemCount = Math.floor((props.height + (2*props.overflowCount*props.rowHeight))/props.rowHeight)
         const items = Math.min(props.count, itemCount)
 
         const a = []
@@ -40,8 +40,8 @@ export default function VirtualizedList(props: VirtualizedListProps) {
     
     function getVisibleItems(scrollTop: number) {
         if (props.count > 0) {
-            const position = Math.floor(scrollTop / props.rowHeight)
-            const visible = Math.min(props.count, position + itemCount.length)        
+            const position = Math.floor(scrollTop / props.rowHeight) - props.overflowCount
+            const visible = Math.min(props.count, position + itemCount.length + (props.overflowCount*2))
             const a = []
             var i;
             for (i = position; i < visible; i++) {
@@ -80,14 +80,14 @@ export default function VirtualizedList(props: VirtualizedListProps) {
     }
 
     return (
-        <div className="virtualized-list"
+        <div className="gutter-virtualized-list"
             style={{
                 width: props.width,
                 height: props.height
             }}
             onScroll={onScroll}>
                 {/* Contained div with full list height to overflow the fixed width div */}
-                <div className="virtualized-list-wrap" 
+                <div
                     style={{ 
                         position: 'absolute', 
                         whiteSpace: 'nowrap',
@@ -97,9 +97,6 @@ export default function VirtualizedList(props: VirtualizedListProps) {
                     {
                         visibleItems.map(item => props.renderItem(item, itemStyle(item)))
                     }
-                </div>
-                <div className="text-editor-overlays">
-                    <div className="caret caret-theme"/>
                 </div>
         </div>
     )

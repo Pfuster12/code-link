@@ -32,6 +32,7 @@ export default function StatusBar(props: StatusBarProps) {
             <span className="status-bar-item">Line {props.status.selection.start.line + 1}</span>
             <span className="status-bar-item">Col {props.status.selection.start.offset + 1}</span>
             <span className="status-bar-item">{extension}</span>
+            <span className="status-bar-version">v0.1.0</span>
         </div>
     )
 }

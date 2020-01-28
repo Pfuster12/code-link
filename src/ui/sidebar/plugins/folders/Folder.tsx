@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import * as folder_closed from '../../../assets/file_icons/directory_icon.svg'
 import * as folder_open from '../../../assets/file_icons/folder_open_icon.svg'
 import { Dirent } from 'fs'
@@ -33,6 +33,12 @@ export function Folder(props: FolderProps = { dirPath: '',
      * Store the dir content to display in this plugin.
      */
     const [dir, setDir] = useState<Dirent[]>(null)
+
+    const lastPath = useMemo(() => {
+        const paths = props.dir.name.split('/')
+        return paths[paths.length - 1] ? paths[paths.length - 1] : props.dir.name
+    },
+    [])
 
     /**
      * Read directory contents on folder expanded.
@@ -74,7 +80,7 @@ export function Folder(props: FolderProps = { dirPath: '',
             <div className="folders-item folders-item-theme"
                 onClick={onFolderClick}>
                 <img className="folders-icon" src={folder_closed}/>
-                <span className="folders-name folder-name">{props.dir.name}</span>
+                <span className="folders-name folder-name">{lastPath}</span>
             </div>
             <ExpandableList expanded={expanded}>
                 <ul className="folder-subdir">
