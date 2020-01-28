@@ -7,8 +7,8 @@ Themes live in the ./src/themes directory.
 */
 
 @font-face {
-    font-family: geomanist;
-    src: url('../assets//fonts/geomanist-regular-webfont.woff2');
+    font-family: raleway;
+    src: url('../assets/fonts/raleway-regular.ttf');
 }
 
 /*
@@ -49,11 +49,11 @@ h1 {
     margin: 0px;
     font-weight: bold;
     font-size: 16px;
-    font-family: 'geomanist',sans-serif;
+    font-family: 'raleway',sans-serif;
 }
 
 span {
-    font-family: 'geomanist',sans-serif;
+    font-family: 'raleway',sans-serif;
     font-size: 1em;
 }
 
@@ -233,6 +233,14 @@ span {
 }
 
 /*
+ Gutter Virtualized list
+*/
+.gutter-virtualized-list {
+    position: relative;
+    overflow: hidden;
+}
+
+/*
  * Gutter and line number.
  */
  
@@ -289,6 +297,11 @@ span {
     padding: 0px 6px;
 }
 
+.status-bar-version {
+    position: absolute;
+    right: 0;
+}
+
  /*
   * Folders
   */
@@ -305,7 +318,6 @@ span {
 .folders-title {
     margin: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
 }
 
 .folders-empty {

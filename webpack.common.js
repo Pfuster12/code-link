@@ -19,7 +19,7 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(woff2|png|svg|jpg|gif)$/,
+                test: /\.(ttf|woff2|png|svg|jpg|gif)$/,
                 exclude: /node_modules/,
                 use: [
                     {
