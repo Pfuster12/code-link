@@ -35,7 +35,7 @@ export default function EditorPane(props: EditorPaneProps) {
                 offset: 0
             }
         },
-        file: '.js'
+        file: ''
     })
 
     /**
@@ -71,7 +71,7 @@ export default function EditorPane(props: EditorPaneProps) {
         <div className="editor-pane">
             {
                 props.files.length > 0
-                &&
+                ?
                 <>
                     <EditorTabLayout tabs={props.files}
                         currentTab={currentTab}
@@ -79,9 +79,13 @@ export default function EditorPane(props: EditorPaneProps) {
                         onTabClose={onTabClose}/>
                     <Editor file={props.files[currentTab]}
                         onStatusChange={onStatusChange}/>
-                    <StatusBar status={editorStatus}/>
                 </>
+                :
+                <div className="empty-editor">
+                    <span>Open a file in the Folders sidebar.</span>
+                </div>
             }
+            <StatusBar status={editorStatus}/>
         </div>
     )
 }
