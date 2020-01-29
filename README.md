@@ -39,7 +39,7 @@ Simple steps to boot it up:
 
 ## Project Development
 
-Follow loosely the development of the project in the [development blog](https://hashnode.com/@pfuster)
+Follow loosely the development of the project in the [dev blog](https://io-pabs.hashnode.dev/)
 
 ## Documentation
 Check the [wiki](https://github.com/Pfuster12/code-link/wiki) for documented electron issues affecting the app and workarounds if necessary.
