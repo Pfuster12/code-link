@@ -53,7 +53,7 @@ export default function Editor(props: EditorProps) {
     })
 
     // Count of items rendered in virtual list.
-    const [visibleCount, setVisibleCount] = useState(0)
+    const [firstVisibleIndex, setFirstVisibleIndex] = useState(0)
     
     /**
      * Stores the editor scrollTop to synchronise other UI components.
@@ -165,9 +165,8 @@ export default function Editor(props: EditorProps) {
 
         var line;
         if (textEditor) {
-            console.log('Virtual Index=',editorState.selection.start.line % visibleCount);
-            
-            line = textEditor.childNodes[0].childNodes[editorState.selection.start.line % visibleCount]
+            const firstPosition = firstVisibleIndex
+            line = textEditor.childNodes[0].childNodes[editorState.selection.start.line - firstPosition]
         }
 
         if (line) {
@@ -249,8 +248,12 @@ export default function Editor(props: EditorProps) {
     }
 
 
-    function onVisibleCountCalculated(count: number) {
-        setVisibleCount(count)
+    /**
+     * Virtual list visible items measured callback.
+     * @param event 
+     */
+    function onFirstVisibleIndexCalculated(firstVisibleIndex: number) {
+        setFirstVisibleIndex(firstVisibleIndex)
     }
 
     return (
@@ -269,16 +272,16 @@ export default function Editor(props: EditorProps) {
                     rowHeight={19}
                     count={editorState.lines.length}
                     overflowCount={8}
-                    onVisibleCountCalculated={onVisibleCountCalculated}
+                    onFirstVisibleIndexCalculated={onFirstVisibleIndexCalculated}
                     onScrollCallback={onEditorScroll}
                     renderItem={(index, style) =>
-                    {
-                        return editorState.lines[index] && <Line key={editorState.lines[index][0]}
-                            style={style}
-                            lexer={lexer}
-                            value={editorState.lines[index][1]} 
-                            plugin={plugin}/>
-                    }}>
+                        {
+                            return editorState.lines[index] && <Line key={editorState.lines[index][0]}
+                                style={style}
+                                lexer={lexer}
+                                value={editorState.lines[index][1]} 
+                                plugin={plugin}/>
+                        }}>
                         <div className="text-editor-overlays">
                             <div className="caret caret-theme"/>
                         </div>

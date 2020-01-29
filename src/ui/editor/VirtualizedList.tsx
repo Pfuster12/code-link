@@ -12,7 +12,7 @@ interface VirtualizedListProps {
     overflowCount: number,
     count: number,
     onScrollCallback?: (event: React.SyntheticEvent) => void,
-    onVisibleCountCalculated?: (count: number) => void,
+    onFirstVisibleIndexCalculated?: (firstVisibleIndex: number) => void,
     renderItem: (index: number, style: Object) => React.ReactElement
 }
 
@@ -73,15 +73,7 @@ export default function VirtualizedList(props: VirtualizedListProps) {
      */
     const itemCount = useMemo(() => {
         const count = Math.floor((measuredDimens.height + (2*props.overflowCount*props.rowHeight))/props.rowHeight)
-        const items = Math.min(props.count, count)
-
-        const a = []
-        var i;
-        for (i = 0; i < items; i++) {
-            a.push(i)
-        }
-        props.onScrollCallback && props.onVisibleCountCalculated(items)
-        return a
+        return Math.min(props.count, count)
     },
     [props.count,  props.overflowCount, props.rowHeight, measuredDimens.height])
 
@@ -93,13 +85,14 @@ export default function VirtualizedList(props: VirtualizedListProps) {
     useLayoutEffect(() => {
         if (props.count > 0) {
             const position = Math.floor(scrollTop / props.rowHeight) - props.overflowCount
-            const visible = Math.min(props.count, position + itemCount.length  + (props.overflowCount*2))        
+            const visible = Math.min(props.count, position + itemCount)        
             const a = []
             var i;
             for (i = position; i < visible; i++) {
                 a.push(i)
             }
     
+            props.onFirstVisibleIndexCalculated && props.onFirstVisibleIndexCalculated(position)
             setVisibleItems(a)
         }
     },
