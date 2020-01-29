@@ -3,6 +3,10 @@
 
 A react x electron code editor.
 
+## Latest Changelog
+
+code-link is still in alpha.
+
 ## Get started
 `code-link` is an electron app. Visit the [electron docs](https://electronjs.org/docs) to get started in your machine.
 Written in Typescript, because it's so much better.
