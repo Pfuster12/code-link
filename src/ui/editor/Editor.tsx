@@ -165,6 +165,8 @@ export default function Editor(props: EditorProps) {
 
         var line;
         if (textEditor) {
+            console.log('Virtual Index=',editorState.selection.start.line % visibleCount);
+            
             line = textEditor.childNodes[0].childNodes[editorState.selection.start.line % visibleCount]
         }
 
@@ -176,6 +178,9 @@ export default function Editor(props: EditorProps) {
             caret.style.top = editorState.selection.start.line*19 + 'px'
             caret.style.left = (range.getBoundingClientRect().left
                 - textEditor.getBoundingClientRect().left) + 'px'
+                console.log('Range left=',range.getBoundingClientRect().left);
+                console.log('Range=',range);
+                console.log('Editor left=',textEditor.getBoundingClientRect().left);
         }
     },
     [editorState.selection])

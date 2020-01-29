@@ -35,7 +35,7 @@ export function Folder(props: FolderProps = { dirPath: '',
     const [dir, setDir] = useState<Dirent[]>(null)
 
     const lastPath = useMemo(() => {
-        const paths = props.dir.name.split('\\')
+        const paths = props.dir.name.split(/\/|\//)
         return paths[paths.length - 1] ? paths[paths.length - 1] : props.dir.name
     },
     [])

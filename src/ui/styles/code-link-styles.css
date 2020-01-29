@@ -288,13 +288,16 @@ span {
   */
 
 .status-bar {
+    display: flex;
     background-color: ghostwhite;
     height: 20px;
+    align-items: center;
     user-select: none;
 }
 
 .status-bar-item {
     padding: 0px 6px;
+    font-size: 13px;
 }
 
 .status-bar-version {

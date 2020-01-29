@@ -158,6 +158,8 @@ export class SelectionManager {
         start: number, 
         end: number,
         endLineElement?: Node): Range {
+            console.log('Starting node=',startLineElement);
+            
         // walk the tree of #text nodes in the line node,
         const walker = document.createTreeWalker(startLineElement,
             NodeFilter.SHOW_TEXT,
