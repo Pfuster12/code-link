@@ -59,8 +59,7 @@ export default function VirtualizedList(props: VirtualizedListProps) {
      */
     useLayoutEffect(() => {
         const listElement = document.getElementById(props.id) as HTMLDivElement
-        console.log('Relayout on window resize.');
-        
+    
         setMeasuredDimens({
             width: listElement.clientWidth,
             height: listElement.clientHeight
@@ -84,7 +83,8 @@ export default function VirtualizedList(props: VirtualizedListProps) {
      */
     useLayoutEffect(() => {
         if (props.count > 0) {
-            const position = Math.floor(scrollTop / props.rowHeight) - props.overflowCount
+            const position = Math.max(0, Math.floor(scrollTop / props.rowHeight) - props.overflowCount)
+            
             const visible = Math.min(props.count, position + itemCount)        
             const a = []
             var i;
