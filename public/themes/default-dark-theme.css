@@ -1,5 +1,17 @@
 
 /*
+
+$$$$$$$\                      $$\             $$$$$$$$\ $$\                                         
+$$  __$$\                     $$ |            \__$$  __|$$ |                                        
+$$ |  $$ | $$$$$$\   $$$$$$\  $$ |  $$\          $$ |   $$$$$$$\   $$$$$$\  $$$$$$\$$$$\   $$$$$$\  
+$$ |  $$ | \____$$\ $$  __$$\ $$ | $$  |         $$ |   $$  __$$\ $$  __$$\ $$  _$$  _$$\ $$  __$$\ 
+$$ |  $$ | $$$$$$$ |$$ |  \__|$$$$$$  /          $$ |   $$ |  $$ |$$$$$$$$ |$$ / $$ / $$ |$$$$$$$$ |
+$$ |  $$ |$$  __$$ |$$ |      $$  _$$<           $$ |   $$ |  $$ |$$   ____|$$ | $$ | $$ |$$   ____|
+$$$$$$$  |\$$$$$$$ |$$ |      $$ | \$$\          $$ |   $$ |  $$ |\$$$$$$$\ $$ | $$ | $$ |\$$$$$$$\ 
+\_______/  \_______|\__|      \__|  \__|         \__|   \__|  \__| \_______|\__| \__| \__| \_______|
+                                                                                                    
+                                                                                                    
+code-link default-dark-theme                                                                                   
 ------------------------------------------
 This is a code-link theme .css file. Every class and id selector is available to customise by the user
 and applies to the App's 'theme'. This file is bundled into a ./themes/ folder when distributed where
@@ -8,10 +20,24 @@ more custom themes can be saved for use.
 */
 
 /*
-
+------------------------------------------
 Editor Theme
-
+------------------------------------------
 */
+
+/*
+    Theme for the text editor pane.
+*/
+.text-editor-theme {
+    background-color: #24292E;
+}
+
+/*
+    Theme for the gutter.
+*/
+.gutter-theme {
+    background-color: #24292E;
+}
 
 /*
 
