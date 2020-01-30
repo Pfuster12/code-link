@@ -1,4 +1,4 @@
-const FileNameRegex = {
+export const FileNameRegex = {
     JAVASCRIPT: /^[a-zA-Z_\-0-9]+?\.js$/,
     JSON: /^[a-zA-Z_\-0-9]+?\.json$/,
     GITIGNORE: /\.gitignore/,
@@ -14,4 +14,24 @@ const FileNameRegex = {
     README: /^README\.md$/,
 }
 
-export default FileNameRegex
+/**
+ * Extract file extension from file path.
+ * @param path 
+ */
+export function extractFileExtension(path: string) {
+    var temp = ''
+        if (path) {
+            const routes = path.split('/')
+            const name = routes[routes.length - 1]
+    
+            if (name) {
+                const fileNames = name.split('.')
+    
+                if (fileNames.length > 1) {
+                    temp = fileNames[fileNames.length - 1]
+                }
+            }
+        
+            return temp
+        }
+}

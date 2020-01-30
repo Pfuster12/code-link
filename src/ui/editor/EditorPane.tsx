@@ -24,14 +24,15 @@ export default function EditorPane(props: EditorPaneProps) {
     // Store the selected tab index.
     const [currentTab, setCurrentTab] = useState(0)
 
+    // Editor Status.
     const [editorStatus, setEditorStatus] = useState<EditorStatus>({
         selection: {
             start: {
-                line: 1,
+                line: 0,
                 offset: 0
             },
             end: {
-                line: 1,
+                line: 0,
                 offset: 0
             }
         },
@@ -43,6 +44,23 @@ export default function EditorPane(props: EditorPaneProps) {
      */
     useEffect(() => {
         setCurrentTab(props.files.length - 1)
+
+        // if files is empty reset status,
+        if (props.files.length == 0) {
+            setEditorStatus({
+                selection: {
+                    start: {
+                        line: 0,
+                        offset: 0
+                    },
+                    end: {
+                        line: 0,
+                        offset: 0
+                    }
+                },
+                file: ''
+            })
+        }
     },
     [props.files])
 
@@ -63,6 +81,10 @@ export default function EditorPane(props: EditorPaneProps) {
         setCurrentTab(index)
     }
 
+    /**
+     * Handle editor status change.
+     * @param status 
+     */
     function onStatusChange(status: EditorStatus) {
         setEditorStatus(status)
     }

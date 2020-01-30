@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useMemo } from 'react'
-import FileNameRegex from '../../../utils/FileNameRegex'
+import {FileNameRegex} from '../../../utils/FileNameRegex'
 import * as js from '../../../assets/file_icons/js_icon.svg'
 import * as git from '../../../assets/file_icons/git_icon.svg'
 import * as json from '../../../assets/file_icons/json_icon.svg'
