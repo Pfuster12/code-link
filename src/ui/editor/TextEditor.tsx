@@ -7,38 +7,17 @@ import PluginReader from '../../lexer/PluginReader'
 import Gutter from './gutter/Gutter'
 import { SelectionManager, Selection } from './SelectionManager'
 import KeyHandler from './KeyHandler'
-import { EditorStatus } from './EditorPane'
+import { Editor } from './EditorPane'
 import VirtualizedList from './VirtualizedList'
 
 interface EditorProps {
     // File path name the editor opens.
     file: string,
-    onStatusChange: (status: EditorStatus) => void
+    onStatusChange: (status: Editor.Status) => void
 }
 
-export interface EditorState {
-    lines: string[][],
-    selection: Selection
-}
-
-/**
- * The code editor component handling syntax highlighting and text editing.
- * The editor is responsible for its file, handling io operations and 
- * language plugin selection.
- * The editor works by mapping an array of strings aka 'lines', vertically 
- * to visualize the text content of the given file.
- * @param props
- */
-export default function Editor(props: EditorProps) {
-
-    /**
-     * Store the current {@link Lexer.Plugin} for this editor 
-     * to provide down the component tree.
-     */
-    const [plugin, setPlugin] = useState<Lexer.Lexer.Plugin | null>(null)
-
-    // Stores the EditorState.
-    const [editorState, setEditorState] = useState<EditorState>({
+function createEmptyEditorState(): Editor.State {
+    return {
         lines: [],
         selection: {
             start: {
@@ -50,7 +29,27 @@ export default function Editor(props: EditorProps) {
                 offset:0
             }
         }
-    })
+    }
+}
+
+/**
+ * The code editor component handling syntax highlighting and text editing.
+ * The editor is responsible for its file, handling io operations and 
+ * language plugin selection.
+ * The editor works by mapping an array of strings aka 'lines', vertically 
+ * to visualize the text content of the given file.
+ * @param props
+ */
+export default function TextEditor(props: EditorProps) {
+
+    /**
+     * Store the current {@link Lexer.Plugin} for this editor 
+     * to provide down the component tree.
+     */
+    const [plugin, setPlugin] = useState<Lexer.Lexer.Plugin | null>(null)
+
+    // Stores the EditorState.
+    const [editorState, setEditorState] = useState<Editor.State>(createEmptyEditorState())
 
     // Count of items rendered in virtual list.
     const [firstVisibleIndex, setFirstVisibleIndex] = useState(0)

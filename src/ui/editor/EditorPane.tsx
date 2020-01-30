@@ -1,31 +1,25 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import Editor from './Editor'
+import TextEditor from './TextEditor'
 import EditorTabLayout from './EditorTabLayout'
 import StatusBar from './StatusBar'
 import { Selection } from './SelectionManager'
 
-interface EditorPaneProps {
-    dirPath: string
-    files: string[],
-    onFileClose: (index: number) => void
+export namespace Editor {
+
+    export interface Status {
+        selection: Selection,
+        file: string
+    }
+
+    export interface State {
+        lines: string[][],
+        selection: Selection
+    }
 }
 
-export interface EditorStatus {
-    selection: Selection,
-    file: string
-}
-
-/**
- * Displays an Editor Tab of an open file.
- */
-export default function EditorPane(props: EditorPaneProps) {
-
-    // Store the selected tab index.
-    const [currentTab, setCurrentTab] = useState(0)
-
-    // Editor Status.
-    const [editorStatus, setEditorStatus] = useState<EditorStatus>({
+function createEmptyEditorStatus(): Editor.Status {
+    return {
         selection: {
             start: {
                 line: 0,
@@ -37,7 +31,25 @@ export default function EditorPane(props: EditorPaneProps) {
             }
         },
         file: ''
-    })
+    }
+}
+
+interface EditorPaneProps {
+    dirPath: string
+    files: string[],
+    onFileClose: (index: number) => void
+}
+
+/**
+ * Displays an Editor Tab of an open file.
+ */
+export default function EditorPane(props: EditorPaneProps) {
+
+    // Store the selected tab index.
+    const [currentTab, setCurrentTab] = useState(0)
+
+    // Editor Status.
+    const [editorStatus, setEditorStatus] = useState<Editor.Status>(createEmptyEditorStatus())
 
     /**
      * Run effect on files changed to set the latest tab.
@@ -47,19 +59,7 @@ export default function EditorPane(props: EditorPaneProps) {
 
         // if files is empty reset status,
         if (props.files.length == 0) {
-            setEditorStatus({
-                selection: {
-                    start: {
-                        line: 0,
-                        offset: 0
-                    },
-                    end: {
-                        line: 0,
-                        offset: 0
-                    }
-                },
-                file: ''
-            })
+            setEditorStatus(createEmptyEditorStatus())
         }
     },
     [props.files])
@@ -85,7 +85,7 @@ export default function EditorPane(props: EditorPaneProps) {
      * Handle editor status change.
      * @param status 
      */
-    function onStatusChange(status: EditorStatus) {
+    function onStatusChange(status: Editor.Status) {
         setEditorStatus(status)
     }
 
@@ -99,7 +99,7 @@ export default function EditorPane(props: EditorPaneProps) {
                         currentTab={currentTab}
                         onTabClick={onTabClick}
                         onTabClose={onTabClose}/>
-                    <Editor file={props.files[currentTab]}
+                    <TextEditor file={props.files[currentTab]}
                         onStatusChange={onStatusChange}/>
                 </>
                 :

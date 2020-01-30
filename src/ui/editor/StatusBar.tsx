@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { useMemo } from 'react'
-import { EditorStatus } from './EditorPane'
+import { Editor } from './EditorPane'
 import { extractFileExtension } from '../utils/FileNameRegex'
 
 interface StatusBarProps {
-    status: EditorStatus
+    status: Editor.Status
 }
 export default function StatusBar(props: StatusBarProps) {
 

@@ -1,6 +1,6 @@
 import KeyCode from "../utils/KeyCodes";
 import { Selection } from "./SelectionManager";
-import { EditorState } from "./Editor";
+import { Editor } from "./EditorPane";
 
 /**
  * Handles React Key events in the Editor to set the line state.
@@ -9,7 +9,7 @@ import { EditorState } from "./Editor";
  * @param selection
  */
 export default function KeyHandler(event: React.KeyboardEvent,
-    setEditorState: (value: React.SetStateAction<EditorState>) => void) {
+    setEditorState: (value: React.SetStateAction<Editor.State>) => void) {
     console.log('Keycode is: ', event.keyCode);
 
     const key = event.key
