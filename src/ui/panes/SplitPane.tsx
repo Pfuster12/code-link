@@ -53,7 +53,8 @@ export default function SplitPane(props: SplitPaneProps) {
         // if in dragging state,
         if (splitPaneState.isDragging) {
             // get the split pane element,
-            const splitPane: HTMLElement = document.getElementsByClassName("row-split-pane")[0] as HTMLElement
+            const splitPane: HTMLElement = 
+                document.getElementsByClassName("row-split-pane")[0] as HTMLElement
 
             // set the cursor to a resize,
             splitPane.style.cursor = 'col-resize'
@@ -99,7 +100,8 @@ export default function SplitPane(props: SplitPaneProps) {
      */
     function onMouseUp(event: React.MouseEvent) {
         // grab the splitpane,
-        const splitPane: HTMLElement = document.getElementsByClassName("row-split-pane")[0] as HTMLElement
+        const splitPane: HTMLElement = 
+            document.getElementsByClassName("row-split-pane")[0] as HTMLElement
         // set cursor to default,
         splitPane.style.cursor = 'auto'
 
@@ -114,7 +116,9 @@ export default function SplitPane(props: SplitPaneProps) {
     }
 
     return (
-        <div className="row-split-pane">
+        <div className="row-split-pane"
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}>
             {/* The first Pane */}
             <Pane id={'first-pane'} 
                 children={children[0]}/>
@@ -126,11 +130,4 @@ export default function SplitPane(props: SplitPaneProps) {
                 children={children[1]}/>
         </div>
     )
-}
-
-/**
- * Define the default props to be empty divs.
- */
-SplitPane.defaultProps = {
-    children: [<div/>, <div/>]
 }
