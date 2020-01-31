@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState, useMemo, useLayoutEffect } from 'react'
+import { useState, useMemo, useLayoutEffect, useRef } from 'react'
 import { useWindowSize } from '../utils/CustomHooks'
 
 interface VirtualizedListProps {
@@ -11,6 +11,7 @@ interface VirtualizedListProps {
     rowHeight: number,
     overflowCount: number,
     count: number,
+    scrollTop?: number,
     onScrollCallback?: (event: React.SyntheticEvent) => void,
     onFirstVisibleIndexCalculated?: (firstVisibleIndex: number) => void,
     renderItem: (index: number, style: Object) => React.ReactElement
@@ -25,6 +26,8 @@ interface VirtualizedListProps {
  * incoming side with CSS positioning, giving the illusion of the infinite scroll.
  */
 export default function VirtualizedList(props: VirtualizedListProps) {
+
+    const listRef = useRef(null)
 
     // Store the scrolltop.
     const [scrollTop, setScrollTop] = useState(0)
@@ -107,6 +110,11 @@ export default function VirtualizedList(props: VirtualizedListProps) {
         setScrollTop(event.currentTarget.scrollTop)
     }
 
+    useLayoutEffect(() => {
+        listRef.current.scrollTop = props.scrollTop
+    },
+    [props.scrollTop])
+
     /**
      * Creates absolute position style according to item index.
      * @param index 
@@ -127,6 +135,7 @@ export default function VirtualizedList(props: VirtualizedListProps) {
                 width: width,
                 height: height
             }}
+            ref={listRef}
             onScroll={onScroll}>
                 {/* Contained div with full list height to overflow the fixed width div */}
                 <div

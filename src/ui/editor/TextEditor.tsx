@@ -60,6 +60,11 @@ export default function TextEditor(props: EditorProps) {
     const [editorScrollTop, setEditorScrollTop] = useState(0)
 
     /**
+     * Stores the gutter scrollTop to synchronise other UI components.
+     */
+    const [gutterScrollTop, setGutterScrollTop] = useState(0)
+
+    /**
      * Memoize the {@link Lexer} class use to parse the editor text.
      * Depends on the plugin to change.
      */
@@ -243,6 +248,9 @@ export default function TextEditor(props: EditorProps) {
         setEditorScrollTop(event.currentTarget.scrollTop)
     }
 
+    function onGutterScroll(event: React.SyntheticEvent) {
+        setGutterScrollTop(event.currentTarget.scrollTop)
+    }
 
     /**
      * Virtual list visible items measured callback.
@@ -255,7 +263,8 @@ export default function TextEditor(props: EditorProps) {
     return (
         <div className="editor editor-theme">
             <Gutter lines={editorState.lines}
-                scrollTop={editorScrollTop}/>
+                scrollTop={editorScrollTop}
+                onScrollCallback={onGutterScroll}/>
             <div className="text-editor text-editor-theme"
                 onMouseDown={onEditorMouseDown}
                 onMouseUp={onEditorMouseUp}
@@ -270,6 +279,7 @@ export default function TextEditor(props: EditorProps) {
                     overflowCount={8}
                     onFirstVisibleIndexCalculated={onFirstVisibleIndexCalculated}
                     onScrollCallback={onEditorScroll}
+                    scrollTop={gutterScrollTop}
                     renderItem={(index, style) =>
                         {
                             return editorState.lines[index] && <Line key={editorState.lines[index][0]}

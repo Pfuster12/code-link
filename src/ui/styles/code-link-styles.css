@@ -246,7 +246,7 @@ span {
 */
 #gutter-virtualized-list {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
 }
 
 /*
@@ -258,9 +258,12 @@ span {
     flex: 0 0 auto;
     min-width: 60px;
     flex-direction: column;
-    user-select: none;
     align-items: stretch;
-    overflow-y: hidden;
+    overflow: hidden;
+}
+
+#gutter-virtualized-list::-webkit-scrollbar {
+    display: none;
 }
 
 .line-number {
@@ -352,7 +355,6 @@ span {
 
 .folder-root {
     display: flex;
-    cursor: pointer;
     flex-direction: column;
     height: 100%;
     overflow-y: auto;

@@ -4,7 +4,8 @@ import VirtualizedList from '../VirtualizedList'
 
 interface GutterProps {
     lines: string[][],
-    scrollTop: number
+    scrollTop: number,
+    onScrollCallback?: (event: React.SyntheticEvent) => void
 }
 
 /**
@@ -12,15 +13,6 @@ interface GutterProps {
  * @property props
  */
 export default function Gutter(props: GutterProps) {
-
-    /**
-     * Layout effect to scroll with text editor scrollTop.
-     */
-    useLayoutEffect(() => {
-        const gutterElement = document.getElementById('gutter-virtualized-list')
-        gutterElement.scrollTop = props.scrollTop
-    }, 
-    [props.scrollTop])
 
     return (
         <div className="gutter gutter-theme">
@@ -32,6 +24,8 @@ export default function Gutter(props: GutterProps) {
                 rowHeight={19}
                 count={props.lines.length}
                 overflowCount={4}
+                onScrollCallback={props.onScrollCallback}
+                scrollTop={props.scrollTop}
                 renderItem={(index, style) =>
                 {
                     return <span style={style} key={index} className="token line-number">{index + 1}</span>
