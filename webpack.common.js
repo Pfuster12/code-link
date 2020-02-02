@@ -49,6 +49,7 @@ module.exports = {
             new CopyPlugin([
                 // copy the themes to a build themes folder,
                 { from: './public/themes/default-light-theme.css', to: './themes/' },
+                { from: './public/themes/default-dark-theme.css', to: './themes/' },
             ]),
         ],
     resolve: {

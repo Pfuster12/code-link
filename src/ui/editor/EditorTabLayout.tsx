@@ -31,7 +31,7 @@ export default function EditorTabLayout(props: EditorTabLayoutProps) {
     }
 
     return (
-        <nav className="editor-tablayout">
+        <nav className="editor-tablayout editor-tablayout-theme">
             {
                 props.tabs.map((tab, index) => {
                 return <EditorTab key={tab}

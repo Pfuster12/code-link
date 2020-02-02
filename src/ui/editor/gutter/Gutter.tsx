@@ -28,7 +28,7 @@ export default function Gutter(props: GutterProps) {
                 scrollTop={props.scrollTop}
                 renderItem={(index, style) =>
                 {
-                    return <span style={style} key={index} className="token line-number">{index + 1}</span>
+                    return <span style={style} key={index} className="token line-number line-number-theme">{index + 1}</span>
                 }}/>
         </div>
     )

@@ -63,8 +63,8 @@ export function Folders(props: FoldersProps) {
     [props.dirPath])
 
     return (
-        <div className="folders">
-            <h1 className="folders-title">Folders</h1>
+        <div className="folders folders-theme">
+            <h1 className="folders-title folders-title-theme">Folders</h1>
             <ResourceBoundUI resource={dir}>
                 <span className="folders-empty">Open a folder to view its contents here.</span>
                 <Folder dir={{name: props.dirPath}}

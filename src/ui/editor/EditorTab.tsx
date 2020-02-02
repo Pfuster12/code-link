@@ -39,11 +39,11 @@ export default function EditorTab(props: EditorTabProps) {
     }
 
     return (
-        <div className={props.selected == props.index ? "editor-tab editor-tab-selected" : "editor-tab"}>
+        <div className={props.selected == props.index ? "editor-tab editor-tab-selected editor-tab-selected-theme" : "editor-tab editor-tab-theme"}>
             <div className="editor-tab-name-wrap"
                 onClick={onClick}>
                 <FileIcon filename={endpointName}/>
-                <span className="editor-tab-name">{endpointName}</span>
+                <span className="editor-tab-name editor-tab-name-theme">{endpointName}</span>
             </div>
             <CloseIcon onClick={onClose} class="editor-tab-close"/>
         </div>

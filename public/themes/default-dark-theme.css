@@ -26,6 +26,34 @@ Editor Theme
 */
 
 /*
+     Theme for the scrollbar
+*/
+::-webkit-scrollbar {
+    background-color: #24292E;
+    width: 14px;
+}
+
+/*
+     Theme for the scrollbar thumb
+*/
+::-webkit-scrollbar-thumb {
+    background-color: slategray;
+}
+
+/*
+    Theme for the text editor input selection background color.
+*/
+::selection {
+    color: white;
+    background-color: blue;
+}
+
+.editor-theme {
+    line-height: 1.4;
+    font-size: 14px;
+}
+
+/*
     Theme for the text editor pane.
 */
 .text-editor-theme {
@@ -40,7 +68,193 @@ Editor Theme
 }
 
 /*
-
-Syntax tokens theme.
-
+  Line number Gutter
 */
+
+.line-number-theme {
+    color: grey !important
+}
+
+.line-number-theme:hover {
+    color: white !important
+}
+
+/*
+ Status Bar
+*/
+.status-bar-theme {
+    background-color: royalblue;
+    color: white;
+}
+
+/*
+ Caret theme.
+*/
+
+@keyframes blink {
+    50% {
+      opacity: 0;
+    }
+}
+
+.caret-theme {
+    background-color: white;
+    height: 1.2em;
+}
+
+/*
+------------------------------------------
+ Syntax tokens theme.
+------------------------------------------
+*/
+
+/*
+    General token theme.
+*/
+.token {
+    color: white;
+    font-family: 'Ubuntu Mono','Consolas',monospace;
+}
+
+/*
+    Keyword token theme.
+*/
+.keyword {
+    color: royalblue;
+    font-weight: bold;
+}
+
+/*
+    Object/Class token theme.
+*/
+.class-identifier {
+    color: darkcyan
+}
+
+/*
+    Function identifier token theme.
+*/
+.function-identifier {
+    color: palevioletred;
+}
+
+/*
+    An operator (e.g. +, - , /) token theme.
+*/
+.operator {
+    color: coral;
+    font-weight: bold
+}
+
+/*
+    Numeric token theme.
+*/
+.number {
+    color: rebeccapurple;
+}
+
+/*
+    Line comment token theme.
+*/
+.line-comment {
+    color: darkgrey;
+    font-weight: normal 
+}
+
+/*
+    Multi Line comment token theme.
+*/
+.multiline-comment {
+    color: grey;
+    font-weight: normal 
+}
+
+/*
+    Multi Line comment token theme.
+*/
+.multiline-comment-line {
+    color: grey;
+    font-weight: normal 
+}
+
+/*
+    Multi Line comment token theme.
+*/
+.multiline-comment-end {
+    color: grey;
+    font-weight: normal 
+}
+
+/*
+    String double quotes token theme.
+*/
+.string-template {
+    color: green
+}
+
+/*
+    String single quotes token theme.
+*/
+.string-literal {
+    color: yellowgreen
+}
+
+/*
+    String back tick token theme.
+*/
+.template-literal {
+    color: seagreen
+}
+
+/*
+    Incomplete string double quotes token theme.
+*/
+.incomplete-string-template {
+    color: greenyellow
+}
+
+/*
+------------------------------------------
+Workspace Theme
+------------------------------------------
+*/
+
+.folders-theme {
+    background-color: #24292E;
+}
+
+.folders-title-theme {
+    color: white;
+}
+
+.folder-name-theme {
+    color: white;
+}
+
+.file-name-theme {
+    color: white;
+}
+
+.folders-item-theme:hover {
+    background-color: grey !important;
+}
+
+.file:hover {
+    background-color: grey !important;
+}
+
+.editor-tablayout-theme {
+    background-color: #24292E;
+}
+
+.editor-tab-theme {
+    background-color: #24292E !important;
+}
+
+.editor-tab-selected-theme {
+    background-color: darkblue !important;
+}
+
+.editor-tab-name-theme {
+    color: white;
+}

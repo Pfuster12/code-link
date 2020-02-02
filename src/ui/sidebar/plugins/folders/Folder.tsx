@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useState, useEffect, useMemo } from 'react'
 import * as folder_closed from '../../../assets/file_icons/directory_icon.svg'
-import * as folder_open from '../../../assets/file_icons/folder_open_icon.svg'
+import * as chevron from '../../../assets/icons/chevron.svg'
 import { Dirent } from 'fs'
 import ExpandableList from '../../../components/ExpandableList'
 import FilesIO from '../../../../io/FilesIO'
@@ -76,16 +76,19 @@ export function Folder(props: FolderProps = { dirPath: '',
     }
 
     return (
-        <div className={props.isRoot ? "folder-root" : "folder"}>
+        <div className={"folder-theme" + (props.isRoot ? "folder-root" : "folder")}>
             <div className="folders-item folders-item-theme"
                 onClick={onFolderClick}>
+                    <img className="folders-chevron"
+                    style={{transform: expanded && 'rotate(90deg)'}} src={chevron}/>
                 <img className="folders-icon" src={folder_closed}/>
-                <span className="folders-name folder-name">{lastPath}</span>
+                <span className="folders-name folder-name folder-name-theme">{lastPath}</span>
             </div>
             <ExpandableList expanded={expanded}>
                 <ul className="folder-subdir">
                     {
-                        dir && 
+                        dir 
+                        && 
                         dir.map(item => {
                             return item.isDirectory() 
                             ?

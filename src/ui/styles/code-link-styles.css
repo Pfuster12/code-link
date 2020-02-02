@@ -130,11 +130,6 @@ span {
     height: 4px;
 }
 
-
-.editor-tablayout:hover {
-     background: rgba(255,255,255,.2);
-}
-
 .editor-tab {
     display: flex;
     flex: 0 0 auto;
@@ -272,7 +267,6 @@ span {
     justify-content: center;
     cursor: pointer;
     user-select: none;
-    color: grey
 }
 
 .line-number:hover {
@@ -301,7 +295,6 @@ span {
 
 .status-bar {
     display: flex;
-    background-color: ghostwhite;
     height: 20px;
     align-items: center;
     user-select: none;
@@ -345,6 +338,10 @@ span {
     width: 17px;
     height: 17px;
     object-fit: contain;
+}
+
+.folders-chevron {
+    transition: all .2s ease;
 }
 
 .folders-name {
