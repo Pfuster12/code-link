@@ -76,7 +76,7 @@ export function Folder(props: FolderProps = { dirPath: '',
     }
 
     return (
-        <div className={"folder-theme" + (props.isRoot ? "folder-root" : "folder")}>
+        <div className={"folder-theme " + (props.isRoot ? "folder-root" : "folder")}>
             <div className="folder-item folder-item-theme"
                 onClick={onFolderClick}>
                     <svg style={{transform: expanded && 'rotate(90deg)'}} width="18"
