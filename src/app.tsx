@@ -8,6 +8,7 @@ import './ui/styles/code-link-styles.css'
 import { Folders } from './ui/sidebar/plugins/folders/Folders';
 import { SideBar } from './ui/sidebar/SideBar';
 import EditorPane from './ui/editor/EditorPane';
+import TitleBar from './ui/titlebar/TitleBar';
 require('dotenv').config()
 
 /**
@@ -44,6 +45,7 @@ export default function App() {
 
     return (
         <main>
+            <TitleBar/>
             <SplitPane>
                 <SideBar>
                     <Folders dirPath={rootDir}
