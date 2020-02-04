@@ -40,6 +40,10 @@ Editor Theme
     background-color: slategray;
 }
 
+::-webkit-scrollbar-corner {
+    background-color: #24292E;  
+}
+
 /*
     Theme for the text editor input selection background color.
 */
@@ -248,11 +252,11 @@ Workspace Theme
 }
 
 .folder-item-theme:hover {
-    background-color: grey !important;
+    background-color: black !important;
 }
 
-.file:hover {
-    background-color: grey !important;
+.file-theme:hover {
+    background-color: black !important;
 }
 
 .editor-tab-theme:hover {
