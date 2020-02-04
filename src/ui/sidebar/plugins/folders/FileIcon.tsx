@@ -75,6 +75,6 @@ export function FileIcon(props: FileIconProps) {
     [props.filename])
 
     return (
-        <img src={icon} className="folders-icon" />
+        <img src={icon} className="folder-icon" />
     )
 }

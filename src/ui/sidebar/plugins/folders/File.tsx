@@ -25,7 +25,7 @@ export function File(props: FileProps) {
         <div className="file"
             onClick={handleFileClick}>
             <FileIcon filename={props.file.name}/>
-            <span className="folders-name file-name file-name-theme">{props.file.name}</span>
+            <span className="folder-name folder-name-theme">{props.file.name}</span>
         </div>
     )
 }

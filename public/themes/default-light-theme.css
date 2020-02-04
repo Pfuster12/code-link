@@ -211,3 +211,7 @@ Workspace Theme
 .folders-item-theme:hover {
     background-color: whitesmoke !important;
 }
+
+.folder-chevron-theme {
+    fill: #303030;
+}

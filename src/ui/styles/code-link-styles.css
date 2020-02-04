@@ -328,23 +328,23 @@ span {
     text-transform: uppercase;
 }
 
-.folders-empty {
+.folder-empty {
     padding: 16px;
     text-align: center;
 }
 
-.folders-icon {
+.folder-icon {
     min-width: 17px;
     width: 17px;
     height: 17px;
     object-fit: contain;
 }
 
-.folders-chevron {
+.folder-chevron {
     transition: all .2s ease;
 }
 
-.folders-name {
+.folder-name {
     padding-left: 8px;
     white-space: nowrap;
     font-size: 0.95em;
@@ -365,13 +365,13 @@ span {
     flex-direction: column;
 }
 
-.folders-item {
+.folder-item {
     display: flex;
     padding: 4px 0px 4px 16px;
     cursor: pointer;
 }
 
-.folders-item:hover {
+.folder-item:hover {
     background-color: whitesmoke;
 }
 

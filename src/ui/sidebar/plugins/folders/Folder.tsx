@@ -77,12 +77,17 @@ export function Folder(props: FolderProps = { dirPath: '',
 
     return (
         <div className={"folder-theme" + (props.isRoot ? "folder-root" : "folder")}>
-            <div className="folders-item folders-item-theme"
+            <div className="folder-item folder-item-theme"
                 onClick={onFolderClick}>
-                    <img className="folders-chevron"
-                    style={{transform: expanded && 'rotate(90deg)'}} src={chevron}/>
-                <img className="folders-icon" src={folder_closed}/>
-                <span className="folders-name folder-name folder-name-theme">{lastPath}</span>
+                    <svg style={{transform: expanded && 'rotate(90deg)'}} width="18"
+                     height="18" 
+                     viewBox="0 0 24 24"
+                     className="folder-chevron folder-chevron-theme">
+                        <path
+                        d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+                    </svg>
+                <img className="folder-icon" src={folder_closed}/>
+                <span className="folder-name folder-name-theme">{lastPath}</span>
             </div>
             <ExpandableList expanded={expanded}>
                 <ul className="folder-subdir">

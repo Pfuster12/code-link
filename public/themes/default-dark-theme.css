@@ -53,6 +53,14 @@ Editor Theme
     font-size: 14px;
 }
 
+.empty-editor-theme {
+    background-color: #24292E;
+}
+
+.empty-editor-text-theme {
+    color: white;
+}
+
 /*
     Theme for the text editor pane.
 */
@@ -189,7 +197,7 @@ Editor Theme
     String double quotes token theme.
 */
 .string-template {
-    color: green
+    color: lightgreen
 }
 
 /*
@@ -227,6 +235,10 @@ Workspace Theme
     color: white;
 }
 
+.folder-chevron-theme {
+    fill: white;
+}
+
 .folder-name-theme {
     color: white;
 }
@@ -235,12 +247,16 @@ Workspace Theme
     color: white;
 }
 
-.folders-item-theme:hover {
+.folder-item-theme:hover {
     background-color: grey !important;
 }
 
 .file:hover {
     background-color: grey !important;
+}
+
+.editor-tab-theme:hover {
+    background-color: royalblue !important;
 }
 
 .editor-tablayout-theme {
