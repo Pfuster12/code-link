@@ -104,7 +104,7 @@ export default function EditorPane(props: EditorPaneProps) {
                 </>
                 :
                 <div className="empty-editor empty-editor-theme">
-                    <span className="empty-editor-text-theme">Open a file in the Folders sidebar.</span>
+                    <span className=" empty-editor-text empty-editor-text-theme">Open a file in the Folders sidebar.</span>
                 </div>
             }
             <StatusBar status={editorStatus}/>

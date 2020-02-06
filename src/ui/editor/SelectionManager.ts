@@ -3,6 +3,16 @@ export interface SelectionOffset {
     end: number
 }
 
+export interface Position {
+    x: number,
+    y: number
+}
+
+export interface SelectionPosition {
+    startPos: Position,
+    endPos: Position
+}
+
 export interface Selection {
     start: {
         line: number,
@@ -25,7 +35,7 @@ export namespace Selection {
         return {
             start: {
                 line: line,
-                offset: offset
+                offset: offset            
             },
             end: {
                 line: line,
@@ -70,8 +80,8 @@ export class SelectionManager {
      */
     getSelection(range: Range, container: HTMLDivElement): Selection {
         const charOffset = this.getRangeCharOffset(range)
-        const lineOffset = this.getRangeLineOffset(range, container)
-
+        const lineOffset = this.getLineOffsetFromRange(range, container)
+        const pos = this.getRangeAbsolutePositionBounds(range)
         return {
             start: {
                 line: lineOffset.start,
@@ -82,6 +92,42 @@ export class SelectionManager {
                 offset: charOffset.end
             }
         }
+    }
+
+    /**
+     * Get the absolute coordinates of a Range start and end bounding rectangle.
+     * @param range
+     */
+    getRangeAbsolutePositionBounds(range: Range): SelectionPosition {
+        var pos = {
+            startPos: {
+                x: 0,
+                y: 0
+            },
+            endPos: {
+                x: 0,
+                y: 0
+            }
+        }
+        const length = range.getClientRects().length
+        if (range.getClientRects().length > 0) {
+            const startRect = range.getClientRects()[0]
+            const endRect = range.getClientRects()[length - 1]
+
+            var selPos = {
+                startPos: {
+                    x: startRect.x,
+                    y: startRect.y
+                },
+                endPos: {
+                    x: endRect.x,
+                    y: endRect.y
+                }
+            }
+            return selPos
+        }
+
+        return pos
     }
 
     /**
@@ -125,7 +171,7 @@ export class SelectionManager {
      * @param container
      * @returns SelectionOffset
      */
-    getRangeLineOffset(range: Range, container: HTMLDivElement): SelectionOffset { 
+    getLineOffsetFromRange(range: Range, container: HTMLDivElement): SelectionOffset { 
         
         // with the computed style,
         const style = window.getComputedStyle(container)

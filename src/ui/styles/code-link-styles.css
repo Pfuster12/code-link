@@ -179,6 +179,11 @@ span {
     justify-content: center;
 }
 
+.empty-editor-text {
+    text-align: center;
+    padding: 16px;
+}
+
 .editor-tablayout {
     display: flex;
     flex-direction: row;
@@ -258,9 +263,16 @@ span {
     overflow: auto;
 }
 
-.text-editor-overlays {
+#text-editor-overlays {
     position: absolute;
     pointer-events: none;
+}
+
+#selection-div {
+    position: absolute;
+    width: 100px;
+    height: 19px;
+    background-color: blue;
 }
 
 .caret {

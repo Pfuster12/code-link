@@ -18,7 +18,7 @@ interface EditorProps {
 
 function createEmptyEditorState(): Editor.State {
     return {
-        lines: [],
+        lines: [['0', '']],
         selection: {
             start: {
                 line:0,
@@ -120,19 +120,7 @@ export default function TextEditor(props: EditorProps) {
             })
             .catch(err => {
                 setEditorState(prevState => {
-                    return {
-                        lines: [['0', '']],
-                        selection: {
-                            start: {
-                                line:0,
-                                offset:0
-                            },
-                            end: {
-                                line:0,
-                                offset:0
-                            }
-                        }
-                    }
+                    return createEmptyEditorState()
                 })
                 console.log(`Error reading file ${props.file} in editor`);
             })
@@ -167,10 +155,12 @@ export default function TextEditor(props: EditorProps) {
         const caret = document.querySelector('.caret') as HTMLDivElement
         const textEditor = document.getElementById('virtualized-list') as HTMLDivElement
 
-        var line;
+        var line: HTMLDivElement;
         if (textEditor) {
             const firstPosition = firstVisibleIndex
-            line = textEditor.childNodes[0].childNodes[editorState.selection.start.line - firstPosition]
+            // get the virtual list container's child node,
+            line = textEditor.childNodes[0].childNodes[editorState.selection.start.line
+                 - firstPosition] as HTMLDivElement
         }
 
         if (line) {
@@ -288,7 +278,7 @@ export default function TextEditor(props: EditorProps) {
                                 value={editorState.lines[index][1]} 
                                 plugin={plugin}/>
                         }}>
-                        <div className="text-editor-overlays">
+                        <div id="text-editor-overlays">
                             <div className="caret caret-theme"/>
                         </div>
                     </VirtualizedList>
