@@ -231,58 +231,26 @@ Workspace Theme
 ------------------------------------------
 */
 
-.title-bar-theme {
-    background-color: #31363B; 
+.workspace.theme {
+    background-color: #1c1c1c;
 }
 
-.title-bar-title-theme {
-    color: white;
+.workspace-text-theme {
+    color: #b2b2b2;
 }
 
-.folders-theme {
-    background-color: #24292E;
+.title-bar.theme {
+    background-color: #1c1c1c; 
 }
 
-.folders-title-theme {
-    color: white;
+.toolbar.theme {
+    background-color: #333333;
 }
 
-.folder-chevron-theme {
-    fill: white;
+.toolbar-item.theme:hover {
+    background-color: #414141;
 }
 
-.folder-name-theme {
-    color: white;
-}
-
-.file-name-theme {
-    color: white;
-}
-
-.folder-item-theme:hover {
-    background-color: black !important;
-}
-
-.file-theme:hover {
-    background-color: black !important;
-}
-
-.editor-tab-theme:hover {
-    background-color: blue !important;
-}
-
-.editor-tablayout-theme {
-    background-color: black;
-}
-
-.editor-tab-theme {
-    background-color: black !important;
-}
-
-.editor-tab-selected-theme {
-    background-color: #24292E !important;
-}
-
-.editor-tab-name-theme {
-    color: white;
+.toolbar-item-icon.theme {
+    fill: #b2b2b2;
 }

@@ -1,0 +1,118 @@
+@font-face {
+    src: url("../assets/fonts/Roboto-Light.ttf");
+    font-family: Roboto;
+    font-weight: 300;
+}
+
+@font-face {
+    src: url("../assets/fonts/Roboto-Regular.ttf");
+    font-family: Roboto;
+}
+
+@font-face {
+    src: url("../assets/fonts/Roboto-Bold.ttf");
+    font-family: Roboto;
+    font-weight: bold;
+}
+
+html, body {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    height: 100%;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+span {
+    letter-spacing: 0.5px;
+    font-family: 'Roboto';
+}
+
+/*
+ Workspace
+*/
+
+.workspace {
+    display: flex;
+    flex-direction: row;
+}
+
+/*
+ Title Bar
+*/
+
+.title-bar {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+}
+
+.title-bar-text {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    font-weight: 500;
+}
+
+.window-controls {
+    align-self: flex-end;
+}
+
+.window-close-box {
+    display: flex;
+    padding: 12px;
+    -webkit-app-region: no-drag;
+    justify-content: center;
+}
+
+.window-close-box:hover {
+    background-color: red;
+    fill: white;
+}
+
+.window-close {
+    width: 20px;
+    height: 20px;
+}
+
+.split-pane-horizontal {
+    display: flex;
+}
+
+.split-pane-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+/*
+ Toolbar
+*/
+
+.toolbar {
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar-item {
+    padding: 16px;
+    cursor: pointer;
+    transition: all .1s ease;
+}
+
+.toolbar-item-icon {
+    width: 20px;
+    height: 20px;
+}

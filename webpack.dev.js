@@ -21,7 +21,7 @@ module.exports = merge(common, {
             // The command to run,
             'electron',
             // list of string arguments ,
-            ['./main.js'],
+            ['./src/main/main.js'],
             // options object,
             // shell runs command inside of a shell. Uses '/bin/sh' on Unix, and process.env.ComSpec on Windows. A different shell can be specified as a string. 
             { 

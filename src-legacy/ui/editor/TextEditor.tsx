@@ -51,6 +51,9 @@ export default function TextEditor(props: EditorProps) {
     // Stores the EditorState.
     const [editorState, setEditorState] = useState<Editor.State>(createEmptyEditorState())
 
+    // Selecting state flag.
+    const [isSelecting, setIsSelecting] = useState(false)
+
     // Count of items rendered in virtual list.
     const [firstVisibleIndex, setFirstVisibleIndex] = useState(0)
     
@@ -160,7 +163,7 @@ export default function TextEditor(props: EditorProps) {
             const firstPosition = firstVisibleIndex
             // get the virtual list container's child node,
             line = textEditor.childNodes[0].childNodes[editorState.selection.start.line
-                 - firstPosition] as HTMLDivElement
+                - firstPosition] as HTMLDivElement
         }
 
         if (line) {
@@ -188,36 +191,18 @@ export default function TextEditor(props: EditorProps) {
     }
 
     /**
-     * Handle the editor click event.
-     * @param event
-     */
-    function onEditorClick(event: React.SyntheticEvent) {
-        const sel = document.getSelection()
-        const range = sel.getRangeAt(0)
-
-        const clone = range.cloneRange()
-        
-        textarea.current.focus()
-
-        sel.removeAllRanges()
-        sel.addRange(clone)
-    }
-
-    /**
      * Handle the editor mouse down event.
      * @param event 
      */
     function onEditorMouseDown(event: React.SyntheticEvent) {
-        document.getSelection().removeAllRanges()
+        setIsSelecting(true)
     }
 
-    /**
-     * Handle the editor mouse up event.
-     * @param event 
-     */
-    function onEditorMouseUp(event: React.SyntheticEvent) {
+    function onEditorClick(event: React.SyntheticEvent) {
+        const sel = document.getSelection()
+
         // assign the selection,
-        if (document.getSelection && document.getSelection().rangeCount > 0) {
+        if (document.getSelection && sel.rangeCount > 0) {
             const range = document.getSelection().getRangeAt(0)
             const editor = document.getElementById('virtualized-list') as HTMLDivElement
 
@@ -227,6 +212,45 @@ export default function TextEditor(props: EditorProps) {
                     selection: selManager.getSelection(range, editor)
                 }
             })
+        }
+    }
+
+    /**
+     * Handle the editor mouse move event.
+     * @param event 
+     */
+    function onEditorMouseMove(event: React.SyntheticEvent) {
+        if (isSelecting) {
+            const sel = document.getSelection()
+
+            // assign the selection,
+            if (document.getSelection && sel.rangeCount > 0) {
+                const range = document.getSelection().getRangeAt(0)
+                const editor = document.getElementById('virtualized-list') as HTMLDivElement
+    
+                setEditorState(prevState => {
+                    return {
+                        lines: prevState.lines,
+                        selection: selManager.getSelection(range, editor)
+                    }
+                })
+            }
+        }
+    }
+
+    /**
+     * Handle the editor mouse up event.
+     * @param event 
+     */
+    function onEditorMouseUp(event: React.SyntheticEvent) {
+        setIsSelecting(false)
+        const sel = document.getSelection()
+
+        // assign the selection,
+        if (document.getSelection && sel.rangeCount > 0) {
+            const range = document.getSelection().getRangeAt(0)
+            const clone = range.cloneRange()
+            textarea.current.focus()
         }
     }
 
@@ -257,8 +281,9 @@ export default function TextEditor(props: EditorProps) {
                 onScrollCallback={onGutterScroll}/>
             <div className="text-editor text-editor-theme"
                 onMouseDown={onEditorMouseDown}
-                onMouseUp={onEditorMouseUp}
-                onClick={onEditorClick}>
+                onClick={onEditorClick}
+                onMouseMove={onEditorMouseMove}
+                onMouseUp={onEditorMouseUp}>
                 <VirtualizedList
                     id="virtualized-list"
                     width={-1}

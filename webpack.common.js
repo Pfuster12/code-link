@@ -1,10 +1,9 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: './src/app.tsx',
+    entry: './src/renderer/app.tsx',
     // target instructs webpack to target electron renderer,
     target: 'electron-renderer',
     output: {
@@ -41,16 +40,12 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        new HtmlWebpackPlugin({
-            template: "./src/index.html",
-            filename: "./index.html",
-            inject: false,
-            }),
-            new CopyPlugin([
-                // copy the themes to a build themes folder,
-                { from: './public/themes/default-light-theme.css', to: './themes/' },
-                { from: './public/themes/default-dark-theme.css', to: './themes/' },
-            ]),
+        new CopyPlugin([
+            { from: './src/renderer/app.html'},
+            // copy the themes to a build themes folder,
+            { from: './public/themes/default-light-theme.css', to: './themes/' },
+            { from: './public/themes/default-dark-theme.css', to: './themes/' },
+        ]),
         ],
     resolve: {
         extensions: [ '.tsx', '.ts', '.js' ]
