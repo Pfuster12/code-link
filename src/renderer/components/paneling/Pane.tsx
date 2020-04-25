@@ -10,7 +10,7 @@ interface PaneProps {
 export default function Pane(props: PaneProps) {
 
     return (
-        <section>
+        <section className="pane">
             {props.children}
         </section>
     )

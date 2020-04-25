@@ -8,6 +8,9 @@ import SplitPane, { SplitPaneOrientation } from './components/paneling/SplitPane
 import ToolBar from './components/toolbar/ToolBar';
 import { ToolbarItems } from './components/toolbar/ToolBarItem';
 import { useState } from 'react';
+import Folders from './components/toolbar/folders/Folders';
+import Settings from './components/toolbar/settings/Settings';
+import Plugins from './components/toolbar/plugins/Plugins';
 require('dotenv').config()
 
 /**
@@ -25,13 +28,13 @@ export default function App() {
     function getToolbarItem(id: ToolbarItems) {
         switch(id) {
             case ToolbarItems.FOLDERS:
-                return <span>Folders</span>
+                return <Folders/>
             case ToolbarItems.PLUGINS:
-                return <span>Plugins</span>
+                return <Plugins/>
             case ToolbarItems.SETTINGS:
-                return <span>Settings</span>
+                return <Settings/>
             default:
-                return <span>Folders</span>
+                return <Folders/>
         }
     }
 

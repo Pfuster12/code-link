@@ -18,7 +18,7 @@ export default function ToolBar(props: ToolBarProps) {
         <nav className="toolbar theme">
             {
                 items.map(item => 
-                    <ToolBarItem id={item} onClick={props.onItemClick}/>)
+                    <ToolBarItem  key={item} id={item} onClick={props.onItemClick}/>)
             }
         </nav>
     )

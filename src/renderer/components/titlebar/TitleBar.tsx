@@ -24,9 +24,9 @@ export default function TitleBar() {
     }
 
     return (
-        <nav className="title-bar theme">
+        <header className="title-bar theme">
             <div className="title-bar-text">                
-                <span className="workspace-text-theme">CodeLink</span>
+                <span className="workspace text theme">CodeLink</span>
             </div>
             <div className="window-controls">
                 <div className="window-close-box"
@@ -38,7 +38,7 @@ export default function TitleBar() {
                     </svg>
                 </div>
             </div>
-        </nav>
+        </header>
     )
 }
 

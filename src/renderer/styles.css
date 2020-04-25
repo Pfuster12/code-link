@@ -48,6 +48,38 @@ span {
     flex-direction: row;
 }
 
+.split-pane {
+    display: flex;
+    flex-grow: 1;
+}
+
+.split-pane.vertical {
+    flex-direction: column;
+}
+
+.resizer {
+    height: 100%;
+    width: 1px;
+    z-index: 1;
+}
+
+.resizer:after {
+    content: "";
+    width: 9px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -4px;
+    background-color: transparent;
+    cursor: ew-resize;
+    z-index: 2;
+}
+
+.pane {
+    display: flex;
+    min-width: 160px;
+}
+
 /*
  Title Bar
 */
@@ -73,28 +105,23 @@ span {
 
 .window-close-box {
     display: flex;
-    padding: 12px;
+    padding: 10px;
     -webkit-app-region: no-drag;
     justify-content: center;
 }
 
 .window-close-box:hover {
     background-color: red;
+}
+
+.window-close-box:hover .window-close {
     fill: white;
 }
 
 .window-close {
     width: 20px;
     height: 20px;
-}
-
-.split-pane-horizontal {
-    display: flex;
-}
-
-.split-pane-vertical {
-    display: flex;
-    flex-direction: column;
+    fill: #757575;
 }
 
 /*
@@ -115,4 +142,13 @@ span {
 .toolbar-item-icon {
     width: 20px;
     height: 20px;
+}
+
+/*
+ Plugin
+*/
+
+.plugin {
+    display: flex;
+    flex-grow: 1;
 }

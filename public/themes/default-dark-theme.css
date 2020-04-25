@@ -235,8 +235,12 @@ Workspace Theme
     background-color: #1c1c1c;
 }
 
-.workspace-text-theme {
+.workspace.text.theme {
     color: #b2b2b2;
+}
+
+.resizer.theme {
+    background-color: black;
 }
 
 .title-bar.theme {
@@ -253,4 +257,8 @@ Workspace Theme
 
 .toolbar-item-icon.theme {
     fill: #b2b2b2;
+}
+
+.plugin.theme {
+    background-color: #252525;
 }
