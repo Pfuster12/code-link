@@ -1,7 +1,8 @@
 import * as React from 'react';
+import Folder from './Folder';
 
 interface FoldersProps {
-
+    path: string
 }
 
 /**
@@ -11,7 +12,12 @@ export default function Folders(props: FoldersProps) {
 
     return (
         <section className="plugin folders theme">
-            <span>Folders</span>
+            <span className="text folders-title theme">Folders</span>
+            {
+                props.path
+                &&
+                <Folder path={props.path}/>
+            }
         </section>
     )
 }

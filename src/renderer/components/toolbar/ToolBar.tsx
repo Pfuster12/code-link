@@ -2,6 +2,8 @@ import * as React from 'react';
 import ToolBarItem, { ToolbarItems } from './ToolBarItem';
 
 interface ToolBarProps {
+    folder: string,
+    currentItem: ToolbarItems,
     onItemClick: (id: ToolbarItems) => void
 }
 /**
@@ -18,7 +20,10 @@ export default function ToolBar(props: ToolBarProps) {
         <nav className="toolbar theme">
             {
                 items.map(item => 
-                    <ToolBarItem  key={item} id={item} onClick={props.onItemClick}/>)
+                    <ToolBarItem currentItem={props.currentItem} 
+                        key={item} 
+                        id={item} 
+                        onClick={props.onItemClick}/>)
             }
         </nav>
     )

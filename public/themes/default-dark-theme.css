@@ -235,7 +235,7 @@ Workspace Theme
     background-color: #1c1c1c;
 }
 
-.workspace.text.theme {
+.text.theme {
     color: #b2b2b2;
 }
 
@@ -255,10 +255,38 @@ Workspace Theme
     background-color: #414141;
 }
 
+.toolbar-item.selected.theme {
+    border-left: solid 2px #b2b2b2;
+}
+
 .toolbar-item-icon.theme {
     fill: #b2b2b2;
 }
 
 .plugin.theme {
     background-color: #252525;
+}
+
+.text.theme {
+    color: #b2b2b2;
+}
+
+/*
+ Folders
+*/
+
+.folder-name-wrap.theme:hover {
+    background-color: #414141;
+}
+
+.folder-icon.theme {
+    fill: #b2b2b2
+}
+
+.file.theme:hover {
+    background-color: #414141;
+}
+
+.file-icon.theme {
+    fill: #b2b2b2
 }

@@ -11,6 +11,7 @@ export enum ToolbarItems {
 
 interface ToolBarItemProps {
     id: ToolbarItems,
+    currentItem: ToolbarItems,
     onClick: (id: ToolbarItems) => void
 }
 
@@ -35,7 +36,7 @@ export default function ToolBarItem(props: ToolBarItemProps) {
     }
 
     return (
-        <div className="toolbar-item theme"
+        <div className={`toolbar-item ${props.currentItem === props.id && "selected"} theme`}
             onClick={handleClick}>
             <svg className="toolbar-item-icon theme" 
                 viewBox="0 0 24 24">

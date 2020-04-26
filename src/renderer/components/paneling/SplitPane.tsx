@@ -17,18 +17,18 @@ export enum SplitPaneOrientation {
  */
 export default function SplitPane(props: SplitPaneProps) {
 
-    const leftResizeable = useRef(null)
-    const rightResizeable = useRef(null)
+    // Split Pane ref.
+    const splitPaneRef = useRef(null)
 
-    React.useEffect(() => {
-        leftResizeable.current.style.width = `${200}px`
-    },
-    [])
+    // Left Pane ref.
+    const leftResizeable = useRef(null)
 
     function handleResize(event: React.MouseEvent) {
         event.preventDefault()
+        // get point X
         const xOffset = event.pageX
-        const startingPaneWidth = leftResizeable.current.clientWidth
+        // get current left pane width
+        const leftPaneWidth = leftResizeable.current.clientWidth
 
         const mouseDragHandler = (moveEvent: PointerEvent) => {
             moveEvent.preventDefault();
@@ -40,11 +40,12 @@ export default function SplitPane(props: SplitPaneProps) {
                 return;
             }
 
-            // resize according to direction of pointer,
-            const direction = xOffset > moveEvent.pageX ? 'left' : 'right'
-            
-            leftResizeable.current.style.width = `${(xOffset - moveEvent.pageX) * -1 + startingPaneWidth}px`
-        };
+            // Calculates the delta change to add to the current pane width,
+            const leftWidth = (xOffset - moveEvent.pageX) * -1 + leftPaneWidth
+
+            // sets width as a percentage of the split pane width.
+            leftResizeable.current.style.width = `${(leftWidth / splitPaneRef.current.clientWidth)*100}%`           
+        }
 
         document.body.addEventListener('pointermove', mouseDragHandler);
     }
@@ -52,14 +53,15 @@ export default function SplitPane(props: SplitPaneProps) {
     return (
         <div className={
             props.orientation === SplitPaneOrientation.HORIZONTAL
-            ? "split-pane" : "split-pane vertical"}>
+            ? "split-pane" 
+            : "split-pane vertical"}
+            ref={splitPaneRef}>
             <section className="pane" 
                 ref={leftResizeable}>
                 { props.children[0] }        
             </section>
             <div className="resizer theme" onMouseDown={handleResize}/>
-            <section className="pane"
-                ref={rightResizeable}>
+            <section className="pane resizeable">
                 { props.children[1] }
             </section>
         </div>

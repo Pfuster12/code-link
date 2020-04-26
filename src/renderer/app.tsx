@@ -18,6 +18,9 @@ require('dotenv').config()
  */
 export default function App() {
 
+    // The open folder.
+    const [folder, setFolder] = useState(process.env.TEST_FOLDER_PATH)
+
     // Current Toolbar Item Selected.
     const [toolbarItem, setToolbarItem] = useState<ToolbarItems>(ToolbarItems.FOLDERS)
 
@@ -28,13 +31,13 @@ export default function App() {
     function getToolbarItem(id: ToolbarItems) {
         switch(id) {
             case ToolbarItems.FOLDERS:
-                return <Folders/>
+                return <Folders path={folder}/>
             case ToolbarItems.PLUGINS:
                 return <Plugins/>
             case ToolbarItems.SETTINGS:
                 return <Settings/>
             default:
-                return <Folders/>
+                return <Folders path={folder}/>
         }
     }
 
@@ -42,7 +45,9 @@ export default function App() {
         <>
         <TitleBar/>
         <main className="workspace theme">
-            <ToolBar onItemClick={handleToolbarClick}/>
+            <ToolBar folder={folder}
+                currentItem={toolbarItem} 
+                onItemClick={handleToolbarClick}/>
             <SplitPane orientation={SplitPaneOrientation.HORIZONTAL}>
                 { getToolbarItem(toolbarItem) }
                 <span>Ho</span>
