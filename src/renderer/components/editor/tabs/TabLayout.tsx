@@ -1,7 +1,8 @@
 import * as React from 'react';
-import Gutter from './gutter/Gutter';
+import Tab from './Tab';
 
 interface TabLayoutProps {
+    files: string[]
 }
 
 /**
@@ -11,7 +12,9 @@ export default function TabLayout(props: TabLayoutProps) {
 
     return (
         <div className="tab-layout theme">
-            <span className="text theme">TabLayout</span>
+            {
+                props.files.map(file => <Tab key={file} file={file}/>)
+            }
         </div>
     )
 }

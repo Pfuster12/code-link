@@ -98,6 +98,7 @@ span {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    overflow-x: auto;
 }
 
 .editor {
@@ -105,8 +106,34 @@ span {
 }
 
 .tab-layout {
+    display: flex;
     height: 42px;
     user-select: none;
+    overflow: auto;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.tab-text {
+    padding: 0px 4px;
+}
+
+.tab-close-box {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.tab-close {
+    width: 16px;
+    height: 16px;
 }
 
 .gutter {

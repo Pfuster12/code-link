@@ -279,6 +279,10 @@ Workspace Theme
     background-color: #333333;
 }
 
+.tab.theme:hover {
+    background-color: #414141;
+}
+
 .gutter.theme {
     width: 62px;
     background-color: #1c1c1c;

@@ -22,6 +22,9 @@ export default function App() {
     // The open folder.
     const [folder, setFolder] = useState(process.env.TEST_FOLDER_PATH)
 
+    // Open files.
+    const [files, setFiles] = useState(["firebase.rc", "app.json"])
+
     // Current Toolbar Item Selected.
     const [toolbarItem, setToolbarItem] = useState<ToolbarItems>(ToolbarItems.FOLDERS)
 
@@ -33,7 +36,7 @@ export default function App() {
         switch(id) {
             case ToolbarItems.FOLDERS:
                 return <Folders onFileOpen={onFileOpen}
-                    path={folder}/>
+                            path={folder}/>
             case ToolbarItems.PLUGINS:
                 return <Plugins/>
             case ToolbarItems.SETTINGS:
@@ -55,7 +58,7 @@ export default function App() {
                 onItemClick={handleToolbarClick}/>
             <SplitPane orientation={SplitPaneOrientation.HORIZONTAL}>
                 { getToolbarItem(toolbarItem) }
-                <EditorWorkspace/>
+                <EditorWorkspace files={files}/>
             </SplitPane>
         </main>
         </>

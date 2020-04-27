@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Gutter from './gutter/Gutter';
-import TabLayout from './TabLayout';
+import TabLayout from './tabs/TabLayout';
 import TextEditor from './texteditor/TextEditor';
 
 interface EditorWorkspaceProps {
+    files: string[]
 }
 
 /**
@@ -15,7 +16,7 @@ export default function EditorWorkspace(props: EditorWorkspaceProps) {
  
     return (
         <div className="editor-workspace">
-            <TabLayout/>
+            <TabLayout files={props.files}/>
             <div className="editor">
                 <Gutter lines={testLines}/>
                 <TextEditor/>
