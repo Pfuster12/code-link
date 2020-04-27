@@ -81,7 +81,7 @@ export function Folder(props: FolderProps = { dirPath: '',
                         d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
                     </svg>
                 <img className="folder-icon" src={folder_closed}/>
-                <span className="folder-name folder-name-theme">{lastPath}</span>
+                <span className="folder-name folder-name-theme">l</span>
             </div>
             <ExpandableList expanded={expanded}>
                 <ul className="folder-subdir">

@@ -5,7 +5,9 @@ import FilesIO from '../../../../io/FilesIO';
 import File from './File';
 
 interface FolderProps {
-    path: string
+    path: string,
+    defaultOpen?: boolean,
+    onFileOpen: (path: string) => void
 }
 
 /**
@@ -14,7 +16,7 @@ interface FolderProps {
 export default function Folder(props: FolderProps) {
 
     // isOpen flag
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(props.defaultOpen)
 
     // Dir contents.
     const [dir, setDir] = useState<Dirent[]>(null)
@@ -73,10 +75,12 @@ export default function Folder(props: FolderProps) {
                         item.isDirectory() 
                         ?
                         <Folder key={item.name}
-                        path={`${props.path}/${item.name}`}/>
+                            path={`${props.path}/${item.name}`}
+                            onFileOpen={props.onFileOpen}/>
                         :
                         <File key={item.name} 
-                        path={`${props.path}/${item.name}`}/>
+                            path={`${props.path}/${item.name}`}
+                            onFileOpen={props.onFileOpen}/>
                     )
                 }
                 </ul>

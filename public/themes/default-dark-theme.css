@@ -272,8 +272,29 @@ Workspace Theme
 }
 
 /*
+ Editor Workspace
+*/
+
+.tab-layout.theme {
+    background-color: #333333;
+}
+
+.gutter.theme {
+    width: 62px;
+    background-color: #1c1c1c;
+}
+
+.gutter-line-number.theme {
+    color: #b2b2b2;
+}
+
+/*
  Folders
 */
+
+.folders-title.theme {
+    color: white;
+}
 
 .folder-name-wrap.theme:hover {
     background-color: #414141;

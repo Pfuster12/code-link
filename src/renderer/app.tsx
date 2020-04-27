@@ -11,6 +11,7 @@ import { useState } from 'react';
 import Folders from './components/toolbar/folders/Folders';
 import Settings from './components/toolbar/settings/Settings';
 import Plugins from './components/toolbar/plugins/Plugins';
+import EditorWorkspace from './components/editor/EditorWorkspace';
 require('dotenv').config()
 
 /**
@@ -31,14 +32,18 @@ export default function App() {
     function getToolbarItem(id: ToolbarItems) {
         switch(id) {
             case ToolbarItems.FOLDERS:
-                return <Folders path={folder}/>
+                return <Folders onFileOpen={onFileOpen}
+                    path={folder}/>
             case ToolbarItems.PLUGINS:
                 return <Plugins/>
             case ToolbarItems.SETTINGS:
                 return <Settings/>
-            default:
-                return <Folders path={folder}/>
         }
+    }
+
+    function onFileOpen(path: string) {
+        console.log(path);
+        
     }
 
     return (
@@ -50,7 +55,7 @@ export default function App() {
                 onItemClick={handleToolbarClick}/>
             <SplitPane orientation={SplitPaneOrientation.HORIZONTAL}>
                 { getToolbarItem(toolbarItem) }
-                <span>Ho</span>
+                <EditorWorkspace/>
             </SplitPane>
         </main>
         </>

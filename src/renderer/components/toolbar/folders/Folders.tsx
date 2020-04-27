@@ -2,7 +2,8 @@ import * as React from 'react';
 import Folder from './Folder';
 
 interface FoldersProps {
-    path: string
+    path: string,
+    onFileOpen: (path: string) => void
 }
 
 /**
@@ -16,7 +17,9 @@ export default function Folders(props: FoldersProps) {
             {
                 props.path
                 &&
-                <Folder path={props.path}/>
+                <Folder defaultOpen={true} 
+                    path={props.path}
+                    onFileOpen={props.onFileOpen}/>
             }
         </section>
     )
