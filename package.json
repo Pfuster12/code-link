@@ -16,27 +16,27 @@
   "author": "Pablo Fuster",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^12.12.37",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.6",
+    "@types/node": "^12.12.47",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
     "clean-webpack-plugin": "^1.0.1",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^2.1.1",
-    "cz-conventional-changelog": "^3.1.0",
+    "cz-conventional-changelog": "^3.2.0",
     "dotenv": "^8.2.0",
-    "electron": "^8.2.3",
+    "electron": "^9.0.5",
     "file-loader": "^3.0.1",
-    "style-loader": "^1.1.4",
+    "style-loader": "^1.2.1",
     "ts-loader": "^6.2.2",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.6"
   },
   "config": {
     "commitizen": {

@@ -20,13 +20,14 @@ require('dotenv').config()
 export default function App() {
 
     // The open folder.
-    const [folder, setFolder] = useState(process.env.TEST_FOLDER_PATH)
+    const [folder, setFolder] = useState<string>(process.env.TEST_FOLDER_PATH)
 
     // Open files.
-    const [files, setFiles] = useState(["firebase.rc", "app.json"])
+    const [files, setFiles] = useState<string[]>(["firebase.rc", "app.json"])
 
     // Current Toolbar Item Selected.
-    const [toolbarItem, setToolbarItem] = useState<ToolbarItems>(ToolbarItems.FOLDERS)
+    const [toolbarItem, setToolbarItem] = 
+        useState<ToolbarItems>(ToolbarItems.FOLDERS)
 
     function handleToolbarClick(id: ToolbarItems) {
         setToolbarItem(id)
@@ -45,8 +46,8 @@ export default function App() {
     }
 
     function onFileOpen(path: string) {
-        console.log(path);
-        
+        files.push(path)
+        setFiles(files)
     }
 
     return (
