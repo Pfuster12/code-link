@@ -21,23 +21,33 @@ export default function EditorWorkspace(props: EditorWorkspaceProps) {
 
     const [currentFile, setCurrentFile] = useState<number>(0)
 
-    const [lines, setLines] = useState<string[]>([])
+    const [lines, setLines] = useState<Map<number, string>>(new Map())
+
+    const [scrollTop, setScrollTop] = useState(0)
     
     useEffect(() => {
         if (props.files.length == 0) {
-            setLines([])
+            setLines(new Map())
             return
         }
 
         FilesIO.readFile(props.files[currentFile])
             .then(res => {
-                console.log("[EDITOR] Success reading file:",
+                console.debug("[EDITOR] Success reading file:",
                     props.files[currentFile])
-                setLines(lexer.splitNewLine(res))
+
+                // Map the file lines to the in memory map.
+                const map = new Map<number, string>()
+
+                lexer.splitNewLine(res).forEach(it => 
+                    map.set(Math.random(), it)
+                )
+
+                setLines(map)
             })
             .catch(err => {
-                console.log("[EDITOR] Error reading current file:",
-                    props.files[currentFile]);
+                console.error("[EDITOR] Error reading current file:",
+                    props.files[currentFile], err);
                 
             })
     },
@@ -53,6 +63,15 @@ export default function EditorWorkspace(props: EditorWorkspaceProps) {
 
         setCurrentFile(index)
     }
+
+    
+    function onGutterScroll(event: React.SyntheticEvent) {
+        setScrollTop(event.currentTarget.scrollTop)
+    }
+    
+    function onEditorScroll(event: React.SyntheticEvent) {
+        setScrollTop(event.currentTarget.scrollTop)
+    }
  
     return (
         <div className="editor-workspace">
@@ -61,8 +80,12 @@ export default function EditorWorkspace(props: EditorWorkspaceProps) {
                 onTabClick={onTabClick}
                 onTabClose={props.onTabClose}/>
             <div className="editor">
-                <Gutter lines={lines}/>
-                <TextEditor lines={lines}/>
+                <Gutter lines={lines}
+                    scrollTop={scrollTop}
+                    onScroll={onGutterScroll}/>
+                <TextEditor lines={lines}
+                    scrollTop={scrollTop}
+                    onScroll={onEditorScroll}/>
             </div>
         </div>
     )

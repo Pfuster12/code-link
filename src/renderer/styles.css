@@ -29,12 +29,14 @@ html, body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    overflow: auto;
 }
 
 main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    overflow: auto;
 }
 
 ul {
@@ -103,8 +105,14 @@ span {
 .pane {
     display: flex;
     min-width: 160px;
+    overflow: auto;
 }
 
 .resizeable {
     flex-grow: 1;
+}
+
+.virtualized-list {
+    position: relative;
+    overflow: auto;
 }

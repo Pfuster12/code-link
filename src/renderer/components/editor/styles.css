@@ -7,19 +7,20 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    overflow-x: auto;
+    overflow: auto;
 }
 
 .editor {
     display: flex;
+    overflow: auto;
+    flex-grow: 1;
 }
 
 .tab-layout {
     display: flex;
     height: 42px;
     user-select: none;
-    overflow-x: visible;
-    overflow-y: hidden;
+    overflow: visible;
 }
 
 .tab-layout::-webkit-scrollbar {
@@ -70,10 +71,18 @@
     flex-direction: column;
     align-items: center;
     user-select: none;
+    overflow: auto;
 }
 
-.gutter-line-number {
-    cursor: default
+[id^="gutter"]::-webkit-scrollbar {
+    display: none;
+}
+
+.gutter-line {
+    cursor: default;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 /*
@@ -83,12 +92,20 @@
 .text-editor {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    overflow: auto;
+    min-width: 100px;
+}
+
+.text-editor-overlay {
+    position: absolute;
+    background-color: transparent;
 }
 
 .line {
-    white-space: pre-wrap;
+    white-space: pre;
 }
 
 .token {
-    white-space: pre-wrap;
+    white-space: pre;
 }

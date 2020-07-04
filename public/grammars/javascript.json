@@ -1,0 +1,21 @@
+{
+    "id": "js",
+    "grammars": {
+        "punctuation": {
+            "rule": "\\W",
+            "name": "punctuation"
+        },
+        "whitespace": {
+            "rule": "\\s",
+            "name": ""
+        },
+        "number": {
+            "rule": "[0-9]([a-zA-Z0-9_]+)?",
+            "name": "number"
+        },
+        "identifier": {
+            "rule": "\\b[a-zA-Z_]([a-zA-Z0-9_]+)?",
+            "name": "identifier"
+        }
+    }
+}
