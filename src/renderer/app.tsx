@@ -20,24 +20,28 @@ require('dotenv').config()
 export default function App() {
 
     // The open folder.
-    const [folder, setFolder] = useState<string>(process.env.TEST_FOLDER_PATH)
+    const [workingDir, setWorkingDir] = useState<string>(process.env.TEST_FOLDER_PATH)
 
     // Open files.
-    const [files, setFiles] = useState<string[]>(["firebase.rc", "app.json"])
+    const [files, setFiles] = useState<string[]>([])
 
     // Current Toolbar Item Selected.
-    const [toolbarItem, setToolbarItem] = 
-        useState<ToolbarItems>(ToolbarItems.FOLDERS)
+    const [toolbarItem, setToolbarItem] = useState<ToolbarItems>(ToolbarItems.FOLDERS)
 
     function handleToolbarClick(id: ToolbarItems) {
         setToolbarItem(id)
     }
 
-    function getToolbarItem(id: ToolbarItems) {
+    /**
+     * Get a ToolbarItem Component from a given id.
+     * @param {ToolbarItems} id
+     * @returns {JSX.Element} component.
+     */
+    function getToolbarItem(id: ToolbarItems): JSX.Element {
         switch(id) {
             case ToolbarItems.FOLDERS:
-                return <Folders onFileOpen={onFileOpen}
-                            path={folder}/>
+                return <Folders path={workingDir}
+                    onFileOpen={onFileOpen}/>
             case ToolbarItems.PLUGINS:
                 return <Plugins/>
             case ToolbarItems.SETTINGS:
@@ -45,21 +49,36 @@ export default function App() {
         }
     }
 
+    /**
+     * Handle a file click callback.
+     * @param {string} path
+     */
     function onFileOpen(path: string) {
-        files.push(path)
-        setFiles(files)
+        setFiles(files => [...files, path])
+    }
+
+    /**
+     * Handle Tab close click callback.
+     * @param {string} file
+     */
+    function onTabClose(file: string) {
+        setFiles(files => files.filter(it => file != it))
     }
 
     return (
         <>
         <TitleBar/>
         <main className="workspace theme">
-            <ToolBar folder={folder}
+            <ToolBar 
                 currentItem={toolbarItem} 
                 onItemClick={handleToolbarClick}/>
-            <SplitPane orientation={SplitPaneOrientation.HORIZONTAL}>
-                { getToolbarItem(toolbarItem) }
-                <EditorWorkspace files={files}/>
+            <SplitPane 
+                orientation={SplitPaneOrientation.HORIZONTAL}>
+                { 
+                    getToolbarItem(toolbarItem) 
+                }
+                <EditorWorkspace files={files}
+                    onTabClose={onTabClose}/>
             </SplitPane>
         </main>
         </>

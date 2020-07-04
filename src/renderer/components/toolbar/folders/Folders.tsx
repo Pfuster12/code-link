@@ -13,7 +13,7 @@ export default function Folders(props: FoldersProps) {
 
     return (
         <section className="plugin folders theme">
-            <span className="text folders-title theme">Folders</span>
+            <h6 className="text folders-title theme">Folders</h6>
             {
                 props.path
                 &&

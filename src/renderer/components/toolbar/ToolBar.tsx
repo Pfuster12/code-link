@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ToolBarItem, { ToolbarItems } from './ToolBarItem';
+import './styles.css'
 
 interface ToolBarProps {
-    folder: string,
     currentItem: ToolbarItems,
     onItemClick: (id: ToolbarItems) => void
 }

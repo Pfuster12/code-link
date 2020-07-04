@@ -21,7 +21,7 @@ const FilesIO = {
      * @returns A Promise of the file contents.
      */
     readFile: (path: string): Promise<string> => {
-        console.info('%c Reading file from ' + path, 'color: royalblue;')
+        console.info('%c [FILESIO] Reading file from ' + path, 'color: green;')
         return fspromises.readFile(path, 'utf8')
     },
 
@@ -79,6 +79,26 @@ const FilesIO = {
         
             return temp
         }
+    },
+
+    /**
+     * Sort a list of files and directories by directories first.
+     * @param dirs
+     */
+    sortByDirectory: (dirs: Dirent[]): Promise<Dirent[]> => {
+        return new Promise((resolve, reject) => {
+            // sort out content by dirs first,
+            dirs.sort((a, b) =>  {
+                if (a.isDirectory() && b.isDirectory()) {
+                    return 0
+                } else if (a.isDirectory() && !b.isDirectory()) {
+                    return -1
+                } else {
+                    return 1
+                }
+            })
+            resolve(dirs)
+        })
     }
 }
 

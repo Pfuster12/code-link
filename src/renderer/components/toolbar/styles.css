@@ -1,0 +1,89 @@
+
+/*
+ Toolbar
+*/
+
+.toolbar {
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar-item {
+    padding: 16px;
+    cursor: pointer;
+    border-left: solid 2px transparent;
+    transition: all .1s ease;
+}
+
+.toolbar-item-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/*
+ Plugin
+*/
+
+.plugin {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-x: hidden;
+}
+
+/*
+ Folders
+*/
+
+.folders {
+    user-select: none;
+}
+
+.folders-title {
+    padding: 8px 16px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.folder-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.folder {
+    display: flex;
+    flex-direction: column;
+}
+
+.folder-name-wrap {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 2px 2px;
+}
+
+.folder-name {
+    padding: 0px 2px;
+}
+
+.folder-list {
+    display: flex;
+    flex-direction: column;
+    padding-left: 8px;
+}
+
+.file {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 2px 2px;
+}
+
+.file-name {
+    padding: 0px 6px;
+}
+
+.file-icon {
+    width: 16px;
+    height: 16px;
+}

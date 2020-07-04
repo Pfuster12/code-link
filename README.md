@@ -26,19 +26,11 @@ Simple steps to boot it up:
 - src
   - io // File and Network IO
   - lexer // Language Lexer and Plugins
-    - plugins
-    - Lexer.ts
-  - ui // UI components
+  - rebderer // Render thread components
     - assets 
     - components // Reusable components
-    - editor // Related to the code editor
-    - sidebar // Sidebar plugins
     - utils
-    - styles // CSS
-  - test // Test files and component tests
-  - app.tsx // Electron render process
-  - index.html // Electron render page
-- main.ts // Electron main process
+  - main // main thread
 ```
 
 ## Project Development

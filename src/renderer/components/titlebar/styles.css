@@ -1,0 +1,45 @@
+
+/*
+ Title Bar
+*/
+
+.title-bar {
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+}
+
+.title-bar-text {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    font-weight: 500;
+}
+
+.window-controls {
+    align-self: flex-end;
+    -webkit-app-region: no-drag;
+}
+
+.window-close-box {
+    display: flex;
+    padding: 10px;
+    -webkit-app-region: no-drag;
+    justify-content: center;
+}
+
+.window-close-box:hover {
+    background-color: red;
+}
+
+.window-close-box:hover .window-close {
+    fill: white;
+}
+
+.window-close {
+    width: 20px;
+    height: 20px;
+    fill: grey;
+}

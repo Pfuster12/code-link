@@ -7,6 +7,7 @@
 @font-face {
     src: url("../assets/fonts/Roboto-Regular.ttf");
     font-family: Roboto;
+    font-weight: 500;
 }
 
 @font-face {
@@ -20,6 +21,8 @@ html, body {
     flex-direction: column;
     margin: 0px;
     height: 100%;
+    font-size: 12px;
+    font-family: 'Roboto',sans-serif;
 }
 
 #root {
@@ -39,8 +42,22 @@ ul {
     padding: 0px;
 }
 
+h4 {
+    margin: 0px;
+    letter-spacing: 0.5px;
+}
+
+h5 {
+    margin: 0px;
+    letter-spacing: 0.5px;
+}
+
+h6 {
+    margin: 0px;
+    letter-spacing: 0.5px;
+}
+
 span {
-    font-size: 14px;
     letter-spacing: 0.5px;
     font-family: 'Roboto';
 }
@@ -52,11 +69,13 @@ span {
 .workspace {
     display: flex;
     flex-direction: row;
+    overflow: auto;
 }
 
 .split-pane {
     display: flex;
     flex-grow: 1;
+    overflow: auto;
 }
 
 .split-pane.vertical {
@@ -88,195 +107,4 @@ span {
 
 .resizeable {
     flex-grow: 1;
-}
-
-/*
- Editor Workspace
-*/
-
-.editor-workspace {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    overflow-x: auto;
-}
-
-.editor {
-    display: flex;
-}
-
-.tab-layout {
-    display: flex;
-    height: 42px;
-    user-select: none;
-    overflow: auto;
-}
-
-.tab {
-    display: flex;
-    align-items: center;
-    padding: 16px;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.tab-text {
-    padding: 0px 4px;
-}
-
-.tab-close-box {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 4px;
-}
-
-.tab-close {
-    width: 16px;
-    height: 16px;
-}
-
-.gutter {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    user-select: none;
-}
-
-.gutter-line-number {
-    cursor: default
-}
-
-/*
- Title Bar
-*/
-
-.title-bar {
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
-    display: flex;
-    cursor: pointer;
-    align-items: center;
-}
-
-.title-bar-text {
-    display: flex;
-    justify-content: center;
-    flex: 1;
-    font-weight: 500;
-}
-
-.window-controls {
-    align-self: flex-end;
-    -webkit-app-region: no-drag;
-}
-
-.window-close-box {
-    display: flex;
-    padding: 10px;
-    -webkit-app-region: no-drag;
-    justify-content: center;
-}
-
-.window-close-box:hover {
-    background-color: red;
-}
-
-.window-close-box:hover .window-close {
-    fill: white;
-}
-
-.window-close {
-    width: 20px;
-    height: 20px;
-    fill: grey;
-}
-
-/*
- Toolbar
-*/
-
-.toolbar {
-    display: flex;
-    flex-direction: column;
-}
-
-.toolbar-item {
-    padding: 16px;
-    cursor: pointer;
-    border-left: solid 2px transparent;
-    transition: all .1s ease;
-}
-
-.toolbar-item-icon {
-    width: 20px;
-    height: 20px;
-}
-
-/*
- Plugin
-*/
-
-.plugin {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    overflow-x: hidden;
-}
-
-/*
- Folders
-*/
-
-.folders {
-    user-select: none;
-}
-
-.folders-title {
-    padding: 8px 16px;
-    font-size: 16px;
-    text-transform: uppercase;
-}
-
-.folder-icon {
-    width: 20px;
-    height: 20px;
-}
-
-.folder {
-    display: flex;
-    flex-direction: column;
-}
-
-.folder-name-wrap {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 2px 2px;
-}
-
-.folder-name {
-    padding: 0px 2px;
-}
-
-.folder-list {
-    display: flex;
-    flex-direction: column;
-    padding-left: 8px;
-}
-
-.file {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 2px 2px;
-}
-
-.file-name {
-    padding: 0px 6px;
-}
-
-.file-icon {
-    width: 16px;
-    height: 16px;
 }

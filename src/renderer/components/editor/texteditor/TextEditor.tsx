@@ -1,6 +1,8 @@
 import * as React from 'react';
+import Line from './Line';
 
 interface TextEditorProps {
+    lines: string[]
 }
 
 /**
@@ -10,7 +12,11 @@ export default function TextEditor(props: TextEditorProps) {
 
     return (
         <div className="text-editor">
-       
+            {
+                props.lines.map(line => 
+                <Line key={Math.random()} 
+                    line={line}/>)
+            }
         </div>
     )
 }

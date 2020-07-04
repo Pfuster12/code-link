@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { remote } from 'electron';
+import './styles.css'
 const { BrowserWindow } = remote
 
 /**

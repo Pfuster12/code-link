@@ -29,19 +29,11 @@ export default function Folder(props: FolderProps) {
      */
     useEffect(() => {
         if (isOpen) {
-            // read contents on click expansion
+            console.log("[FOLDER] Reading dir contents...");
+            
             FilesIO.readDir(props.path)
+            .then(FilesIO.sortByDirectory)
             .then(res => {
-                // sort out content by dirs first,
-                res.sort((a, b) =>  {
-                    if (a.isDirectory() && b.isDirectory()) {
-                        return 0
-                    } else if (a.isDirectory() && !b.isDirectory()) {
-                        return -1
-                    } else {
-                        return 1
-                    }
-                })
                 setDir(res)
             })
             .catch(err => {

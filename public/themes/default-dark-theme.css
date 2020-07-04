@@ -13,15 +13,9 @@ $$$$$$$  |\$$$$$$$ |$$ |      $$ | \$$\          $$ |   $$ |  $$ |\$$$$$$$\ $$ |
                                                                                                     
 code-link default-dark-theme                                                                                   
 ------------------------------------------
-This is a code-link theme .css file. Every class and id selector is available to customise by the user
-and applies to the App's 'theme'. This file is bundled into a ./themes/ folder when distributed where
-more custom themes can be saved for use.
-------------------------------------------
-*/
-
-/*
-------------------------------------------
-Editor Theme
+This is a code-link theme .css file. Every class and id selector is available 
+to customise by the user and applies to the App's 'theme'. This file is bundled 
+into a ./themes/ folder when distributed where more custom themes can be saved for use.
 ------------------------------------------
 */
 
@@ -52,53 +46,6 @@ Editor Theme
     background-color: blue;
 }
 
-.editor-theme {
-    line-height: 1.4;
-    font-size: 14px;
-}
-
-.empty-editor-theme {
-    background-color: #24292E;
-}
-
-.empty-editor-text-theme {
-    color: white;
-}
-
-/*
-    Theme for the text editor pane.
-*/
-.text-editor-theme {
-    background-color: #24292E;
-}
-
-/*
-    Theme for the gutter.
-*/
-.gutter-theme {
-    background-color: #24292E;
-}
-
-/*
-  Line number Gutter
-*/
-
-.line-number-theme {
-    color: grey !important
-}
-
-.line-number-theme:hover {
-    color: white !important
-}
-
-/*
- Status Bar
-*/
-.status-bar-theme {
-    background-color: royalblue;
-    color: white;
-}
-
 /*
  Caret theme.
 */
@@ -109,7 +56,7 @@ Editor Theme
     }
 }
 
-.caret-theme {
+.caret.theme {
     background-color: white;
     height: 1.2em;
 }
@@ -123,7 +70,7 @@ Editor Theme
 /*
     General token theme.
 */
-.token {
+.token.theme {
     color: white;
     font-family: 'Ubuntu Mono','Consolas',monospace;
 }
@@ -279,8 +226,20 @@ Workspace Theme
     background-color: #333333;
 }
 
+.tab-selected.theme {
+    background-color: blue;
+}
+
 .tab.theme:hover {
     background-color: #414141;
+}
+
+.tab-file-icon.theme {
+    fill: #b2b2b2
+}
+
+.tab-close.theme {
+    fill: #979797
 }
 
 .gutter.theme {
